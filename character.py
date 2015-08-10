@@ -11,9 +11,9 @@ class Character(metaclass=ABCMeta):
     """The Character class"""
     __metaclass__ = ABCMeta
 
-    def __init__(self, name, health="", brawl="", shoot="", dodge="", might="", finesse="", cunning=""):
+    def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, *abilities):
+        self.__my_league = league
         self.__name = name
-        # self.__char_type = self.set_char_type(char_type)
         self.__health = self.set_skill(ESkill.health, health)
         self.__brawl = self.set_skill(ESkill.brawl, brawl)
         self.__shoot = self.set_skill(ESkill.shoot, shoot)
@@ -21,9 +21,6 @@ class Character(metaclass=ABCMeta):
         self.__might = self.set_skill(ESkill.might, might)
         self.__finesse = self.set_skill(ESkill.finesse, finesse)
         self.__cunning = self.set_skill(ESkill.cunning, cunning)
-
-    def get_char_type(self):
-        return self.__char_type
 
     @staticmethod
     def set_health(health):
@@ -64,10 +61,12 @@ class Character(metaclass=ABCMeta):
         # The following will get the number of dice, the type of dice, and the skill type:
         number_dice_str = "".join(number_dice)
 
-        if len(alpha_array) > 1:
-            type_dice_str = skill_input[alpha_array[0]:alpha_array[1]]
-        else:
+        if len(alpha_array) == 0:
+            return
+        elif len(alpha_array) == 1:
             type_dice_str = skill_input[alpha_array[0]:]
+        elif len(alpha_array) > 1:
+            type_dice_str = skill_input[alpha_array[0]:alpha_array[1]]
         # debugging:
         # skill_t = skill_input[alphaArray[1]:]
         # print(skill_t)
@@ -79,6 +78,7 @@ class Character(metaclass=ABCMeta):
         for x in EDice:
             if type_dice_str == x.name:
                 type_dice = x
+
         if type_dice == "":
             try:
                 raise InputException("User has entered the wrong type of dice")
@@ -133,6 +133,9 @@ class Character(metaclass=ABCMeta):
 
     def get_name(self):
         return self.__name
+
+    def get_my_league(self):
+        return self.__my_league
 
 # What does this actually do?
 # Character.register(Ally)

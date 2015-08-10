@@ -44,7 +44,6 @@ class Skill(object):
         except InputException as e:
             print(e.value)
 
-
     def get_dice_type(self):
         return self._dice_type
 
@@ -53,4 +52,3 @@ class Skill(object):
 
     def get_skill_name(self):
         return self._skill_name.name
-
