@@ -153,6 +153,9 @@ class Character(metaclass=ABCMeta):
     def set_ability_3(self, ab_3):
         self.__ability_3 = ab_3
 
+    def get_name(self):
+        return self.__name
+
     def get_health(self):
         return self.__health
 

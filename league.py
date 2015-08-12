@@ -74,17 +74,21 @@ class League(object):
                 if self.check_number_abilities(new_character):
                     # print("3")
                     for ability in new_character.get_abilities():
-                        # The level value of each ability object needs to be converted into a int - the Abilities have
-                        # been obtained from file Strings
-                        if not self.check_level_ability(new_character, int(ability.get_level())):
-                            return False
+                        # The level value of each ability object needs to be converted into a int - the instances of
+                        # Ability have been obtained from file Strings
+                        if self.check_level_ability(new_character, int(ability.get_level())):
 
-                        print("Character creation has been successful!")
-                        self._all_my_characters.append(new_character)
-                        return new_character
-
+                            if not self.check_duplicate_values(new_character.get_abilities()):
+                                print("Character creation has been successful!")
+                                self._all_my_characters.append(new_character)
+                                return new_character
+                            else:
+                                print("User has tried to give the character a duplicate ability")
+                                return print("Character creation has been unsuccessful, please try again.")
+                        else:
+                            return print("Character creation has been unsuccessful, please try again.")
                     else:
-                        # This string should really be a constant
+                        # This string should really be made into a constant
                         return print("Character creation has been unsuccessful, please try again.")
                 else:
                     return print("Character creation has been unsuccessful, please try again.")
@@ -99,6 +103,35 @@ class League(object):
                 print("User has tried to create a character with the name of an existing character.")
                 return False
         return True
+
+    @staticmethod
+    def check_duplicate_values(collection):
+        a_dict = dict()
+
+        for a in collection:
+            if a not in a_dict:
+                a_dict[a] = 1
+            else:
+                a_dict[a] += 1
+
+        for b in a_dict:
+            if a_dict[b] > 1:
+                return True
+        return False
+
+        #for a in collection:
+        #    for b in collection:
+        #       if b == a and a_dict[a] is None:
+        #           a_dict[a] = 1
+        #       elif b == a and a_dict[a] > 0:
+        #           a_dict[a] += 1
+
+        #   if a_dict[a] > 1:
+               # This means there are duplicate items in the dictionary
+        #       return True
+        # This means there are no duplicate items in the collection
+        # return False
+
 
     @staticmethod
     def check_empty_arg(name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities):
@@ -339,7 +372,7 @@ class League(object):
         to the character creation rules
         :param new_char: an instance of a subclass of the Character class
         :param ability: an ability the character has
-        :return:
+        :return: A boolean value which indicates whether the character be given an ability of a certain level
         """
 
         if character.__class__.__name__ == "Leader":
