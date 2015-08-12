@@ -11,7 +11,7 @@ class Character(metaclass=ABCMeta):
     """The Character class"""
     __metaclass__ = ABCMeta
 
-    def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, *abilities):
+    def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities):
         self.__my_league = league
         self.__name = name
         self.__health = self.set_skill(ESkill.health, health)
@@ -21,6 +21,13 @@ class Character(metaclass=ABCMeta):
         self.__might = self.set_skill(ESkill.might, might)
         self.__finesse = self.set_skill(ESkill.finesse, finesse)
         self.__cunning = self.set_skill(ESkill.cunning, cunning)
+        self.__abilities = self.set_abilities(**abilities)
+        self.__ability_1 = abilities["arg1"]
+        self.__ability_2 = abilities["arg2"]
+        self.__ability_3 = abilities["arg3"]
+
+    def __str__(self):
+        return self.__name
 
     @staticmethod
     def set_health(health):
@@ -58,7 +65,7 @@ class Character(metaclass=ABCMeta):
                     j += 1
                 break
 
-        # The following will get the number of dice, the type of dice, and the skill type:
+        # The following lines will get the number of dice, the type of dice, and the skill type:
         number_dice_str = "".join(number_dice)
 
         if len(alpha_array) == 0:
@@ -110,6 +117,42 @@ class Character(metaclass=ABCMeta):
                 except InputException as e:
                     print(e.value)
 
+    def set_abilities(self, **abilities):
+        """
+        This is a function to set the abilities of a character
+        :param abilities: Various keyword variables of type String
+        :return: A list of Ability objects (unless none have been passed into this method)
+        """
+        abil_coll = self.__my_league.get_my_league_model().get_all_abilities()
+        new_abilities = []
+
+        # abilities is a dictionary ? yes
+        for new_ab in abilities:
+            for existing_ab in abil_coll:
+                if abilities[new_ab] == existing_ab.get_name():
+                    new_abilities.append(existing_ab)
+        return new_abilities
+
+    def remove_ability(self, ability):
+        """
+        This function will attempt to remove an ability from the character's abilities list
+        :param ability_name: the String name of an ability the user would like to remove
+        :return: A boolean value to indicate whether the removal has been successful or not
+        """
+        self.__abilities.remove(ability)
+
+    def add_ability(self, ability):
+        self.__abilities.append(ability)
+
+    def set_ability_1(self, ab_1):
+        self.__ability_1 = ab_1
+
+    def set_ability_2(self, ab_2):
+        self.__ability_2 = ab_2
+
+    def set_ability_3(self, ab_3):
+        self.__ability_3 = ab_3
+
     def get_health(self):
         return self.__health
 
@@ -136,6 +179,18 @@ class Character(metaclass=ABCMeta):
 
     def get_my_league(self):
         return self.__my_league
+
+    def get_abilities(self):
+        return self.__abilities
+
+    def get_ability_1(self):
+        return self.__ability_1
+
+    def get_ability_2(self):
+        return self.__ability_2
+
+    def get_ability_3(self):
+        return self.__ability_3
 
 # What does this actually do?
 # Character.register(Ally)
