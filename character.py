@@ -22,9 +22,13 @@ class Character(metaclass=ABCMeta):
         self.__finesse = self.set_skill(ESkill.finesse, finesse)
         self.__cunning = self.set_skill(ESkill.cunning, cunning)
         self.__abilities = self.set_abilities(**abilities)
-        self.__ability_1 = abilities["arg1"]
-        self.__ability_2 = abilities["arg2"]
-        self.__ability_3 = abilities["arg3"]
+        self.__ability_1 = self.__abilities[0]
+        # Could use exception handling instead of the if statement when setting ability 2 or 3
+        # (in case self.__abilities has only one item in it
+        if len(self.__abilities) == 2:
+            self.__ability_2 = self.__abilities[1]
+        elif len(self.__abilities) == 3:
+            self.__ability_3 = self.__abilities[2]
 
     def __str__(self):
         return self.__name
@@ -120,8 +124,8 @@ class Character(metaclass=ABCMeta):
     def set_abilities(self, **abilities):
         """
         This is a function to set the abilities of a character
-        :param abilities: Various keyword variables of type String
-        :return: A list of Ability objects (unless none have been passed into this method)
+        :param abilities: A dictionary of strings of the names of abilities. The keys are: 'arg1', 'arg2', 'arg3'
+        :return: A list of Ability objects (unless no valid ability names have been passed to this method)
         """
         abil_coll = self.__my_league.get_my_league_model().get_all_abilities()
         new_abilities = []

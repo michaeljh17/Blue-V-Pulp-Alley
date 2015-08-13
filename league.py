@@ -57,7 +57,7 @@ class League(object):
         # are recognised by the system
         # This functionality could be replaced by an exception ...
         if not self.check_abilities(abilities):
-            print("Character creation has been unsuccessful, please try again.")
+            print("Character creation of " + name + " has been unsuccessful, please try again.")
             return None
 
         # There could be a check here that the character is being given a ability with a permitted level, instead of
@@ -81,13 +81,16 @@ class League(object):
                 return
 
         if not self.check_number_skill_dice(new_character):
-            return print("Character creation has been unsuccessful, please try again.")
+            return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try "
+                                                                                 "again.")
 
         if not self.check_type_skill_dice(new_character):
-            return print("Character creation has been unsuccessful, please try again.")
+            return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try "
+                                                                                 "again.")
 
         if not self.check_number_abilities(new_character):
-            return print("Character creation has been unsuccessful, please try again.")
+            return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try "
+                                                                                 "again.")
 
         errors_level = False
         errors_dupl = False
@@ -106,13 +109,14 @@ class League(object):
                 errors_dupl = True
 
         if errors_level:
-            return print("Character creation has been unsuccessful, please try again.")
+            return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try "
+                                                                                 "again.")
 
         if errors_dupl:
             print("User has tried to give the character a duplicate ability")
             return print("Character creation has been unsuccessful, please try again.")
 
-        print("Character creation has been successful!")
+        print("Character creation of " + name + " the " + char_type + " has been successful!")
         self._all_my_characters.append(new_character)
         return new_character
 
@@ -449,7 +453,7 @@ class League(object):
                         bool_result = True
                 if bool_result:
                         if ch.remove_ability(ability_name):
-                            print("The character's " + ability_name + " ability has been removed")
+                            print(char_name + "'s " + ability_name + " ability has been removed")
                             return True
                         else:
                             print(char_name + " does have an ability called " + ability_name + ", but it has not been "
@@ -570,12 +574,12 @@ class League(object):
                                 # Check whether the character already has this particular ability
                                 for ab in ch.get_abilities():
                                     if ab.get_name() == ability_name:
-                                        print("The character already has the ability you would like to add. " +
-                                              ability_name + " has not been added.")
+                                        print(char_name + " already has the ability you would like to add. " +
+                                              ability_name + " has not been added again.")
                                         return False
 
                                 ch.add_ability(abili)
-                                print("The character has had this ability added: " + ability_name)
+                                print(char_name + " has had this ability added: " + ability_name)
                                 return True
                             else:
                                 return False
