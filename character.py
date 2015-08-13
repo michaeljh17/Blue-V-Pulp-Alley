@@ -133,13 +133,17 @@ class Character(metaclass=ABCMeta):
                     new_abilities.append(existing_ab)
         return new_abilities
 
-    def remove_ability(self, ability):
+    def remove_ability(self, ability_name):
         """
         This function will attempt to remove an ability from the character's abilities list
         :param ability_name: the String name of an ability the user would like to remove
         :return: A boolean value to indicate whether the removal has been successful or not
         """
-        self.__abilities.remove(ability)
+        for ability in self.__abilities:
+            if ability.get_name() == ability_name:
+                self.__abilities.remove(ability)
+                return True
+        return False
 
     def add_ability(self, ability):
         self.__abilities.append(ability)

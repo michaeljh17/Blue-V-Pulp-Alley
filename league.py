@@ -68,16 +68,17 @@ class League(object):
                 return
 
         if self.check_number_skill_dice(new_character):
-            # print("1")
+
             if self.check_type_skill_dice(new_character):
-                # print("2")
+
                 if self.check_number_abilities(new_character):
-                    # print("3")
+
                     for ability in new_character.get_abilities():
-                        # The level value of each ability object needs to be converted into a int - the instances of
-                        # Ability have been obtained from file Strings
+                        # The level value of each ability object needs to be converted into a int - because the
+                        # instances of Ability have been obtained from file Strings
                         if self.check_level_ability(new_character, int(ability.get_level())):
 
+                            # If none of the character's abilities are duplicates then the character is okay
                             if not self.check_duplicate_values(new_character.get_abilities()):
                                 print("Character creation has been successful!")
                                 self._all_my_characters.append(new_character)
@@ -415,16 +416,22 @@ class League(object):
         """
         for ch in self._all_my_characters:
             if ch.get_name() == char_name:
+                bool_result = False
                 for abili in ch.get_abilities():
                     if abili.get_name() == ability_name:
-                        ch.remove_ability(abili)
-                        print("The character's " + abili.get_name() + " ability has been removed")
-                        return True
-                    # Instead of the else statement, an exception could be raised.
-                    else:
-                        print(char_name + " does not have an ability called " + ability_name + ", so it cannot be "
+                        bool_result = True
+                if bool_result:
+                        if ch.remove_ability(ability_name):
+                            print("The character's " + ability_name + " ability has been removed")
+                            return True
+                        else:
+                            print(char_name + " does have an ability called " + ability_name + ", but it has not been "
                                                                                                "removed.")
-                        return False
+                # Instead of the else statement, an exception could be raised.
+                else:
+                    print(char_name + " does not have an ability called " + ability_name + ", so it cannot be "
+                                                                                           "removed.")
+                    return False
             else:
                 print("A character called " + char_name + " does not exist in the " + self._name + " league")
                 return False
@@ -543,6 +550,7 @@ class League(object):
                             else:
                                 return False
                         else:
+                            print("The character cannot add another ability")
                             return False
 
             print("Attempting to add an unrecognised ability")
