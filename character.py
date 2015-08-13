@@ -95,7 +95,7 @@ class Character(metaclass=ABCMeta):
                 return
         else:
             if skill_type == ESkill.health:
-                print("Adding a health skill")
+                # print("Adding a health skill")
                 return Skill(ESkill.health, type_dice, number_dice_str)
             elif skill_type == ESkill.brawl:
                 return Skill(ESkill.brawl, type_dice, number_dice_str)
@@ -131,6 +131,8 @@ class Character(metaclass=ABCMeta):
             for existing_ab in abil_coll:
                 if abilities[new_ab] == existing_ab.get_name():
                     new_abilities.append(existing_ab)
+                    break
+
         return new_abilities
 
     def remove_ability(self, ability_name):
