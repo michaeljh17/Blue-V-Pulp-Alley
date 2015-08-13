@@ -36,17 +36,17 @@ class League(object):
 
     def add_character(self, name="", char_type="", health="", brawl="", shoot="", dodge="", might="", finesse="",
                       cunning="", **abilities):
-        # def add_character(self, name="", char_type="", **skills_abilities):
         """Adds a new character to the league"""
 
         # First need to check that the user has not created a character with the same name as an existing character:
+        # These 'if not' statements are saying if the result is False then ...
         if not self.check_duplicate_name(name):
             return
 
         # There needs to be a check that only one Leader and one Side-Kick can be in the league
 
         # Check none of the arguments passed to the function are empty or missed out
-        # Could call an exception to check this - would have to be called in the controller though ...
+        # Could call an exception to check this - would have to be called in the controller - ?
         # check_empty_arg() could be called for each argument. This would enable the system to identify which attributes
         # are missing, if any are missing
         if not self.check_empty_arg(name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities):
@@ -54,11 +54,12 @@ class League(object):
 
         # Checking the abilities which the user may have attempted to add to the character actually are abilities which
         # are recognised by the system
+        # This functionality could be replaced by an exception ...
         if not self.check_abilities(abilities):
-            print("Character creation has been successful!")
-            return
+            return print("Character creation has been unsuccessful, please try again.")
 
-        # There could be a check here that the character is being given a ability with a permitted level
+        # There could be a check here that the character is being given a ability with a permitted level, instead of
+        # being done after the character creation block
 
         # Then need to check what sort of character the user wants to create (is there a better way of doing this?):
         # Now checking char_type against the the class of the Character child-classes:
@@ -77,39 +78,41 @@ class League(object):
                 print(e.value)
                 return
 
-        if self.check_number_skill_dice(new_character):
-
-            if self.check_type_skill_dice(new_character):
-
-                if self.check_number_abilities(new_character):
-
-                    for ability in new_character.get_abilities():
-                        print("Ability to be added: " + ability.get_name())
-                        print("Ability level: " + ability.get_level())
-
-                        # The level value of each ability object needs to be converted into a int - because the
-                        # instances of Ability have been obtained from file Strings
-                        if self.check_level_ability(new_character, int(ability.get_level())):
-
-                            # If none of the character's abilities are duplicates then the character is okay
-                            if not self.check_duplicate_values(new_character.get_abilities()):
-                                print("Character creation has been successful!")
-                                self._all_my_characters.append(new_character)
-                                return new_character
-                            else:
-                                print("User has tried to give the character a duplicate ability")
-                                return print("Character creation has been unsuccessful, please try again.")
-                        else:
-                            return print("Character creation has been unsuccessful, please try again.")
-                    else:
-                        # This string should really be made into a constant ...
-                        return print("Character creation has been unsuccessful, please try again.")
-                else:
-                    return print("Character creation has been unsuccessful, please try again.")
-            else:
-                return print("Character creation has been unsuccessful, please try again.")
-        else:
+        if not self.check_number_skill_dice(new_character):
             return print("Character creation has been unsuccessful, please try again.")
+
+        if not self.check_type_skill_dice(new_character):
+            return print("Character creation has been unsuccessful, please try again.")
+
+        if not self.check_number_abilities(new_character):
+            return print("Character creation has been unsuccessful, please try again.")
+
+        errors_level = False
+        errors_dupl = False
+
+        for ability in new_character.get_abilities():
+            print("Ability to be added: " + ability.get_name())
+            print("Ability level: " + ability.get_level())
+
+            # The level value of each ability object needs to be converted into a int - because the
+            # instances of Ability have been obtained from file Strings
+            if not self.check_level_ability(new_character, int(ability.get_level())):
+                errors_level = True
+
+            # If none of the character's abilities are duplicates then the character is okay
+            if self.check_duplicate_values(new_character.get_abilities()):
+                errors_dupl = True
+
+        if errors_level:
+            return print("Character creation has been unsuccessful, please try again.")
+
+        if errors_dupl:
+            print("User has tried to give the character a duplicate ability")
+            return print("Character creation has been unsuccessful, please try again.")
+
+        print("Character creation has been successful!")
+        self._all_my_characters.append(new_character)
+        return new_character
 
     def check_duplicate_name(self, name):
         for c in self._all_my_characters:

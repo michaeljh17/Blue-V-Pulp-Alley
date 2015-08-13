@@ -12,7 +12,7 @@ for a in lm.get_all_abilities():
 
 lm.add_league("Buffalo")
 lm.get_current_league().add_character("J", char_type="SideKick", health="d6", brawl="2d6", shoot="3d6", dodge="2d6",
-                                      might="3d8", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash",
+                                      might="3d8", finesse="2d8", cunning="3d8", arg1="Brash", arg2="Mighty",
                                       arg3="")
 print("\r")
 c = lm.get_current_league().find_character("J")
@@ -39,6 +39,9 @@ if c is not None:
 
     l = lm.get_current_league()
     l.char_remove_ability("Brash", "J")
+    print("\r")
+
+    l.char_add_ability("Mighty", "J")
     print("\r")
 
     print(str(c) + "'s abilities:")
