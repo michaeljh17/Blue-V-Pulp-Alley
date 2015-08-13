@@ -15,6 +15,10 @@ lm.get_current_league().add_character("J", char_type="SideKick", health="d6", br
                                       might="3d8", finesse="2d8", cunning="3d8", arg1="Brash", arg2="Mighty",
                                       arg3="")
 print("\r")
+lm.get_current_league().add_character("W", char_type="Follower", health="d6", brawl="1d6", shoot="1d6", dodge="1d6",
+                                      might="1d6", finesse="1d6", cunning="1d6", arg1="Brash", arg2="",
+                                      arg3="")
+print("\r")
 c = lm.get_current_league().find_character("J")
 if c is not None:
     print("Some of " + str(c) + "'s skills and abilities:")

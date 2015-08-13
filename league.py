@@ -41,6 +41,7 @@ class League(object):
         # First need to check that the user has not created a character with the same name as an existing character:
         # These 'if not' statements are saying if the result is False then ...
         if not self.check_duplicate_name(name):
+            # This is the same as returning None
             return
 
         # There needs to be a check that only one Leader and one Side-Kick can be in the league
@@ -56,7 +57,8 @@ class League(object):
         # are recognised by the system
         # This functionality could be replaced by an exception ...
         if not self.check_abilities(abilities):
-            return print("Character creation has been unsuccessful, please try again.")
+            print("Character creation has been unsuccessful, please try again.")
+            return None
 
         # There could be a check here that the character is being given a ability with a permitted level, instead of
         # being done after the character creation block
@@ -137,6 +139,11 @@ class League(object):
         return False
 
     def check_abilities(self, abilities):
+        """
+        This method checks whether the abilities a user is trying to add are valid abilities
+        :param abilities: a dictionary of strings which are names of abilities
+        :return: Boolean result
+        """
         abili_names = []
         invalid_abili = []
         for ab in self._my_league_model.get_all_abilities():
@@ -148,13 +155,9 @@ class League(object):
                     invalid_abili.append(abilities[name])
 
         if len(invalid_abili) > 0:
-            if len(invalid_abili) == 1:
-                print(invalid_abili[0] + " is not a valid ability and cannot be added to the character")
-                return True
-            else:
-                for invalid in invalid_abili:
-                    print(invalid + " is not a valid ability")
-                return True
+            for ab in invalid_abili:
+                print(ab + " is not a valid ability and cannot be added to the character")
+            return False
         else:
             return True
 
@@ -406,28 +409,28 @@ class League(object):
             if input_level > 0:
                 return True
             else:
-                print("The leader cannot be given an ability with this level number")
+                print(character.get_name() + " the leader cannot be given an ability with this level number")
                 return False
 
         elif character.__class__.__name__ == "SideKick":
             if 0 < input_level <= 3:
                 return True
             else:
-                print("The side kick cannot be given an ability with this level number")
+                print(character.get_name() + " the side kick cannot be given an ability with this level number")
                 return False
 
         elif character.__class__.__name__ == "Ally":
             if 0 < input_level <= 2:
                 return True
             else:
-                print("The ally cannot be given an ability with this level number")
+                print(character.get_name() + " the ally cannot be given an ability with this level number")
                 return False
 
         elif character.__class__.__name__ == "Follower":
             if input_level == 1:
                 return True
             else:
-                print("cannot be given an ability with this level number")
+                print(character.get_name() + " the follower cannot be given an ability with this level number")
                 return False
 
     def char_remove_ability(self, ability_name, char_name):
