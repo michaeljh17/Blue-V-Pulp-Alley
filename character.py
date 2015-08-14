@@ -78,11 +78,6 @@ class Character(metaclass=ABCMeta):
             type_dice_str = skill_input[alpha_array[0]:]
         elif len(alpha_array) > 1:
             type_dice_str = skill_input[alpha_array[0]:alpha_array[1]]
-        # debugging:
-        # skill_t = skill_input[alphaArray[1]:]
-        # print(skill_t)
-        # print(number_dice_str)
-        # print(type_dice_str)
 
         # When passing the dice-type to the Skill constructor, it should be an EDice type instead of just a string
         type_dice = ""

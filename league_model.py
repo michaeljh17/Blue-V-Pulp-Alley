@@ -39,11 +39,12 @@ class LeagueModel(object):
 
     def read_file(self, filename):
         data = []
-        file_content = open(filename)
+        file_content = open(filename, "r")
         for line in file_content:
             if line != "\n":
                 # print(line)
                 self.get_line_data(line, data)
+        file_content.close()
         return data
 
     @staticmethod

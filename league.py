@@ -5,6 +5,7 @@ from leader import Leader
 from side_kick import SideKick
 from ally import Ally
 from follower import Follower
+from edice import EDice
 
 
 class League(object):
@@ -60,11 +61,22 @@ class League(object):
             print("Character creation of " + name + " has been unsuccessful, please try again.")
             return None
 
+        # Check that the character class string the user has entered matches a valid character class
+        if not self.check_valid_character(char_type):
+            return
+
+        # Check that the user has entered valid values for the new character's health
+        if not self.check_health_input(char_type, health):
+            return
+
+        # Check that the details for the skills which the user has inputted are valid
+        if not self.check_skills_input(char_type, brawl, shoot, dodge, might, finesse, cunning):
+            return
+
         # There could be a check here that the character is being given a ability with a permitted level, instead of
         # being done after the character creation block
 
-        # Then need to check what sort of character the user wants to create (is there a better way of doing this?):
-        # Now checking char_type against the the class of the Character child-classes:
+        # If no errors have been found then the characters can be created
         if char_type == Leader.__name__:
             new_character = Leader(self, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities)
         elif char_type == Ally.__name__:
@@ -80,13 +92,11 @@ class League(object):
                 print(e.value)
                 return
 
-        if not self.check_number_skill_dice(new_character):
-            return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try "
-                                                                                 "again.")
+        #if not self.check_number_skill_dice(new_character):
+        #    return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try again.")
 
-        if not self.check_type_skill_dice(new_character):
-            return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try "
-                                                                                 "again.")
+        #if not self.check_type_skill_dice(new_character):
+        #    return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try again.")
 
         if not self.check_number_abilities(new_character):
             return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try "
@@ -119,6 +129,263 @@ class League(object):
         print("Character creation of " + name + " the " + char_type + " has been successful!")
         self._all_my_characters.append(new_character)
         return new_character
+
+    @staticmethod
+    def check_valid_character(char_type):
+        if char_type == Leader.__name__ or char_type == Ally.__name__ or char_type == SideKick.__name__ or char_type \
+                == Follower.__name__:
+            return True
+        else:
+            return False
+
+    def check_health_input(self, char_type, health):
+        results = self.get_skill_values(health)
+        # print("Number: " + results[0])
+        # print("Type: " + results[1])
+        check = False
+        if results[0] == "":
+            # check that the dice type is valid
+            if self.check_health_dice_type(char_type, results[1]):
+                check = True
+        else:
+            print("The health skill should not be prefixed by any numbers. Please try again.")
+        return check
+
+    @staticmethod
+    def check_health_dice_type(char_type, health_dice_type):
+
+        if char_type == Leader.__name__ and health_dice_type == str(EDice.d10.name):
+            return True
+        elif char_type == SideKick.__name__ and health_dice_type == str(EDice.d8.name):
+            return True
+        elif char_type == Ally.__name__ and health_dice_type == str(EDice.d6.name):
+            return True
+        elif char_type == Follower.__name__ and health_dice_type == str(EDice.d6.name):
+            return True
+        else:
+            print("Incorrect input for the new character's health. Please try again")
+            return False
+
+    def check_skills_input(self, char_type, brawl, shoot, dodge, might, finesse, cunning):
+        number_dice_list = []
+        dice_type_list = []
+
+        number_dice_list.append(self.get_skill_values(brawl)[0])
+        dice_type_list.append(self.get_skill_values(brawl)[1])
+
+        number_dice_list.append(self.get_skill_values(shoot)[0])
+        dice_type_list.append(self.get_skill_values(shoot)[1])
+
+        number_dice_list.append(self.get_skill_values(dodge)[0])
+        dice_type_list.append(self.get_skill_values(dodge)[1])
+
+        number_dice_list.append(self.get_skill_values(might)[0])
+        dice_type_list.append(self.get_skill_values(might)[1])
+
+        number_dice_list.append(self.get_skill_values(finesse)[0])
+        dice_type_list.append(self.get_skill_values(finesse)[1])
+
+        number_dice_list.append(self.get_skill_values(cunning)[0])
+        dice_type_list.append(self.get_skill_values(cunning)[1])
+
+        if self.check_number_dice(char_type, number_dice_list) and self.check_dice_type(char_type, dice_type_list):
+            return True
+        else:
+            return False
+
+    def check_number_dice(self, char_type, number_dice_list):
+        """
+        This function checks the number of dice which the user would like the skills to have has been done correctly
+        according to the class of the character to be created
+        :param char_type: A string representing the class of the character to be created
+        :param number_dice_list: A 1-D list containing the numbers of dice the user has assigned for each skill
+        :return:
+        """
+        number_3_dice_skills = 0
+        number_2_dice_skills = 0
+        number_1_dice_skills = 0
+
+        if char_type == "Leader":
+            for x in number_dice_list:
+                if x == '3':
+                    number_3_dice_skills += 1
+                elif x == '2':
+                    number_2_dice_skills += 1
+            # print(number_2_dice_skills)
+            # print(number_3_dice_skills)
+            if number_3_dice_skills != 4 or number_2_dice_skills != 2:
+                try:
+                    raise InputException("Incorrect dice number setting for the new character's skills. Please try "
+                                         "again")
+                except InputException as e:
+                    print(e.value)
+            else:
+                return True
+
+        if char_type == "SideKick":
+            for x in number_dice_list:
+                if x == '3':
+                    number_3_dice_skills += 1
+                elif x == '2':
+                    number_2_dice_skills += 1
+            # print(number_2_dice_skills)
+            # print(number_3_dice_skills)
+            if number_3_dice_skills != 3 or number_2_dice_skills != 3:
+                try:
+                    raise InputException("Incorrect dice number setting for the new character's skills. Please try "
+                                         "again")
+                except InputException as e:
+                    print(e.value)
+            else:
+                return True
+
+        if char_type == "Ally":
+            for x in number_dice_list:
+                if x == '2':
+                    number_2_dice_skills += 1
+                elif x == '1':
+                    number_1_dice_skills += 1
+            # print(number_2_dice_skills)
+            # print(number_1_dice_skills)
+            # If either of these are incorrect, so use 'or'
+            if number_2_dice_skills != 2 or number_1_dice_skills != 4:
+                try:
+                    raise InputException("Incorrect dice number setting for the new character's skills. Please try "
+                                         "again")
+                except InputException as e:
+                    print(e.value)
+            else:
+                return True
+
+        if char_type == "Follower":
+            for x in number_dice_list:
+                if x == '1':
+                    number_1_dice_skills += 1
+            # print(number_1_dice_skills)
+            if number_1_dice_skills != 6:
+                try:
+                    raise InputException("Incorrect dice number setting for the new character's skills. Please try "
+                                         "again")
+                except InputException as e:
+                    print(e.value)
+            else:
+                return True
+
+    @staticmethod
+    def check_dice_type(char_type, dice_type_list):
+        """
+        This function will check whether the new character's skills going to be being assigned the correct dice types
+        :param char_type: The character class (string)
+        :param dice_type_list: list of strings which represent the type of die the user has inputted
+        :return:
+        """
+        number_d6_dice = 0
+        number_d8_dice = 0
+        number_d10_dice = 0
+
+        if char_type == Leader.__name__:
+            for x in dice_type_list:
+                if x == EDice.d10.name:
+                    number_d10_dice += 1
+                elif x == EDice.d8.name:
+                    number_d8_dice += 1
+            # print(number_d10_dice)
+            # print(number_d8_dice)
+            if number_d10_dice != 4 or number_d8_dice != 2:
+                try:
+                    raise InputException("Incorrect dice type for at least one of the new character's skills. Please "
+                                         "try again")
+                except InputException as e:
+                    print(e.value)
+            else:
+                return True
+
+        if char_type == SideKick.__name__:
+            for x in dice_type_list:
+                if x == EDice.d8.name:
+                    number_d8_dice += 1
+                elif x == EDice.d6.name:
+                    number_d6_dice += 1
+            # print(number_d8_dice)
+            # print(number_d6_dice)
+            if number_d8_dice != 3 or number_d6_dice != 3:
+                try:
+                    raise InputException("Incorrect dice type for at least one of the new character's skills. Please try "
+                                         "again")
+                except InputException as e:
+                    print(e.value)
+            else:
+                return True
+
+        if char_type == Ally.__name__:
+            for x in dice_type_list:
+                if x == EDice.d6.name:
+                    number_d6_dice += 1
+            # print(number_d6_dice)
+            # If either of these are incorrect, so use 'or'
+            if number_d6_dice != 6:
+                try:
+                    raise InputException("Incorrect dice type for at least one of the new character's skills. Please try "
+                                         "again")
+                except InputException as e:
+                    print(e.value)
+            else:
+                return True
+
+        if char_type == Follower.__name__:
+            for x in dice_type_list:
+                if x == EDice.d6.name:
+                    number_d6_dice += 1
+            # print(number_d6_dice)
+            if number_d6_dice != 6:
+                try:
+                    raise InputException("Incorrect dice type for at least one of the new character's skills. Please try "
+                                         "again")
+                except InputException as e:
+                    print(e.value)
+            else:
+                return True
+
+
+    @staticmethod
+    def get_skill_values(skill_input):
+        """
+        This function was actually initially created to check the skill input was in this format: 2d10brawl
+        However, it can still handle this format: 2d10. I have now changed it so that it will only accept the latter
+        format.
+        :param skill_input: a string representing the number of dice and type of dice a user would like to assign to a
+         character's skill
+        :return:
+        """
+        number_dice = []
+        alpha_array = []
+        i = 0
+        while i < len(skill_input):
+            if skill_input[i].isdigit():
+                number_dice.append(skill_input[i])
+                i += 1
+            elif skill_input[i].isalpha():
+                j = i
+                while j < len(skill_input):
+                    if skill_input[j].isalpha():
+                        alpha_array.append(j)
+                        # print(alphaArray[len(alphaArray) - 1])
+                    j += 1
+                break
+
+        # The following lines will get the number of dice, the type of dice, and the skill type:
+        number_dice_str = "".join(number_dice)
+        type_dice_str = ""
+
+        if len(alpha_array) == 0:
+            type_dice_str = ""
+        elif len(alpha_array) == 1:
+            type_dice_str = skill_input[alpha_array[0]:]
+        elif len(alpha_array) > 1:
+            type_dice_str = ""
+
+        results = [number_dice_str, type_dice_str]
+        return results
 
     def check_duplicate_name(self, name):
         for c in self._all_my_characters:
@@ -287,9 +554,9 @@ class League(object):
 
         if new_char.__class__.__name__ == "Leader":
             for x in skills_list:
-                if x == 'd10':
+                if x == EDice.d10.name:
                     number_d10_dice += 1
-                elif x == 'd8':
+                elif x == EDice.d8.name:
                     number_d8_dice += 1
             # print(number_d10_dice)
             # print(number_d8_dice)
@@ -304,9 +571,9 @@ class League(object):
 
         if new_char.__class__.__name__ == "SideKick":
             for x in skills_list:
-                if x == 'd8':
+                if x == EDice.d8.name:
                     number_d8_dice += 1
-                elif x == 'd6':
+                elif x == EDice.d6.name:
                     number_d6_dice += 1
             # print(number_d8_dice)
             # print(number_d6_dice)
@@ -321,7 +588,7 @@ class League(object):
 
         if new_char.__class__.__name__ == "Ally":
             for x in skills_list:
-                if x == 'd6':
+                if x == EDice.d6.name:
                     number_d6_dice += 1
             # print(number_d6_dice)
             # If either of these are incorrect, so use 'or'
@@ -336,7 +603,7 @@ class League(object):
 
         if new_char.__class__.__name__ == "Follower":
             for x in skills_list:
-                if x == 'd6':
+                if x == EDice.d6.name:
                     number_d6_dice += 1
             # print(number_d6_dice)
             if number_d6_dice != 6:

@@ -9,9 +9,10 @@ lm.set_abilities_file(lm.read_file("abilities.txt"))
 for a in lm.get_all_abilities():
     # print(a)
     pass
+print("\r")
 
 lm.add_league("Buffalo")
-lm.get_current_league().add_character("J", char_type="SideKick", health="d6", brawl="2d6", shoot="3d6", dodge="2d6",
+lm.get_current_league().add_character("J", char_type="SideKick", health="d8", brawl="2d6", shoot="3d6", dodge="2d6",
                                       might="3d8", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash",
                                       arg3="")
 print("\r")
