@@ -71,13 +71,15 @@ class Character(metaclass=ABCMeta):
 
         # The following lines will get the number of dice, the type of dice, and the skill type:
         number_dice_str = "".join(number_dice)
+        type_dice_str = skill_input[alpha_array[0]:]
 
-        if len(alpha_array) == 0:
-            return
-        elif len(alpha_array) == 1:
-            type_dice_str = skill_input[alpha_array[0]:]
-        elif len(alpha_array) > 1:
-            type_dice_str = skill_input[alpha_array[0]:alpha_array[1]]
+        # This should already have been tested:
+        # if len(alpha_array) == 0:
+        #    return
+        # elif len(alpha_array) == 1:
+        #    type_dice_str = skill_input[alpha_array[0]:]
+        # elif len(alpha_array) > 1:
+        #    type_dice_str = ""
 
         # When passing the dice-type to the Skill constructor, it should be an EDice type instead of just a string
         type_dice = ""
@@ -85,36 +87,38 @@ class Character(metaclass=ABCMeta):
             if type_dice_str == x.name:
                 type_dice = x
 
-        if type_dice == "":
+        # This should already have been tested:
+        # if type_dice == "":
+        #    try:
+        #        raise InputException("User has entered the wrong type of dice")
+        #    except InputException as e:
+        #        print(e.value)
+        #    finally:
+        #        return
+        # else:
+
+        if skill_type == ESkill.health:
+            # print("Adding a health skill")
+            return Skill(ESkill.health, type_dice, number_dice_str)
+        elif skill_type == ESkill.brawl:
+            return Skill(ESkill.brawl, type_dice, number_dice_str)
+        elif skill_type == ESkill.shoot:
+            return Skill(ESkill.shoot, type_dice, number_dice_str)
+        elif skill_type == ESkill.dodge:
+            return Skill(ESkill.dodge, type_dice, number_dice_str)
+        elif skill_type == ESkill.might:
+            return Skill(ESkill.might, type_dice, number_dice_str)
+        elif skill_type == ESkill.finesse:
+            return Skill(ESkill.finesse, type_dice, number_dice_str)
+        elif skill_type == ESkill.cunning:
+            return Skill(ESkill.cunning, type_dice, number_dice_str)
+        else:
+            # An if statement would suffice instead of using and raising exceptions in this manner
+            # Just experimenting with exceptions here and elsewhere
             try:
-                raise InputException("User has entered the wrong type of dice")
+                raise InputException("'" + skill_type + "' is an unknown skill type")
             except InputException as e:
                 print(e.value)
-            finally:
-                return
-        else:
-            if skill_type == ESkill.health:
-                # print("Adding a health skill")
-                return Skill(ESkill.health, type_dice, number_dice_str)
-            elif skill_type == ESkill.brawl:
-                return Skill(ESkill.brawl, type_dice, number_dice_str)
-            elif skill_type == ESkill.shoot:
-                return Skill(ESkill.shoot, type_dice, number_dice_str)
-            elif skill_type == ESkill.dodge:
-                return Skill(ESkill.dodge, type_dice, number_dice_str)
-            elif skill_type == ESkill.might:
-                return Skill(ESkill.might, type_dice, number_dice_str)
-            elif skill_type == ESkill.finesse:
-                return Skill(ESkill.finesse, type_dice, number_dice_str)
-            elif skill_type == ESkill.cunning:
-                return Skill(ESkill.cunning, type_dice, number_dice_str)
-            else:
-                # An if statement would suffice instead of using and raising exceptions in this manner
-                # Just experimenting with exceptions here and elsewhere
-                try:
-                    raise InputException("'" + skill_type + "' is an unknown skill type")
-                except InputException as e:
-                    print(e.value)
 
     def set_abilities(self, **abilities):
         """

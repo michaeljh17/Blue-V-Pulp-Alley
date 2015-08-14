@@ -92,11 +92,14 @@ class League(object):
                 print(e.value)
                 return
 
-        #if not self.check_number_skill_dice(new_character):
-        #    return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try again.")
+        # These commented out checks are now performed before the character creation:
+        # if not self.check_number_skill_dice(new_character):
+        #    return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try
+        # again.")
 
-        #if not self.check_type_skill_dice(new_character):
-        #    return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try again.")
+        # if not self.check_type_skill_dice(new_character):
+        #    return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try
+        # again.")
 
         if not self.check_number_abilities(new_character):
             return print("Character creation of " + name + " the " + char_type + " has been unsuccessful, please try "
@@ -351,7 +354,7 @@ class League(object):
     def get_skill_values(skill_input):
         """
         This function was actually initially created to check the skill input was in this format: 2d10brawl
-        However, it can still handle this format: 2d10. I have now changed it so that it will only accept the latter
+        However, it can still handle this format: 2d10 ... I have now changed it so that it will only accept the latter
         format.
         :param skill_input: a string representing the number of dice and type of dice a user would like to assign to a
          character's skill
@@ -713,26 +716,28 @@ class League(object):
         :return: A boolean value to indicate whether the removal has been successful or not
         """
         for ch in self._all_my_characters:
+
             if ch.get_name() == char_name:
                 bool_result = False
                 for abili in ch.get_abilities():
                     if abili.get_name() == ability_name:
                         bool_result = True
                 if bool_result:
-                        if ch.remove_ability(ability_name):
-                            print(char_name + "'s " + ability_name + " ability has been removed")
-                            return True
-                        else:
-                            print(char_name + " does have an ability called " + ability_name + ", but it has not been "
+                    if ch.remove_ability(ability_name):
+                        print(char_name + "'s '" + ability_name + "' ability has been removed")
+                        return True
+                    else:
+                        print(char_name + " does have an ability called " + ability_name + ", but it has not been "
                                                                                                "removed.")
                 # Instead of the else statement, an exception could be raised.
                 else:
                     print(char_name + " does not have an ability called " + ability_name + ", so it cannot be "
                                                                                            "removed.")
                     return False
-            else:
-                print("A character called " + char_name + " does not exist in the " + self._name + " league")
-                return False
+
+        # If a return statement has not been run then:
+        print("A character called " + char_name + " does not exist in the " + self._name + " league")
+        return False
 
     @staticmethod
     def check_add_ability(character):
@@ -841,8 +846,8 @@ class League(object):
                                 # Check whether the character already has this particular ability
                                 for ab in ch.get_abilities():
                                     if ab.get_name() == ability_name:
-                                        print(char_name + " already has the ability you would like to add. " +
-                                              ability_name + " has not been added again.")
+                                        print(char_name + " already has the ability you would like to add. '" +
+                                              ability_name + "' has not been added again.")
                                         return False
 
                                 ch.add_ability(abili)
@@ -854,9 +859,10 @@ class League(object):
                             # print("The character cannot add another ability")
                             return False
 
-            print("Attempting to add an unrecognised ability")
-            return False
-        # Or could raise an exception here:
-        else:
-            print("A character called " + char_name + " does not exist in the " + self._name + " league")
-            return False
+                # This code will only run if the ability passed into this method is not in the list of legit abilities
+                print("Attempting to add an unrecognised ability")
+                return False
+        # Or could raise an exception here?:
+        # This code will only run if the loop above has not found the character name in the list of characters:
+        print("A character called " + char_name + " does not exist in the " + self._name + " league")
+        return False

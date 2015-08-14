@@ -12,6 +12,12 @@ for a in lm.get_all_abilities():
 print("\r")
 
 lm.add_league("Buffalo")
+
+lm.get_current_league().add_character("L", char_type="Leader", health="d10", brawl="3d10", shoot="3d10", dodge="3d8",
+                                      might="3d10", finesse="2d10", cunning="2d8", arg1="Mighty", arg2="Brash",
+                                      arg3="Crafty")
+print("\r")
+
 lm.get_current_league().add_character("J", char_type="SideKick", health="d8", brawl="2d6", shoot="3d6", dodge="2d6",
                                       might="3d8", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash",
                                       arg3="")
