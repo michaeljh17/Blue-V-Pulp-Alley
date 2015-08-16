@@ -14,12 +14,17 @@ print("\r")
 lm.add_league("Buffalo")
 
 lm.get_current_league().add_character("L", char_type="Leader", health="d10", brawl="2d10", shoot="3d10", dodge="3d8",
-                                      might="3d10", finesse="2d10", cunning="2d8", arg1="Mighty", arg2="Brash",
+                                      might="3d10", finesse="2d10", cunning="3d8", arg1="Mighty", arg2="Brash",
                                       arg3="Crafty")
 print("\r")
 
 lm.get_current_league().add_character("J", char_type="SideKick", health="d8", brawl="2d6", shoot="3d6", dodge="2d6",
                                       might="3d8", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash",
+                                      arg3="Crafty")
+print("\r")
+
+lm.get_current_league().add_character("A", char_type="Ally", health="d6", brawl="2d6", shoot="2d6", dodge="1d6",
+                                      might="1d6", finesse="1d6", cunning="1d6", arg1="Mighty", arg2="",
                                       arg3="")
 print("\r")
 lm.get_current_league().add_character("W", char_type="Follower", health="d6", brawl="1d6", shoot="1d6", dodge="1d6",

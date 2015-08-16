@@ -4,6 +4,7 @@ from skill import Skill
 from eskill import ESkill
 from edice import EDice
 from input_exception import InputException
+from character_exception import CharacterException
 
 
 class Character(metaclass=ABCMeta):
@@ -128,6 +129,58 @@ class Character(metaclass=ABCMeta):
             except InputException as e:
                 print(e.value)
 
+    @staticmethod
+    def get_skill_values(skill_input):
+        """
+        :skill_input: handles input in this format: 2d10
+        :param skill_input: a string representing the number of dice and type
+        of dice a user would like to assign to a character's skill
+        :return:
+        """
+        number_dice_str = ""
+        type_dice_str = ""
+        i = 0
+
+        if skill_input[0].isdigit():
+            number_dice_str = skill_input[0]
+        else:
+            # raise an exception
+            pass
+
+        if skill_input[1].isalpha():
+            type_dice_str = skill_input[1:]
+        else:
+            # raise an exception
+            pass
+
+        results = [number_dice_str, type_dice_str]
+        return results
+
+    def check_skills_input(self, brawl, shoot, dodge, might, finesse, cunning):
+        number_dice_list = []
+        dice_type_list = []
+
+        number_dice_list.append(self.get_skill_values(brawl)[0])
+        dice_type_list.append(self.get_skill_values(brawl)[1])
+
+        number_dice_list.append(self.get_skill_values(shoot)[0])
+        dice_type_list.append(self.get_skill_values(shoot)[1])
+
+        number_dice_list.append(self.get_skill_values(dodge)[0])
+        dice_type_list.append(self.get_skill_values(dodge)[1])
+
+        number_dice_list.append(self.get_skill_values(might)[0])
+        dice_type_list.append(self.get_skill_values(might)[1])
+
+        number_dice_list.append(self.get_skill_values(finesse)[0])
+        dice_type_list.append(self.get_skill_values(finesse)[1])
+
+        number_dice_list.append(self.get_skill_values(cunning)[0])
+        dice_type_list.append(self.get_skill_values(cunning)[1])
+
+        results = [number_dice_list, dice_type_list]
+        return results
+
     def set_abilities(self, **abilities):
         """
         This is a function to set the abilities of a character
@@ -147,6 +200,52 @@ class Character(metaclass=ABCMeta):
                     break
 
         return new_abilities
+
+    def check_abilities(self, char_class, ability_level, number_allowed,
+                        **abilities):
+        """
+        This is a function to set the abilities of a character
+        :param abilities: A dictionary of strings of the names of abilities.
+        The keys are: 'arg1', 'arg2', 'arg3'
+        :return: A boolean value, which is True if the user has entered valid
+        abilities for the new character
+        """
+        abil_coll = self.__my_league.get_my_league_model().get_all_abilities()
+        new_abilities = []
+        result = True
+
+        # abilities is a dictionary ? yes
+        for new_ab in abilities:
+            for existing_ab in abil_coll:
+                if abilities[new_ab] == existing_ab.get_name():
+                    new_abilities.append(existing_ab)
+                    break
+            # call an exception here - if the loop ends and it hasn't returned
+            # then an exception should be called as the name of the ability
+            # passed in by the user will not be a valid ability
+            result = False
+
+        if len(new_abilities) != number_allowed:
+            # Raise an exception
+            print("The " + char_class + " does not have the correct number of "
+                                        "abilities: " + str(number_allowed))
+            result = False
+
+        if len(new_abilities) > number_allowed:
+            # Raise an exception
+            print("The " + char_class + " cannot have more than this number of"
+                                        " abilities: " + str(number_allowed))
+            result = False
+
+        # Check the level of the abilities which the user has entered
+        for abili in new_abilities:
+            if int(abili.get_level()) > ability_level:
+                # raise an exception
+                print("The follower cannot have an ability with a level " +
+                      "higher than " + str(ability_level))
+                result = False
+
+        return result
 
     def remove_ability(self, ability_name):
         """
