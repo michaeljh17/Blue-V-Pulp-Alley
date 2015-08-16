@@ -11,7 +11,7 @@ class Character(metaclass=ABCMeta):
     """The Character class"""
     __metaclass__ = ABCMeta
 
-    def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, *abilities):
+    def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities):
         self.__my_league = league
         self.__name = name
         self.__health = self.set_skill(ESkill.health, health)
@@ -21,6 +21,17 @@ class Character(metaclass=ABCMeta):
         self.__might = self.set_skill(ESkill.might, might)
         self.__finesse = self.set_skill(ESkill.finesse, finesse)
         self.__cunning = self.set_skill(ESkill.cunning, cunning)
+        self.__abilities = self.set_abilities(**abilities)
+        self.__ability_1 = self.__abilities[0]
+        # Could use exception handling instead of the if statement when setting ability 2 or 3
+        # (in case self.__abilities has only one item in it
+        if len(self.__abilities) == 2:
+            self.__ability_2 = self.__abilities[1]
+        elif len(self.__abilities) == 3:
+            self.__ability_3 = self.__abilities[2]
+
+    def __str__(self):
+        return self.__name
 
     @staticmethod
     def set_health(health):
@@ -58,20 +69,17 @@ class Character(metaclass=ABCMeta):
                     j += 1
                 break
 
-        # The following will get the number of dice, the type of dice, and the skill type:
+        # The following lines will get the number of dice, the type of dice, and the skill type:
         number_dice_str = "".join(number_dice)
+        type_dice_str = skill_input[alpha_array[0]:]
 
-        if len(alpha_array) == 0:
-            return
-        elif len(alpha_array) == 1:
-            type_dice_str = skill_input[alpha_array[0]:]
-        elif len(alpha_array) > 1:
-            type_dice_str = skill_input[alpha_array[0]:alpha_array[1]]
-        # debugging:
-        # skill_t = skill_input[alphaArray[1]:]
-        # print(skill_t)
-        # print(number_dice_str)
-        # print(type_dice_str)
+        # This should already have been tested:
+        # if len(alpha_array) == 0:
+        #    return
+        # elif len(alpha_array) == 1:
+        #    type_dice_str = skill_input[alpha_array[0]:]
+        # elif len(alpha_array) > 1:
+        #    type_dice_str = ""
 
         # When passing the dice-type to the Skill constructor, it should be an EDice type instead of just a string
         type_dice = ""
@@ -79,36 +87,83 @@ class Character(metaclass=ABCMeta):
             if type_dice_str == x.name:
                 type_dice = x
 
-        if type_dice == "":
+        # This should already have been tested:
+        # if type_dice == "":
+        #    try:
+        #        raise InputException("User has entered the wrong type of dice")
+        #    except InputException as e:
+        #        print(e.value)
+        #    finally:
+        #        return
+        # else:
+
+        if skill_type == ESkill.health:
+            # print("Adding a health skill")
+            return Skill(ESkill.health, type_dice, number_dice_str)
+        elif skill_type == ESkill.brawl:
+            return Skill(ESkill.brawl, type_dice, number_dice_str)
+        elif skill_type == ESkill.shoot:
+            return Skill(ESkill.shoot, type_dice, number_dice_str)
+        elif skill_type == ESkill.dodge:
+            return Skill(ESkill.dodge, type_dice, number_dice_str)
+        elif skill_type == ESkill.might:
+            return Skill(ESkill.might, type_dice, number_dice_str)
+        elif skill_type == ESkill.finesse:
+            return Skill(ESkill.finesse, type_dice, number_dice_str)
+        elif skill_type == ESkill.cunning:
+            return Skill(ESkill.cunning, type_dice, number_dice_str)
+        else:
+            # An if statement would suffice instead of using and raising exceptions in this manner
+            # Just experimenting with exceptions here and elsewhere
             try:
-                raise InputException("User has entered the wrong type of dice")
+                raise InputException("'" + skill_type + "' is an unknown skill type")
             except InputException as e:
                 print(e.value)
-            finally:
-                return
-        else:
-            if skill_type == ESkill.health:
-                print("Adding a health skill")
-                return Skill(ESkill.health, type_dice, number_dice_str)
-            elif skill_type == ESkill.brawl:
-                return Skill(ESkill.brawl, type_dice, number_dice_str)
-            elif skill_type == ESkill.shoot:
-                return Skill(ESkill.shoot, type_dice, number_dice_str)
-            elif skill_type == ESkill.dodge:
-                return Skill(ESkill.dodge, type_dice, number_dice_str)
-            elif skill_type == ESkill.might:
-                return Skill(ESkill.might, type_dice, number_dice_str)
-            elif skill_type == ESkill.finesse:
-                return Skill(ESkill.finesse, type_dice, number_dice_str)
-            elif skill_type == ESkill.cunning:
-                return Skill(ESkill.cunning, type_dice, number_dice_str)
-            else:
-                # An if statement would suffice instead of using and raising exceptions in this manner
-                # Just experimenting with exceptions here and elsewhere
-                try:
-                    raise InputException("'" + skill_type + "' is an unknown skill type")
-                except InputException as e:
-                    print(e.value)
+
+    def set_abilities(self, **abilities):
+        """
+        This is a function to set the abilities of a character
+        :param abilities: A dictionary of strings of the names of abilities. The keys are: 'arg1', 'arg2', 'arg3'
+        :return: A list of Ability objects (unless no valid ability names have been passed to this method)
+        """
+        abil_coll = self.__my_league.get_my_league_model().get_all_abilities()
+        new_abilities = []
+
+        # abilities is a dictionary ? yes
+        for new_ab in abilities:
+            for existing_ab in abil_coll:
+                if abilities[new_ab] == existing_ab.get_name():
+                    new_abilities.append(existing_ab)
+                    break
+
+        return new_abilities
+
+    def remove_ability(self, ability_name):
+        """
+        This function will attempt to remove an ability from the character's abilities list
+        :param ability_name: the String name of an ability the user would like to remove
+        :return: A boolean value to indicate whether the removal has been successful or not
+        """
+        for ability in self.__abilities:
+            if ability.get_name() == ability_name:
+                self.__abilities.remove(ability)
+                return True
+        return False
+
+    def add_ability(self, ability):
+        self.__abilities.append(ability)
+
+    def set_ability_1(self, ab_1):
+        self.__ability_1 = ab_1
+
+    def set_ability_2(self, ab_2):
+        self.__ability_2 = ab_2
+
+    def set_ability_3(self, ab_3):
+        self.__ability_3 = ab_3
+
+    def get_name(self):
+        return self.__name
 
     def get_health(self):
         return self.__health
@@ -136,6 +191,18 @@ class Character(metaclass=ABCMeta):
 
     def get_my_league(self):
         return self.__my_league
+
+    def get_abilities(self):
+        return self.__abilities
+
+    def get_ability_1(self):
+        return self.__ability_1
+
+    def get_ability_2(self):
+        return self.__ability_2
+
+    def get_ability_3(self):
+        return self.__ability_3
 
 # What does this actually do?
 # Character.register(Ally)
