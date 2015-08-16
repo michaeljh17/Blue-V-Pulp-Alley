@@ -1,8 +1,9 @@
-__author__ = 'mih279'
+#__author__ = 'mih279'
 
 from character import Character
 from edice import EDice
 from character_exception import CharacterException
+from edice import EDice
 
 
 class SideKick(Character):
@@ -20,7 +21,11 @@ class SideKick(Character):
         # Check the health type
         if health != self.base_health:
             # raise an exception
-            raise CharacterException
+            try:
+                raise CharacterException("Incorrect health input")
+            except CharacterException as e:
+                print(e.value)
+                return
 
         number_2_dice_skills = 0
         number_3_dice_skills = 0
