@@ -1,4 +1,4 @@
-__author__ = 'mih279'
+﻿__author__ = 'mih279'
 
 from character import Character
 
