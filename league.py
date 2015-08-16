@@ -1,4 +1,4 @@
-# __author__ = 'User'
+﻿# __author__ = 'User'
 from input_exception import InputException
 from leader import Leader
 from side_kick import SideKick
@@ -76,8 +76,8 @@ class League(object):
 
         # Check that the user has entered valid values for the new character's
         # health
-        if not self.check_health_input(char_type, health):
-            return
+        #if not self.check_health_input(char_type, health):
+        #    return
 
         # Check that the details for the skills which the user has inputted are
         # valid
