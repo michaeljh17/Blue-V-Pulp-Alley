@@ -13,7 +13,7 @@ print("\r")
 
 lm.add_league("Buffalo")
 
-lm.get_current_league().add_character("L", char_type="Leader", health="d10", brawl="3d10", shoot="3d10", dodge="3d8",
+lm.get_current_league().add_character("L", char_type="Leader", health="d10", brawl="2d10", shoot="3d10", dodge="3d8",
                                       might="3d10", finesse="2d10", cunning="2d8", arg1="Mighty", arg2="Brash",
                                       arg3="Crafty")
 print("\r")
@@ -86,3 +86,6 @@ if j is not None and w is not None:
         print("The instances of " + j.get_ability_1().get_name() + " and " + w.get_ability_1().get_name() + " for " +
               str(j) + " and " + str(w) + " are different.")
 
+# if __name__ == "__main__":
+#    import doctest
+#    doctest.testmod()

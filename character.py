@@ -1,5 +1,4 @@
-__author__ = 'User'
-
+# __author__ = 'M H'
 from abc import ABCMeta
 from skill import Skill
 from eskill import ESkill
@@ -11,7 +10,8 @@ class Character(metaclass=ABCMeta):
     """The Character class"""
     __metaclass__ = ABCMeta
 
-    def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities):
+    def __init__(self, league, name, health, brawl, shoot, dodge, might,
+                 finesse, cunning, **abilities):
         self.__my_league = league
         self.__name = name
         self.__health = self.set_skill(ESkill.health, health)
@@ -23,7 +23,8 @@ class Character(metaclass=ABCMeta):
         self.__cunning = self.set_skill(ESkill.cunning, cunning)
         self.__abilities = self.set_abilities(**abilities)
         self.__ability_1 = self.__abilities[0]
-        # Could use exception handling instead of the if statement when setting ability 2 or 3
+        # Could use exception handling instead of the if statement when setting
+        # ability 2 or 3
         # (in case self.__abilities has only one item in it
         if len(self.__abilities) == 2:
             self.__ability_2 = self.__abilities[1]
@@ -49,8 +50,10 @@ class Character(metaclass=ABCMeta):
     @staticmethod
     def set_skill(skill_type, skill_input):
         """
-        :param skill_type: Type of skill which the user would like to add, as a string
-        :param skill_input: The number of dice, and the type of die, of the skill to be set, as a string
+        :param skill_type: Type of skill which the user would like to add, as a
+        string
+        :param skill_input: The number of dice, and the type of die, of the
+        skill to be set, as a string
         :return:
         """
         number_dice = []
@@ -69,7 +72,8 @@ class Character(metaclass=ABCMeta):
                     j += 1
                 break
 
-        # The following lines will get the number of dice, the type of dice, and the skill type:
+        # The following lines will get the number of dice, the type of dice,
+        # and the skill type:
         number_dice_str = "".join(number_dice)
         type_dice_str = skill_input[alpha_array[0]:]
 
@@ -81,7 +85,8 @@ class Character(metaclass=ABCMeta):
         # elif len(alpha_array) > 1:
         #    type_dice_str = ""
 
-        # When passing the dice-type to the Skill constructor, it should be an EDice type instead of just a string
+        # When passing the dice-type to the Skill constructor, it should be an
+        # EDice type instead of just a string
         type_dice = ""
         for x in EDice:
             if type_dice_str == x.name:
@@ -90,7 +95,8 @@ class Character(metaclass=ABCMeta):
         # This should already have been tested:
         # if type_dice == "":
         #    try:
-        #        raise InputException("User has entered the wrong type of dice")
+        #        raise InputException("User has entered the wrong type of
+        # dice")
         #    except InputException as e:
         #        print(e.value)
         #    finally:
@@ -113,18 +119,22 @@ class Character(metaclass=ABCMeta):
         elif skill_type == ESkill.cunning:
             return Skill(ESkill.cunning, type_dice, number_dice_str)
         else:
-            # An if statement would suffice instead of using and raising exceptions in this manner
+            # An if statement would suffice instead of using and raising
+            # exceptions in this manner
             # Just experimenting with exceptions here and elsewhere
             try:
-                raise InputException("'" + skill_type + "' is an unknown skill type")
+                raise InputException("'" + skill_type + "' is an unknown skill"
+                                                        " type")
             except InputException as e:
                 print(e.value)
 
     def set_abilities(self, **abilities):
         """
         This is a function to set the abilities of a character
-        :param abilities: A dictionary of strings of the names of abilities. The keys are: 'arg1', 'arg2', 'arg3'
-        :return: A list of Ability objects (unless no valid ability names have been passed to this method)
+        :param abilities: A dictionary of strings of the names of abilities.
+        The keys are: 'arg1', 'arg2', 'arg3'
+        :return: A list of Ability objects (unless no valid ability names have
+        been passed to this method)
         """
         abil_coll = self.__my_league.get_my_league_model().get_all_abilities()
         new_abilities = []
@@ -140,9 +150,12 @@ class Character(metaclass=ABCMeta):
 
     def remove_ability(self, ability_name):
         """
-        This function will attempt to remove an ability from the character's abilities list
-        :param ability_name: the String name of an ability the user would like to remove
-        :return: A boolean value to indicate whether the removal has been successful or not
+        This function will attempt to remove an ability from the character's
+        abilities list
+        :param ability_name: the String name of an ability the user would like
+        to remove
+        :return: A boolean value to indicate whether the removal has been
+        successful or not
         """
         for ability in self.__abilities:
             if ability.get_name() == ability_name:
@@ -204,5 +217,6 @@ class Character(metaclass=ABCMeta):
     def get_ability_3(self):
         return self.__ability_3
 
-# What does this actually do?
-# Character.register(Ally)
+# if __name__ == "__main__":
+#    import doctest
+#    doctest.testmod()

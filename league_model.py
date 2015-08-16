@@ -1,5 +1,4 @@
-__author__ = 'User'
-
+# __author__ = 'User'
 from league import League
 from ability import Ability
 import string
