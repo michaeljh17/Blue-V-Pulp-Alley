@@ -22,7 +22,7 @@ class Leader(Character):
         # Check the health type
         if health != self.base_health:
             # raise an exception
-            return
+            raise CharacterException("Incorrect health input")
 
         number_2_dice_skills = 0
         number_3_dice_skills = 0
@@ -38,13 +38,11 @@ class Leader(Character):
         # print(number_2_dice_skills)
         # print(number_3_dice_skills)
         if number_3_dice_skills != 4 or number_2_dice_skills != 2:
-            try:
-                raise CharacterException("Incorrect dice number setting for " +
-                                         " the new character's skills. Please "
-                                         + "try again")
-            except CharacterException as e:
-                print(e.value)
-                return
+            # raise an exception
+            raise CharacterException("Incorrect dice numbers have been set for"
+                                     + " " + name + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
 
         # Check the dice type
         for x in results[1]:
@@ -55,16 +53,18 @@ class Leader(Character):
         # print(number_d10_dice)
         # print(number_d8_dice)
         if number_d10_dice != 4 or number_d8_dice != 2:
-            try:
-                raise CharacterException("Incorrect dice type for at least " +
-                                         " one of the new character's skills."
-                                         + " Please try again")
-            except CharacterException as e:
-                print(e.value)
-                return
+            # raise an exception
+            raise CharacterException("Incorrect dice type have been set for" +
+                                     + name + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
 
-        # Check the number of abilities which are entered
-        # new_abilities will be a list
-        # super().check_abilities(self.__class__.__name__, self.level,
-        #                        self.number_abilities, **abilities)
+        # Check the abilities which the user has entered
+        super().check_abilities( name, self.__class__.__name__, self.level,
+                                self.number_abilities, **abilities)
 
+        # Check for duplicate abilities entered here? Or just leave the
+        # ModelInputView to handle this?"""
+
+    def __del__(self):
+        print(self.__class__.__name__ + " object has been removed.")

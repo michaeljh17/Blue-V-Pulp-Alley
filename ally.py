@@ -11,8 +11,10 @@ class Ally(Character):
     number_abilities = 1
     base_health = EDice.d6.name
     
-    def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities):
-        super().__init__(league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities)
+    def __init__(self, league, name, health, brawl, shoot, dodge, might,
+                 finesse, cunning, **abilities):
+        super().__init__(league, name, health, brawl, shoot, dodge, might,
+                         finesse, cunning, **abilities)
 
         results = super().check_skills_input(brawl, shoot, dodge, might,
                                              finesse, cunning)
@@ -20,7 +22,7 @@ class Ally(Character):
         # Check the health type
         if health != self.base_health:
             # raise an exception
-            return
+            raise CharacterException("Incorrect health input")
 
         number_1_dice_skills = 0
         number_2_dice_skills = 0
@@ -34,51 +36,31 @@ class Ally(Character):
                 number_1_dice_skills += 1
         # print(number_2_dice_skills)
         # print(number_1_dice_skills)
-        # If either of these are incorrect an exception shold be raised,
+        # If either of these are incorrect an exception should be raised
         # so use 'or':
         if number_2_dice_skills != 2 or number_1_dice_skills != 4:
-            try:
-                raise CharacterException("Incorrect dice number setting for " +
-                                     "the new character's skills. Please " +
-                                     "try again")
-            except CharacterException as e:
-                print(e.value)
-                return
+            raise CharacterException("Incorrect dice numbers have been set for"
+                                     + " " + name + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
 
         # Check the dice type
         for x in results[1]:
             if x == EDice.d6.name:
                 number_d6_dice += 1
         # print(number_d6_dice)
-        # If either of these are incorrect, so use 'or'
         if number_d6_dice != 6:
-            try:
-                raise CharacterException("Incorrect dice type for at least one" +
-                                     " of the new character's skills. " +
-                                     "Please try again")
-            except CharacterException as e:
-                print(e.value)
-                return
+            raise CharacterException("Incorrect dice type have been set for" +
+                                     + name + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
 
-        # Check the number of abilities which are entered
-        # new_abilities will be a list
-        # super().check_abilities(self.__class__.__name__, self.level,
-        #                        self.number_abilities, **abilities)
+        # Check the abilities which the user has entered
+        super().check_abilities(name, self.__class__.__name__, self.level,
+                                self.number_abilities, **abilities)
 
-        """if len(new_abilities) != 1:
-            # Raise an exception
-            print("The ally does not have the correct number of abilities: 1")
+        # Check for duplicate abilities entered here? Or just leave the
+        # ModelInputView to handle this?"""
 
-        if len(new_abilities) > 1:
-            # Raise an exception
-            print("The ally cannot have more than one ability.")
-
-        # Check the level of the abilities which the user has entered
-        for abili in new_abilities:
-            if abili.get_level() > self.level:
-                # raise an exception
-                print("The ally cannot have an ability with a level " +
-                      "higher than " + str(self.level))
-
-        # Check for duplicate abilities entered here? Or just leave the View or
-        # the ModelInputView to handle this?"""
+    def __del__(self):
+        print(self.__class__.__name__ + " object has been removed.")

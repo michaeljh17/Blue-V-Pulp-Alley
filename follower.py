@@ -8,18 +8,21 @@ from character import Character
 class Follower(Character):
     level = 1
     size = 1
-    abilities_allowed = 1
+    number_abilities = 1
     base_health = EDice.d6.name
     
-    def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities):
-        Character.__init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities)
+    def __init__(self, league, name, health, brawl, shoot, dodge, might,
+                 finesse, cunning, **abilities):
+        Character.__init__(self, league, name, health, brawl, shoot, dodge,
+                           might, finesse, cunning, **abilities)
 
-        results = super().check_skills_input(brawl, shoot, dodge, might, finesse, cunning)
+        results = super().check_skills_input(brawl, shoot, dodge, might,
+                                             finesse, cunning)
 
         # Check the health type
         if health != self.base_health:
             # raise an exception
-            return
+            raise CharacterException("Incorrect health input")
 
         number_1_dice_skills = 0
         number_d6_dice = 0
@@ -31,13 +34,10 @@ class Follower(Character):
         # print(number_1_dice_skills)
         if number_1_dice_skills != 6:
             # raise an exception
-            try:
-                raise CharacterException("Incorrect dice number setting for "
-                                     "the new character's skills. Please "
-                                     "try again")
-            except CharacterException as e:
-                print(e.value)
-                return
+            raise CharacterException("Incorrect dice numbers have been set for"
+                                     + " " + name + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
 
         # Check the dice type
         for x in results[1]:
@@ -46,34 +46,17 @@ class Follower(Character):
         # print(number_d6_dice)
         if number_d6_dice != 6:
             # raise an exception
-            try:
-                raise CharacterException("Incorrect dice type for at least one"
-                + " of the new character's skills. Please try again")
-            except CharacterException as e:
-                print(e.value)
-                return
+            raise CharacterException("Incorrect dice type have been set for" +
+                                     + name + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
 
-        # Check the number of abilities which are entered
-        # new_abilities will be a list
-        # if not super().check_abilities(self.__class__.__name__, self.level,
-        #                        self.abilities_allowed, **abilities):
-        #    return
+        # Check the abilities which the user has entered
+        super().check_abilities( name, self.__class__.__name__, self.level,
+                                self.number_abilities, **abilities)
 
-        """if len(new_abilities) != 1:
-            # Raise an exception
-            print("The follower does not have the correct number of abilities:"
-                  + " 1")
+        # Check for duplicate abilities entered here? Or just leave the
+        # ModelInputView to handle this?"""
 
-        if len(new_abilities) > 1:
-            # Raise an exception
-            print("The follower cannot have more than one ability.")
-
-        # Check the level of the abilities which the user has entered
-        for abili in new_abilities:
-            if abili.get_level() != self.level:
-                # raise an exception
-                print("The follower cannot have an ability with a level " +
-                      "higher than " + str(self.level))
-
-        # Check for duplicate abilities entered here? Or just leave the View or
-        # the ModelInputView to handle this?"""
+    def __del__(self):
+        print(self.__class__.__name__ + " object has been removed.")

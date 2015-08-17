@@ -1,10 +1,8 @@
-# __author__ = 'M H'
 from abc import ABCMeta
 from skill import Skill
 from eskill import ESkill
 from edice import EDice
 from input_exception import InputException
-# from league_model import LeagueModel
 from character_exception import CharacterException
 
 
@@ -24,14 +22,14 @@ class Character(metaclass=ABCMeta):
         self.__finesse = self.set_skill(ESkill.finesse, finesse)
         self.__cunning = self.set_skill(ESkill.cunning, cunning)
         self.__abilities = self.set_abilities(**abilities)
-        self.__ability_1 = self.__abilities[0]
+        """self.__ability_1 = self.__abilities[0]
         # Could use exception handling instead of the if statement when setting
         # ability 2 or 3
         # (in case self.__abilities has only one item in it
         if len(self.__abilities) == 2:
             self.__ability_2 = self.__abilities[1]
         elif len(self.__abilities) == 3:
-            self.__ability_3 = self.__abilities[2]
+            self.__ability_3 = self.__abilities[2]"""
 
     def __str__(self):
         return self.__name
@@ -74,18 +72,8 @@ class Character(metaclass=ABCMeta):
                     j += 1
                 break
 
-        # The following lines will get the number of dice, the type of dice,
-        # and the skill type:
         number_dice_str = "".join(number_dice)
         type_dice_str = skill_input[alpha_array[0]:]
-
-        # This should already have been tested:
-        # if len(alpha_array) == 0:
-        #    return
-        # elif len(alpha_array) == 1:
-        #    type_dice_str = skill_input[alpha_array[0]:]
-        # elif len(alpha_array) > 1:
-        #    type_dice_str = ""
 
         # When passing the dice-type to the Skill constructor, it should be an
         # EDice type instead of just a string
@@ -93,17 +81,6 @@ class Character(metaclass=ABCMeta):
         for x in EDice:
             if type_dice_str == x.name:
                 type_dice = x
-
-        # This should already have been tested:
-        # if type_dice == "":
-        #    try:
-        #        raise InputException("User has entered the wrong type of
-        # dice")
-        #    except InputException as e:
-        #        print(e.value)
-        #    finally:
-        #        return
-        # else:
 
         if skill_type == ESkill.health:
             # print("Adding a health skill")
@@ -121,9 +98,7 @@ class Character(metaclass=ABCMeta):
         elif skill_type == ESkill.cunning:
             return Skill(ESkill.cunning, type_dice, number_dice_str)
         else:
-            # An if statement would suffice instead of using and raising
-            # exceptions in this manner
-            # Just experimenting with exceptions here and elsewhere
+            # An exception should really never occur here
             try:
                 raise InputException("'" + skill_type + "' is an unknown skill"
                                                         " type")
@@ -202,10 +177,9 @@ class Character(metaclass=ABCMeta):
 
         return new_abilities
 
-    def test_function(self):
-        print("Test hello")
-
-    def check_abilities(self, **abilities):
+    def check_abilities(self, name, char_class, ability_level, number_allowed,
+                        **abilities):
+    # def check_abilities(self, **abilities):
         """
         This is a function to set the abilities of a character
         :param abilities: A dictionary of strings of the names of abilities.
@@ -226,30 +200,34 @@ class Character(metaclass=ABCMeta):
             # call an exception here - if the loop ends and it hasn't returned
             # then an exception should be called as the name of the ability
             # passed in by the user will not be a valid ability
-        return new_abilities
-        """ result = False
 
-        if len(new_abilities) != number_allowed:
-            # Raise an exception
-            print("The " + char_class + " does not have the correct number of "
-                                        "abilities: " + str(number_allowed))
-            result = False
 
         if len(new_abilities) > number_allowed:
             # Raise an exception
-            print("The " + char_class + " cannot have more than this number of"
-                                        " abilities: " + str(number_allowed))
+            raise CharacterException(name + " the " + char_class
+                                     + " cannot have more than " +
+                                     str(self.number_abilities) + " abilities."
+                                     + " Please try again.")
+            result = False
+
+        if len(new_abilities) != number_allowed:
+            # Raise an exception
+            raise CharacterException(name + " the " + char_class +
+                                     " does not have the correct number of " +
+                                     "abilities: " + str(self.number_abilities)
+                                     + ". Please try again.")
             result = False
 
         # Check the level of the abilities which the user has entered
         for abili in new_abilities:
             if int(abili.get_level()) > ability_level:
                 # raise an exception
-                print("The follower cannot have an ability with a level " +
-                      "higher than " + str(ability_level))
+                raise CharacterException("The " + char_class + " cannot have "
+                                         + "an ability with a level higher "
+                                           "than " + str(self.level))
                 result = False
 
-        return result"""
+        return result
 
     def remove_ability(self, ability_name):
         """

@@ -1,5 +1,6 @@
 # __author__ = 'User'
 from input_exception import InputException
+from character_exception import CharacterException
 from leader import Leader
 from side_kick import SideKick
 from ally import Ally
@@ -90,33 +91,30 @@ class League(object):
         # being done after the character creation block
 
         # If no errors have been found then the characters can be created
-        if char_type == Leader.__name__:
-            new_character = Leader(self, name, health, brawl, shoot, dodge,
-                                   might, finesse, cunning, **abilities)
-        elif char_type == Ally.__name__:
-            new_character = Ally(self, name, health, brawl, shoot, dodge,
-                                 might, finesse, cunning, **abilities)
-        elif char_type == SideKick.__name__:
-            new_character = SideKick(self, name, health, brawl, shoot, dodge,
-                                     might, finesse, cunning, **abilities)
-        elif char_type == Follower.__name__:
-            new_character = Follower(self, name, health, brawl, shoot, dodge,
-                                     might, finesse, cunning, **abilities)
-        else:
-            try:
-                raise InputException("User has tried to create a character "
-                                     "with an unrecognised class.")
-            except InputException as e:
-                print(e.value)
-                return
+        new_character = ""
 
-        # print("New char: " + str(new_character))
+        try:
+            if char_type == Leader.__name__:
+                new_character = Leader(self, name, health, brawl, shoot, dodge,
+                                       might, finesse, cunning, **abilities)
+            elif char_type == Ally.__name__:
+                new_character = Ally(self, name, health, brawl, shoot, dodge,
+                                     might, finesse, cunning, **abilities)
 
-        if new_character is not None:
+            elif char_type == SideKick.__name__:
+                new_character = SideKick(self, name, health, brawl, shoot, dodge,
+                                         might, finesse, cunning, **abilities)
+            elif char_type == Follower.__name__:
+                new_character = Follower(self, name, health, brawl, shoot, dodge,
+                                         might, finesse, cunning, **abilities)
             print("Character creation of " + name + " the " + char_type +
-                  " has been successful!")
+                      " has been successful!")
             self._all_my_characters.append(new_character)
             return new_character
+
+        except CharacterException as e:
+                print(e.value)
+                del new_character
 
         # These commented out checks are now performed before the character
         # creation:
