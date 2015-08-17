@@ -1,4 +1,4 @@
-# __author__ = 'M H'
+﻿# __author__ = 'M H'
 from abc import ABCMeta
 from skill import Skill
 from eskill import ESkill
@@ -216,6 +216,29 @@ class Character(metaclass=ABCMeta):
 
     def get_ability_3(self):
         return self.__ability_3
+
+    def export_character(self):
+        """
+        # Method used to export the current character into an array
+        # formatted like a character sheet
+        :return: An array containing the characters name, skills, and abilities
+        """
+        output = []
+        output.append(self.get_name())
+        output.append(str(self.get_health().get_number_dice()) + str(self.get_health().get_number_dice()))
+        output.append(self.get_brawl())
+        output.append(self.get_shoot())
+        output.append(self.get_dodge())
+        output.append(self.get_might())
+        output.append(self.get_finesse())
+        output.append(str(self.get_cunning().get_number_dice()) + str(self.get_cunning().get_number_dice()))
+
+        for ability in self.__abilities:
+            output.append(ability.get_name())
+
+        return output
+
+
 
 # if __name__ == "__main__":
 #    import doctest
