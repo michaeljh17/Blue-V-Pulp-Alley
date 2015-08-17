@@ -55,9 +55,9 @@ class Follower(Character):
 
         # Check the number of abilities which are entered
         # new_abilities will be a list
-        if not super().check_abilities(self.__class__.__name__, self.level,
-                                self.abilities_allowed, **abilities):
-            return
+        # if not super().check_abilities(self.__class__.__name__, self.level,
+        #                        self.abilities_allowed, **abilities):
+        #    return
 
         """if len(new_abilities) != 1:
             # Raise an exception

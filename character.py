@@ -4,6 +4,7 @@ from skill import Skill
 from eskill import ESkill
 from edice import EDice
 from input_exception import InputException
+# from league_model import LeagueModel
 from character_exception import CharacterException
 
 
@@ -201,8 +202,10 @@ class Character(metaclass=ABCMeta):
 
         return new_abilities
 
-    def check_abilities(self, char_class, ability_level, number_allowed,
-                        **abilities):
+    def test_function(self):
+        print("Test hello")
+
+    def check_abilities(self, **abilities):
         """
         This is a function to set the abilities of a character
         :param abilities: A dictionary of strings of the names of abilities.
@@ -223,7 +226,8 @@ class Character(metaclass=ABCMeta):
             # call an exception here - if the loop ends and it hasn't returned
             # then an exception should be called as the name of the ability
             # passed in by the user will not be a valid ability
-            result = False
+        return new_abilities
+        """ result = False
 
         if len(new_abilities) != number_allowed:
             # Raise an exception
@@ -245,7 +249,7 @@ class Character(metaclass=ABCMeta):
                       "higher than " + str(ability_level))
                 result = False
 
-        return result
+        return result"""
 
     def remove_ability(self, ability_name):
         """

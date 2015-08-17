@@ -8,7 +8,6 @@ class LeagueModel(object):
     """Top model class"""
     def __init__(self, all_my_abilities=[], my_league=""):
         self._all_my_abilities = all_my_abilities
-        # self._all_my_abilities = ["Hey", "Yes", "Wow"]
         self._my_league = my_league
 
     def export_league(self):
@@ -16,6 +15,8 @@ class LeagueModel(object):
 
     def set_abilities_file(self, input):
         temp = []
+        global ability_list
+        ability_list = []
         for sub_list in input:
             for attr in sub_list:
                 temp.append(attr)
@@ -24,6 +25,8 @@ class LeagueModel(object):
             # print(new_ability)
             self._all_my_abilities.append(new_ability)
             temp = []
+            ability_list.append(new_ability)
+        # return ability_list
 
     def get_all_abilities(self):
         return self._all_my_abilities

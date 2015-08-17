@@ -65,6 +65,6 @@ class Leader(Character):
 
         # Check the number of abilities which are entered
         # new_abilities will be a list
-        super().check_abilities(self.__class__.__name__, self.level,
-                                self.number_abilities, **abilities)
+        # super().check_abilities(self.__class__.__name__, self.level,
+        #                        self.number_abilities, **abilities)
 

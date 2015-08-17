@@ -53,9 +53,9 @@ class League(object):
         # check_empty_arg() could be called for each argument. This would
         # enable the system to identify which attributes
         # are missing, if any are missing
-        if not self.check_empty_arg(name, health, brawl, shoot, dodge, might,
+        """if not self.check_empty_arg(name, health, brawl, shoot, dodge, might,
                                     finesse, cunning, **abilities):
-            return
+            return"""
 
         # Checking the abilities which the user may have attempted to add to
         # the character actually are abilities which
@@ -110,7 +110,7 @@ class League(object):
                 print(e.value)
                 return
 
-        print("New char: " + str(new_character))
+        # print("New char: " + str(new_character))
 
         if new_character is not None:
             print("Character creation of " + name + " the " + char_type +

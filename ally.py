@@ -12,7 +12,7 @@ class Ally(Character):
     base_health = EDice.d6.name
     
     def __init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities):
-        Character.__init__(self, league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities)
+        super().__init__(league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities)
 
         results = super().check_skills_input(brawl, shoot, dodge, might,
                                              finesse, cunning)
@@ -62,8 +62,8 @@ class Ally(Character):
 
         # Check the number of abilities which are entered
         # new_abilities will be a list
-        super().check_abilities(self.__class__.__name__, self.level,
-                                self.number_abilities, **abilities)
+        # super().check_abilities(self.__class__.__name__, self.level,
+        #                        self.number_abilities, **abilities)
 
         """if len(new_abilities) != 1:
             # Raise an exception

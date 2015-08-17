@@ -18,9 +18,9 @@ lm.get_current_league().add_character("L", char_type="Leader", health="d10", bra
                                       arg3="Crafty")
 print("\r")
 
-lm.get_current_league().add_character("J", char_type="SideKick", health="d6", brawl="2d6", shoot="3d6", dodge="2d6",
-                                      might="3d8", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash",
-                                      arg3="Crafty")
+lm.get_current_league().add_character("J", char_type="SideKick", health="d8", brawl="2d6", shoot="3d6", dodge="2d6",
+                                      might="3d3", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash",
+                                      arg3="")
 print("\r")
 
 lm.get_current_league().add_character("A", char_type="Ally", health="d6", brawl="2d6", shoot="2d6", dodge="1d6",
