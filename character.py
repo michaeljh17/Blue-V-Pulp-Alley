@@ -224,17 +224,18 @@ class Character(metaclass=ABCMeta):
         :return: An array containing the characters name, skills, and abilities
         """
         output = []
-        output.append(self.get_name())
-        output.append(str(self.get_health().get_number_dice()) + str(self.get_health().get_number_dice()))
-        output.append(self.get_brawl())
-        output.append(self.get_shoot())
-        output.append(self.get_dodge())
-        output.append(self.get_might())
-        output.append(self.get_finesse())
-        output.append(str(self.get_cunning().get_number_dice()) + str(self.get_cunning().get_number_dice()))
+        output.append(str(type(self).__name__))
+        output.append(str(self.get_name()))
+        output.append(str(self.get_health().get_dice_type().name))
+        output.append(str(self.get_brawl().get_number_dice()) + str(self.get_brawl().get_dice_type().name))
+        output.append(str(self.get_shoot().get_number_dice()) + str(self.get_shoot().get_dice_type().name))
+        output.append(str(self.get_dodge().get_number_dice()) + str(self.get_dodge().get_dice_type().name))
+        output.append(str(self.get_might().get_number_dice()) + str(self.get_might().get_dice_type().name))
+        output.append(str(self.get_finesse().get_number_dice()) + str(self.get_finesse().get_dice_type().name))
+        output.append(str(self.get_cunning().get_number_dice()) + str(self.get_cunning().get_dice_type().name))
 
         for ability in self.__abilities:
-            output.append(ability.get_name())
+            output.append(str(ability.get_name()))
 
         return output
 

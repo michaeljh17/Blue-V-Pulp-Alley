@@ -30,9 +30,11 @@ w = lm.get_current_league().find_character("W")
 
 # Testing export strings array
 print("League export")
-print(lm.export_league())
+print(str(lm.export_league()))
 #print(lm.get_current_league().find_character("J").export_character())
 print(j.export_character())
+print(w.export_character())
+
 
 if j is not None:
     print("Some of " + str(j) + "'s skills and abilities:")
