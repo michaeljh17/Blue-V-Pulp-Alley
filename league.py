@@ -994,7 +994,7 @@ class League(object):
     def export_league(self):
         output = []
         for character in self._all_my_characters:
-            output.append(character.export_character)
+            output.append(character.export_character())
         
         return output
 
