@@ -1,4 +1,4 @@
-# __author__ = 'User'
+#?# __author__ = 'User'
 from league import League
 from ability import Ability
 import string
@@ -9,9 +9,6 @@ class LeagueModel(object):
     def __init__(self, all_my_abilities=[], my_league=""):
         self._all_my_abilities = all_my_abilities
         self._my_league = my_league
-
-    def export_league(self):
-        return self._my_league
 
     def set_abilities_file(self, input):
         temp = []
@@ -58,6 +55,11 @@ class LeagueModel(object):
             attr = attr.strip(string.punctuation + string.whitespace)
             ability_details.append(attr)
         data.append(ability_details)
+
+    # League Export functions
+
+    def export_league(self):
+        return self._my_league.export_league()
 
 
 

@@ -1,5 +1,3 @@
-#__author__ = 'mih279'
-
 from character import Character
 from character_exception import CharacterException
 from edice import EDice

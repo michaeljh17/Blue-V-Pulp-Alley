@@ -457,7 +457,7 @@ class League(object):
             if name == c.get_name():
                 print("User has tried to create a character with the name of"
                       " an existing character.")
-                return False
+                return
         return True
 
     @staticmethod
@@ -996,6 +996,13 @@ class League(object):
         print("A character called " + char_name + " does not exist in the " +
               self._name + " league")
         return False
+
+    def export_league(self):
+        output = []
+        for character in self._all_my_characters:
+            output.append(character.export_character())
+        
+        return output
 
 # if __name__ == "__main__":
 #    import doctest

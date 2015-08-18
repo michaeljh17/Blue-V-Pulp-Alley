@@ -9,11 +9,10 @@ class SideKick(Character):
     size = 3
     number_abilities = 2
     base_health = EDice.d8.name
-    
+
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
-        super().__init__(league, name, health, brawl, shoot, dodge, might,
-                         finesse, cunning, **abilities)
+        super().__init__(league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities)
 
         results = super().check_skills_input(brawl, shoot, dodge, might,
                                              finesse, cunning)

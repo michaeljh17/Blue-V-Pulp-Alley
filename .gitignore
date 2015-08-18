@@ -1,0 +1,6 @@
+*.pyc
+*.pyproj
+**/__pycache__
+*sln
+*.suo
+*.cpython-*
