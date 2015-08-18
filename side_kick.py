@@ -1,5 +1,4 @@
 from character import Character
-from edice import EDice
 from character_exception import CharacterException
 from edice import EDice
 
@@ -65,3 +64,7 @@ class SideKick(Character):
 
     def __del__(self):
         print(self.__class__.__name__ + " object has been removed.")
+
+    @staticmethod
+    def get_level():
+        return Character.level

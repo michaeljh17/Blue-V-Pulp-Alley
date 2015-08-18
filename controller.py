@@ -101,6 +101,8 @@ if j is not None:
         print(abili.get_name())
     print("\r")
 
+    j.replace_ability(w, "Mighty", "Brash")
+
 if j is not None and w is not None:
     # Interesting test (if two characters add the same ability):
     if j.get_ability_1 is w.get_ability_1:

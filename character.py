@@ -10,6 +10,13 @@ class Character(metaclass=ABCMeta):
     """The Character class"""
     __metaclass__ = ABCMeta
 
+    # Class attributes
+    """
+    level = None
+    size = None
+    number_abilities = None
+    base_health = None """
+
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
         self.__my_league = league
@@ -21,7 +28,9 @@ class Character(metaclass=ABCMeta):
         self.__might = self.set_skill(ESkill.might, might)
         self.__finesse = self.set_skill(ESkill.finesse, finesse)
         self.__cunning = self.set_skill(ESkill.cunning, cunning)
+        # __abilities is a list of Ability objects
         self.__abilities = self.set_abilities(**abilities)
+
         """self.__ability_1 = self.__abilities[0]
         # Could use exception handling instead of the if statement when setting
         # ability 2 or 3
@@ -320,7 +329,82 @@ class Character(metaclass=ABCMeta):
 
         return output
 
+    def find_ability(self, character, ability_name, abilities_list):
+        # Check that the character has the old ability
+        for abili in abilities_list:
+            if abili.get_name() == ability_name:
+                return abili
+        return None
+        # Or could call an exception here?
 
+    def replace_ability(self, character, old_ability_name, new_ability_name):
+        """
+        This function will replace one of a character's abilities with another
+        one.
+        Preconditions: 1) the name of the character has been checked as
+        belonging to a character who exists in the league.
+        2) the names of both the old ability and new ability have been checked
+        as being valid abilities.
+        :param character: the instance of the character
+        :param old_ability_name: the name of the old ability
+        :param new_ability_name: the name of the new ability
+        :return: A Boolean to indicate that the change has been successful
+        """
+
+        # First we really need to check that both the old ability and the new
+        # ability are valid abilities
+        old_abili = character.find_ability(character, old_ability_name,
+                                           self.__abilities)
+        new_abili = character.find_ability(character, new_ability_name,
+                                      self.__my_league.get_my_league_model()
+                                              .get_all_abilities())
+
+        # I know this looks bad - it's hard-coded - but I couldn't work out
+        # any other way to get the value of a class attribute of a subclass
+        # from the parent class
+        class_name = character.__class__.__name__
+        max_level = 0
+
+        if class_name == "Leader":
+            max_level = 3
+        elif class_name == "SideKick":
+            max_level = 3
+        elif class_name == "Ally":
+            max_level = 2
+        elif class_name == "Follower":
+            max_level = 1
+
+        if old_abili:
+            if new_abili:
+                # check the level of the new ability
+                # The following line doesn't quite work
+                # if int(new_abili.get_level()) <= character.__class__.get_level():
+                if int(new_abili.get_level()) <= max_level:
+                    # print("hello")
+                    # Remove the unwanted ability from the character
+                    self.__abilities.remove(old_abili)
+                    # Add the new ability to the character
+                    self.__abilities.append(new_abili)
+                    print(character.get_name() + "'s ability, " +
+                          old_ability_name + ", has been removed and the "
+                                             "character now has a new "
+                          "ability: " + new_ability_name)
+                else:
+                    print(character.get_name() + " cannot have the ability, "
+                          + new_ability_name + ", because its level is too "
+                                               "high. The attempt to replace "
+                                               "abilities has failed.")
+            else:
+                print(new_ability_name + " is not a valid ability. The attempt "
+                                         "to replace abilities has failed.")
+        else:
+            print(character.get_name() + " does not the ability, " +
+                  old_ability_name + ". The attempt to replace abilities has "
+                                     "failed.")
+
+    # @staticmethod
+    # def get_level():
+    #    return Character.level
 
 # if __name__ == "__main__":
 #    import doctest
