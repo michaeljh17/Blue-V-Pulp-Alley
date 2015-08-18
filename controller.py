@@ -1,4 +1,4 @@
-﻿__author__ = 'User'
+# __author__ = 'User'
 
 from league_model import LeagueModel
 
@@ -13,16 +13,34 @@ print("\r")
 
 lm.add_league("Buffalo")
 
-lm.get_current_league().add_character("L", char_type="Leader", health="d10", brawl="2d10", shoot="3d10", dodge="3d8",
-                                      might="3d10", finesse="2d10", cunning="2d8", arg1="Mighty", arg2="Brash",
-                                      arg3="Crafty")
+lm.get_current_league().add_character("L", char_type="Leader", health="d10",
+                                      brawl="3d10", shoot="2d10", dodge="3d8",
+                                      might="3d10", finesse="2d10",
+                                      cunning="3d8", arg1="Mighty",
+                                      arg2="Brash", arg3="Crafty")
 print("\r")
 
-lm.get_current_league().add_character("J", char_type="SideKick", health="d6", brawl="2d6", shoot="3d6", dodge="2d6",
-                                      might="3d8", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash")
+lm.get_current_league().add_character("J", char_type="SideKick", health="d8",
+                                      brawl="2d6", shoot="3d6", dodge="2d6",
+                                      might="3d8", finesse="2d8",
+                                      cunning="3d8", arg1="Mighty",
+                                      arg2="Brash", arg3="")
 print("\r")
-lm.get_current_league().add_character("W", char_type="Follower", health="d6", brawl="1d6", shoot="1d6", dodge="1d6",
-                                      might="1d6", finesse="1d6", cunning="1d6", arg1="Mighty", arg2="",
+
+lm.get_current_league().add_character("A", char_type="Ally", health="d6",
+                                      brawl="2d6", shoot="2d6", dodge="1d6",
+                                      might="1d6", finesse="1d6", cunning="1d6",
+                                      arg1="Mighty", arg2="",
+                                      arg3="")
+
+# lm.get_current_league().add_character("J", char_type="SideKick", health="d6", brawl="2d6", shoot="3d6", dodge="2d6",
+#                                      might="3d8", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash")
+
+print("\r")
+lm.get_current_league().add_character("W", char_type="Follower", health="d6",
+                                      brawl="1d6", shoot="1d6", dodge="1d6",
+                                      might="1d6", finesse="1d6", cunning="1d6",
+                                      arg1="Mighty", arg2="",
                                       arg3="")
 print("\r")
 j = lm.get_current_league().find_character("J")
@@ -35,10 +53,13 @@ print(str(lm.export_league()))
 
 if j is not None:
     print("Some of " + str(j) + "'s skills and abilities:")
-    print("Health: " + j.get_health().get_number_dice() + j.get_health().get_dice_type().name)
-    print("Brawl: " + j.get_brawl().get_number_dice() + j.get_brawl().get_dice_type().name)
-    print("Might: " + j.get_might().get_number_dice() + j.get_might().get_dice_type().name)
-    print("Ability 1: " + j.get_ability_1().get_name())
+    print("Health: " + j.get_health().get_number_dice()
+          + j.get_health().get_dice_type().name)
+    print("Brawl: " + j.get_brawl().get_number_dice()
+          + j.get_brawl().get_dice_type().name)
+    print("Might: " + j.get_might().get_number_dice()
+          + j.get_might().get_dice_type().name)
+    print("Ability 1: " + j.get_abilities()[0].get_name())
 
     print("\r")
     print("League name: " + j.get_my_league().get_name())
@@ -83,11 +104,13 @@ if j is not None:
 if j is not None and w is not None:
     # Interesting test (if two characters add the same ability):
     if j.get_ability_1 is w.get_ability_1:
-        print("The instances of " + j.get_ability_1().get_name() + " and " + w.get_ability_1().get_name() + " for " +
+        print("The instances of " + j.get_abilities()[0].get_name() +
+              " and " + w.get_abilities()[0].get_name() + " for " +
               str(j) + " and " + str(w) + " are the same")
 
     else:
-        print("The instances of " + j.get_ability_1().get_name() + " and " + w.get_ability_1().get_name() + " for " +
+        print("The instances of " + j.get_abilities()[0].get_name() +
+              " and " + w.get_abilities()[0].get_name() + " for " +
               str(j) + " and " + str(w) + " are different.")
 
 

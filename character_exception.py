@@ -1,4 +1,4 @@
-class InputException(Exception):
+class CharacterException(Exception):
     def __init__(self, value):
         self.value = value
         # Exception.__init__(self, value)

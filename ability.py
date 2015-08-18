@@ -10,7 +10,8 @@ class Ability(object):
         self._modifier = modifier
 
     def __str__(self):
-        return self._name + " " + self._level + " " + self._effected_skill + " " + self._modifier
+        return self._name + " " + self._level + " " + self._effected_skill \
+            + " " + self._modifier
 
     def get_name(self):
         return self._name
