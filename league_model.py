@@ -1,4 +1,4 @@
-# __author__ = 'User'
+﻿# __author__ = 'User'
 from league import League
 from ability import Ability
 import string
@@ -55,6 +55,11 @@ class LeagueModel(object):
             attr = attr.strip(string.punctuation + string.whitespace)
             ability_details.append(attr)
         data.append(ability_details)
+
+    # League Export functions
+
+    def export_league(self):
+        return self._my_league.export_league()
 
 
 

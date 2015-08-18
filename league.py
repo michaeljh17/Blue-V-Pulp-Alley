@@ -991,6 +991,13 @@ class League(object):
               self._name + " league")
         return False
 
+    def export_league(self):
+        output = []
+        for character in self._all_my_characters:
+            output.append(character.export_character())
+        
+        return output
+
 # if __name__ == "__main__":
 #    import doctest
 #    doctest.testmod()
