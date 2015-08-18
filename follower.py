@@ -60,3 +60,7 @@ class Follower(Character):
 
     def __del__(self):
         print(self.__class__.__name__ + " object has been removed.")
+
+    @staticmethod
+    def get_level():
+        return Character.level

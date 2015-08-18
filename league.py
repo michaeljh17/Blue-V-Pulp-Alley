@@ -177,6 +177,14 @@ class League(object):
         else:
             return False
 
+    def check_duplicate_name(self, name):
+        for c in self._all_my_characters:
+            if name == c.get_name():
+                print("User has tried to create a character with the name of"
+                      " an existing character.")
+                return
+        return True
+
     def check_health_input(self, char_type, health):
         results = self.get_skill_values(health)
         # print("Number: " + results[0])
@@ -451,14 +459,6 @@ class League(object):
 
         results = [number_dice_str, type_dice_str]
         return results
-
-    def check_duplicate_name(self, name):
-        for c in self._all_my_characters:
-            if name == c.get_name():
-                print("User has tried to create a character with the name of"
-                      " an existing character.")
-                return
-        return True
 
     @staticmethod
     def check_duplicate_values(collection):
@@ -1004,6 +1004,6 @@ class League(object):
         
         return output
 
-# if __name__ == "__main__":
-#    import doctest
-#    doctest.testmod()
+    # if __name__ == "__main__":
+    #    import doctest
+    #    doctest.testmod()
