@@ -110,6 +110,7 @@ class Console(cmd.Cmd):
         league = self.lm.get_current_league()
         result = args.split(" ")
         inputV = InputView()
+
         try:
             inputV.check_valid_name(result[0])
             inputV.check_valid_class(result[1])
@@ -195,10 +196,27 @@ class Console(cmd.Cmd):
         Replaces an ability on a character
         '''
         result = args.split(" ")
+        if len(result) < 3:
+            print("Not enou/gh arguments. Please try again")
+            # What if there are too many arguments ???
+            return
+        inputV = InputView()
         league = self.lm.get_current_league()
+        # character = ""
+
         character = league.find_character(result[0])
-        character.replace_ability(result[0],result[1],result[2])
-        print(result[0] + " has had the ability " + result[1] + " with " + result[2])
+        if character is not None:
+            try:
+                inputV.check_valid_ability(result[1], self.lm.get_all_abilities())
+                inputV.check_valid_ability(result[2], self.lm.get_all_abilities())
+                character.replace_ability(character, result[1] ,result[2])
+                print(result[0] + " has had the ability " + result[1] + " replaced "
+                                                                        "with " +
+                      result[2])
+            except InputException as e:
+                print(e.value)
+        else:
+            print("Invaid character name entered. Please try again.")
 
     def do_replace_all_abilities(self,args):
         '''
