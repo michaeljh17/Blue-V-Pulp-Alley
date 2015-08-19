@@ -49,7 +49,7 @@ w = lm.get_current_league().find_character("W")
 # Testing export strings array
 print("League export")
 print(str(lm.export_league()))
-
+print("\r")
 
 if j is not None:
     print("Some of " + str(j) + "'s skills and abilities:")
@@ -68,7 +68,7 @@ if j is not None:
     print("\r")
     print("Character name = " + str(j))
     print("\r")
-
+    """
     print(str(j) + "'s abilities:")
     for abili in j.get_abilities():
         print(abili.get_name())
@@ -100,10 +100,12 @@ if j is not None:
     for abili in j.get_abilities():
         print(abili.get_name())
     print("\r")
-
+    """
     j.replace_ability(w, "Mighty", "Brash")
+    print("\r")
 
 if j is not None and w is not None:
+    print("\r")
     # Interesting test (if two characters add the same ability):
     if j.get_ability_1 is w.get_ability_1:
         print("The instances of " + j.get_abilities()[0].get_name() +
