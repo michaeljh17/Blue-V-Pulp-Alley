@@ -13,6 +13,8 @@ class Test_Add_Character(object):
     def __init__(self):
         self.lm = LeagueModel()
         self.lm.add_league("Test League")
+        self.lm.set_abilities_file(self.lm.read_file("..\Abilities.txt"))
+
 
     def check_character_creation(self, characters_name):
         x = self.lm.get_current_league().find_character(characters_name)
@@ -32,9 +34,6 @@ class Test_Add_Character(object):
                       shoot, dodge, might, finesse,
                       cunning, *abilities):
         print("Beginning Test: " + tests_name)
-        print (abilities[0])
-        print (abilities[1])
-        print (abilities[2])
         self.lm.get_current_league().add_character(name, char_type, health, brawl,
                       shoot, dodge, might, finesse,
                       cunning, arg1 = abilities[0], arg2 = abilities[1], arg3 = abilities[2])

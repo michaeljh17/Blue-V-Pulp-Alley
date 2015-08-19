@@ -41,8 +41,6 @@ class League(object):
                       shoot="", dodge="", might="", finesse="",
                       cunning="", **abilities):
         """Adds a new character to the league"""
-        print(abilities)
-        print(len(abilities))
         # First need to check that the user has not created a character with
         # the same name as an existing character: These 'if not' statements
         # are saying if the result is False then ...
