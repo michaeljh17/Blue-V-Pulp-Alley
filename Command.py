@@ -104,7 +104,8 @@ class Console(cmd.Cmd):
             Uses one roster slot
 
         Example
-            addCharacter Testing Leader d10 3d8 3d10 3d10 2d8 3d10 2d10 Mighty Brash Crafty
+            addCharacter Testing Leader d10 3d8 3d10 3d10 2d8 3d10 2d10 Mighty
+            Brash Crafty
         '''
         league = self.lm.get_current_league()
         result = args.split(" ")
@@ -117,7 +118,11 @@ class Console(cmd.Cmd):
                 try:
                     inputV.check_valid_ability(result[9],
                                                self.lm.get_all_abilities())
-                    league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9])
+                    league.add_character(name=result[0],char_type=result[1],
+                                         health=result[2],brawl=result[3],
+                                         shoot=result[4],dodge=result[5],
+                                         might=result[6],finesse=result[7],
+                                         cunning=result[8],arg1=result[9])
                 except InputException as e:
                     print(e.value)
 
@@ -127,19 +132,29 @@ class Console(cmd.Cmd):
                                                self.lm.get_all_abilities())
                     inputV.check_valid_ability(result[10],
                                                self.lm.get_all_abilities())
-                    league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9], arg2=result[10])
+                    league.add_character(name=result[0],char_type=result[1],
+                                         health=result[2],brawl=result[3],
+                                         shoot=result[4],dodge=result[5],
+                                         might=result[6], finesse=result[7],
+                                         cunning=result[8],arg1=result[9],
+                                         arg2=result[10])
                 except InputException as e:
+                    print(e.value)
+
+            if len(result) == 12:
+                try:
                     inputV.check_valid_ability(result[9],
                                                self.lm.get_all_abilities())
                     inputV.check_valid_ability(result[10],
                                                self.lm.get_all_abilities())
                     inputV.check_valid_ability(result[11],
                                                self.lm.get_all_abilities())
-                    print(e.value)
-
-            if len(result) == 12:
-                try:
-                    league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9], arg2=result[10], arg3=result[11])
+                    league.add_character(name=result[0],char_type=result[1],
+                                         health=result[2],brawl=result[3],
+                                         shoot=result[4],dodge=result[5],
+                                         might=result[6],finesse=result[7],
+                                         cunning=result[8],arg1=result[9],
+                                         arg2=result[10], arg3=result[11])
                 except InputException as e:
                     print(e.value)
 

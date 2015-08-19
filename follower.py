@@ -48,7 +48,8 @@ class Follower(Character):
             # raise an exception
             raise CharacterException("Incorrect dice type have been set for"
                                      + name + " the " +
-                                     self.__class__.__name__ + ". Please try again")
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
 
         # Check the abilities which the user has entered
         super().check_abilities( name, self.__class__.__name__, self.level,

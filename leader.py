@@ -52,7 +52,7 @@ class Leader(Character):
         # print(number_d8_dice)
         if number_d10_dice != 4 or number_d8_dice != 2:
             # raise an exception
-            raise CharacterException("Incorrect dice type have been set for" +
+            raise CharacterException("Incorrect dice type have been set for "
                                      + name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
