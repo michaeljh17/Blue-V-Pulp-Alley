@@ -1,5 +1,6 @@
-﻿# __author__ = 'User'
+# __author__ = 'User'
 from input_exception import InputException
+from character_exception import CharacterException
 from leader import Leader
 from side_kick import SideKick
 from ally import Ally
@@ -61,18 +62,18 @@ class League(object):
         # check_empty_arg() could be called for each argument. This would
         # enable the system to identify which attributes
         # are missing, if any are missing
-        if not self.check_empty_arg(name, health, brawl, shoot, dodge, might,
+        """if not self.check_empty_arg(name, health, brawl, shoot, dodge, might,
                                     finesse, cunning, **abilities):
-            return
+            return"""
 
         # Checking the abilities which the user may have attempted to add to
         # the character actually are abilities which
         # are recognised by the system
         # This functionality could be replaced by an exception ...
-        if not self.check_abilities(abilities):
-            print("Character creation of " + name + " has been unsuccessful, "
-                                                    "please try again.")
-            return None
+        # if not self.check_abilities(abilities):
+        #    print("Character creation of " + name + " has been unsuccessful, "
+        #                                            "please try again.")
+        #    return None
 
         # Check that the character class string the user has entered matches a
         # valid character class
@@ -84,39 +85,44 @@ class League(object):
 
         # Check that the user has entered valid values for the new character's
         # health
-        #if not self.check_health_input(char_type, health):
+        # if not self.check_health_input(char_type, health):
         #    return
 
         # Check that the details for the skills which the user has inputted are
         # valid
-        if not self.check_skills_input(char_type, brawl, shoot, dodge, might,
-                                       finesse, cunning):
-            return
+        # if not self.check_skills_input(char_type, brawl, shoot, dodge, might,
+        #                               finesse, cunning):
+        #    return
 
         # There could be a check here that the character is being given a
         # ability with a permitted level, instead of
         # being done after the character creation block
 
         # If no errors have been found then the characters can be created
-        if char_type == Leader.__name__:
-            new_character = Leader(self, name, health, brawl, shoot, dodge,
-                                   might, finesse, cunning, **abilities)
-        elif char_type == Ally.__name__:
-            new_character = Ally(self, name, health, brawl, shoot, dodge,
-                                 might, finesse, cunning, **abilities)
-        elif char_type == SideKick.__name__:
-            new_character = SideKick(self, name, health, brawl, shoot, dodge,
+        new_character = ""
+
+        try:
+            if char_type == Leader.__name__:
+                new_character = Leader(self, name, health, brawl, shoot, dodge,
+                                       might, finesse, cunning, **abilities)
+            elif char_type == Ally.__name__:
+                new_character = Ally(self, name, health, brawl, shoot, dodge,
                                      might, finesse, cunning, **abilities)
-        elif char_type == Follower.__name__:
-            new_character = Follower(self, name, health, brawl, shoot, dodge,
-                                     might, finesse, cunning, **abilities)
-        else:
-            try:
-                raise InputException("User has tried to create a character "
-                                     "with an unrecognised class.")
-            except InputException as e:
+
+            elif char_type == SideKick.__name__:
+                new_character = SideKick(self, name, health, brawl, shoot, dodge,
+                                         might, finesse, cunning, **abilities)
+            elif char_type == Follower.__name__:
+                new_character = Follower(self, name, health, brawl, shoot, dodge,
+                                         might, finesse, cunning, **abilities)
+            print("Character creation of " + name + " the " + char_type +
+                      " has been successful!")
+            self._all_my_characters.append(new_character)
+            return new_character
+
+        except CharacterException as e:
                 print(e.value)
-                return
+                del new_character
 
         # These commented out checks are now performed before the character
         # creation:
@@ -130,7 +136,7 @@ class League(object):
         #  + " has been unsuccessful, please try
         # again.")
 
-        if not self.check_number_abilities(new_character):
+        """if not self.check_number_abilities(new_character):
             print("Character creation of " + name + " the " + char_type +
                   " has been unsuccessful, please try again.")
             return
@@ -168,7 +174,7 @@ class League(object):
         print("Character creation of " + name + " the " + char_type +
               " has been successful!")
         self._all_my_characters.append(new_character)
-        return new_character
+        return new_character"""
 
     def delete_character_by_name(self, characterName):
         count = 0
@@ -186,6 +192,14 @@ class League(object):
             return True
         else:
             return False
+
+    def check_duplicate_name(self, name):
+        for c in self._all_my_characters:
+            if name == c.get_name():
+                print("User has tried to create a character with the name of"
+                      " an existing character.")
+                return
+        return True
 
     def check_health_input(self, char_type, health):
         results = self.get_skill_values(health)
@@ -463,14 +477,6 @@ class League(object):
 
         results = [number_dice_str, type_dice_str]
         return results
-
-    def check_duplicate_name(self, name):
-        for c in self._all_my_characters:
-            if name == c.get_name():
-                print("User has tried to create a character with the name of"
-                      " an existing character.")
-                return False
-        return True
 
     @staticmethod
     def check_duplicate_values(collection):
@@ -1009,6 +1015,13 @@ class League(object):
               self._name + " league")
         return False
 
-# if __name__ == "__main__":
-#    import doctest
-#    doctest.testmod()
+    def export_league(self):
+        output = []
+        for character in self._all_my_characters:
+            output.append(character.export_character())
+        
+        return output
+
+    # if __name__ == "__main__":
+    #    import doctest
+    #    doctest.testmod()
