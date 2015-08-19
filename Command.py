@@ -2,6 +2,8 @@ __author__ = 'gazza'
 import os
 import cmd
 from league_model import LeagueModel
+from input_view import InputView
+from input_exception import InputException
 from league import League
 from character import Character
 import sys
@@ -24,10 +26,15 @@ class Console(cmd.Cmd):
     def do_createLeague(self,args):
         '''createLeague [LeagueName]
         This command creates a league with the given name.
+        > Error handling: need to make sure that the new league is not given
+        an empty string as a name
         '''
         self.lm.set_abilities_file(self.lm.read_file("abilities.txt")) #change to handle file systems
-        self.lm.add_league(args)
-        print(args + " created")
+        if args != "":
+            self.lm.add_league(args)
+            print(args + " created")
+        else:
+            print("The new league must have a name!")
 
     def do_deleteLeague(self,args):
         '''
@@ -81,7 +88,7 @@ class Console(cmd.Cmd):
         SideKick
             MUST have a health value of d8
             Select three skills to start at 3 dice and three skills to start at 2 dice
-            Select three skills to start at d10 and three skills to start at d8
+            Select three skills to start at d8 and three skills to start at d6
             Can choose 2 abilities at level 1 to 3
             Uses three roster slots
         Ally
@@ -101,25 +108,59 @@ class Console(cmd.Cmd):
         '''
         league = self.lm.get_current_league()
         result = args.split(" ")
-        if len(result) == 10:
-            league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9])
+        inputV = InputView()
+        try:
+            inputV.check_valid_name(result[0])
+            inputV.check_valid_class(result[1])
 
-        if len(result) == 11:
-            league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9], arg2=result[10])
+            if len(result) == 10:
+                try:
+                    inputV.check_valid_ability(result[9],
+                                               self.lm.get_all_abilities())
+                    league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9])
+                except InputException as e:
+                    print(e.value)
 
-        if len(result) == 12:
-            league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9], arg2=result[10], arg3=result[11])
+            if len(result) == 11:
+                try:
+                    inputV.check_valid_ability(result[9],
+                                               self.lm.get_all_abilities())
+                    inputV.check_valid_ability(result[10],
+                                               self.lm.get_all_abilities())
+                    league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9], arg2=result[10])
+                except InputException as e:
+                    inputV.check_valid_ability(result[9],
+                                               self.lm.get_all_abilities())
+                    inputV.check_valid_ability(result[10],
+                                               self.lm.get_all_abilities())
+                    inputV.check_valid_ability(result[11],
+                                               self.lm.get_all_abilities())
+                    print(e.value)
+
+            if len(result) == 12:
+                try:
+                    league.add_character(name=result[0],char_type=result[1],health=result[2],brawl=result[3],shoot=result[4],dodge=result[5],might=result[6],finesse=result[7],cunning=result[8],arg1=result[9], arg2=result[10], arg3=result[11])
+                except InputException as e:
+                    print(e.value)
+
+        except InputException as e:
+            print(e.value)
 
     def do_rename_character(self,args):
         '''
         rename_character [oldName] [newName]
         Renames the character with a new name provided
         Names must be one word with no spaces
+        > Error handling: need to check that the character exists in league
+        > Error handling: need to check that the new name is not an empty string
         '''
         result = args.split(" ")
+        print("Results: " + result[0] + " " + result[1])
         league = self.lm.get_current_league()
         character = league.find_character(result[0])
+        # try:
         character.set_name(result[1])
+        # except
         print(result[0] + " renamed to " + character.get_name())
 
     def do_delete_character(self,args):

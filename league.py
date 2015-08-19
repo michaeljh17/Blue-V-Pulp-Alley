@@ -184,6 +184,20 @@ class League(object):
                       " an existing character.")
                 return
         return True
+
+    def remove_character(self,char):
+        for character in self._all_my_characters:
+            if character.get_name() == char.get_name():
+                print(character.get_name() + " Deleted // Change my output to view class. ")
+                self._all_my_characters.remove(character)
+
+    def export_league(self):
+        output = []
+        for character in self._all_my_characters:
+            output.append(character.export_character())
+
+        return output
+
     """
     def check_health_input(self, char_type, health):
         results = self.get_skill_values(health)
@@ -842,13 +856,9 @@ class League(object):
         print("A character called " + char_name + " does not exist in the " +
               self._name + " league")
         return False
+    """
 
-    def remove_character(self,char):
-        for character in self._all_my_characters:
-            if character.get_name() == char.get_name():
-                print(character.get_name() + " Deleted // Change my output to view class. ")
-                self._all_my_characters.remove(character)
-
+    """
     @staticmethod
     def check_add_ability(character):
         """ """
@@ -1003,13 +1013,6 @@ class League(object):
               self._name + " league")
         return False
         """
-
-    def export_league(self):
-        output = []
-        for character in self._all_my_characters:
-            output.append(character.export_character())
-        
-        return output
 
 # if __name__ == "__main__":
 #    import doctest

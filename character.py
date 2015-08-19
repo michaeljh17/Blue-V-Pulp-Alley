@@ -107,7 +107,7 @@ class Character(metaclass=ABCMeta):
         elif skill_type == ESkill.cunning:
             return Skill(ESkill.cunning, type_dice, number_dice_str)
         else:
-            # An exception should really never occur here
+            # An exception should actually never occur here
             try:
                 raise InputException("'" + skill_type + "' is an unknown skill"
                                                         " type")
@@ -188,7 +188,6 @@ class Character(metaclass=ABCMeta):
 
     def check_abilities(self, name, char_class, ability_level, number_allowed,
                         **abilities):
-    # def check_abilities(self, **abilities):
         """
         This is a function to set the abilities of a character
         :param abilities: A dictionary of strings of the names of abilities.
@@ -268,8 +267,8 @@ class Character(metaclass=ABCMeta):
     def get_name(self):
         return self.__name
 
-    def get_name(self):
-        return self.__name
+    def set_name(self, new_name):
+        self.__name = new_name
 
     def get_health(self):
         return self.__health
@@ -351,7 +350,7 @@ class Character(metaclass=ABCMeta):
         :param character: the instance of the character
         :param old_ability_name: the name of the old ability
         :param new_ability_name: the name of the new ability
-        :return: A Boolean to indicate that the change has been successful
+        :return: ? A Boolean to indicate that the change has been successful ?
         """
 
         # First we really need to check that both the old ability and the new

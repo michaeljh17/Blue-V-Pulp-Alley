@@ -50,8 +50,8 @@ class SideKick(Character):
         # print(number_d6_dice)
         if number_d8_dice != 3 or number_d6_dice != 3:
             # raise an exception
-            raise CharacterException("Incorrect dice type have been set for" +
-                                     + name + " the " +
+            raise CharacterException("Incorrect dice type have been set for " +
+                                     name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
 
