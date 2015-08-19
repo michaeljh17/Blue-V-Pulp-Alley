@@ -11,7 +11,7 @@ from league_model import *
 lm = LeagueModel()
 lm.set_abilities_file(lm.read_file("..\Abilities.txt"))
 lm.add_league("Legion")
-print("Create new leader - Happy Day")
+print("Start of Test: Create new leader - Happy Day")
 lm.get_current_league().add_character("Bruce", "Leader","d10","3d10","3d10","3d8","3d10","2d8","2d10",arg1="Mighty",arg2="Brash",arg3="Crafty")
 
 def check_character_creation(characters_name, tests_name):
@@ -24,5 +24,16 @@ def check_character_creation(characters_name, tests_name):
 check_character_creation("Bruce", "Create new leader - Happy Day!")
 lm.get_current_league().delete_character_by_name("Bruce")
 #print(lm.get_current_league())
+
+print("\nStart of Test: Create new leader - Incorrectly set dice")
+lm.get_current_league().add_character("Bruce", "Leader","d10","2d10","3d10","3d8","3d10","2d8","2d10",arg1="Mighty",arg2="Brash",arg3="Crafty")
+check_character_creation("Bruce", "Create new leader - Incorrectly set dice")
+lm.get_current_league().delete_character_by_name("Bruce")
+
+print("\nStart of Test: Create new leader - Incorrectly set dice")
+lm.get_current_league().add_character("Bruce", "Leader","d10","2d10","3d10","3d8","3d10","2d8","2d10",arg1="Mighty",arg2="Brash",arg3="Crafty")
+check_character_creation("Bruce", "Create new leader - Incorrectly set dice")
+lm.get_current_league().delete_character_by_name("Bruce")
+
 
 
