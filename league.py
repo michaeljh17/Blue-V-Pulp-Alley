@@ -843,6 +843,12 @@ class League(object):
               self._name + " league")
         return False
 
+    def remove_character(self,char):
+        for character in self._all_my_characters:
+            if character.get_name() == char.get_name():
+                print(character.get_name() + " Deleted // Change my output to view class. ")
+                self._all_my_characters.remove(character)
+
     @staticmethod
     def check_add_ability(character):
         """
