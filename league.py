@@ -220,6 +220,7 @@ class League(object):
     # Why is the user entering a dice type that may or may not be compatible with 
     # the character type? Wouldnt it be better if this was set according to the 
     # character type rather than a parameter. 
+    # This check seems to happen somewhere else. - MS
         if char_type == Leader.__name__ \
                 and health_dice_type == str(EDice.d10.name):
             return True
@@ -233,7 +234,7 @@ class League(object):
                 and health_dice_type == str(EDice.d6.name):
             return True
         else:
-            print("Incorrect input for the new " + char_type + "'s health. Please try "
+            print("Incorrect dice for the new " + char_type + "'s health. Please try "
                   "again")
             return False
 
