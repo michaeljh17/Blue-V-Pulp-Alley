@@ -33,9 +33,6 @@ lm.get_current_league().add_character("A", char_type="Ally", health="d6",
                                       arg1="Mighty", arg2="",
                                       arg3="")
 
-# lm.get_current_league().add_character("J", char_type="SideKick", health="d6", brawl="2d6", shoot="3d6", dodge="2d6",
-#                                      might="3d8", finesse="2d8", cunning="3d8", arg1="Mighty", arg2="Brash")
-
 print("\r")
 lm.get_current_league().add_character("W", char_type="Follower", health="d6",
                                       brawl="1d6", shoot="1d6", dodge="1d6",
@@ -67,6 +64,9 @@ if j is not None:
 
     print("\r")
     print("Character name = " + str(j))
+    print("\r")
+
+    j.replace_ability(j, "Mighty", "Brash")
     print("\r")
     """
     print(str(j) + "'s abilities:")
@@ -101,8 +101,6 @@ if j is not None:
         print(abili.get_name())
     print("\r")
     """
-    j.replace_ability(w, "Mighty", "Brash")
-    print("\r")
 
 if j is not None and w is not None:
     print("\r")
