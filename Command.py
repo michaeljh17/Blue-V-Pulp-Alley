@@ -135,7 +135,7 @@ class Console(cmd.Cmd):
                     except InputException as e:
                         print(e.value)
 
-                if len(result) == 11:
+                elif len(result) == 11:
                     try:
                         inputV.check_valid_ability(result[9],
                                                    self.lm.get_all_abilities())
@@ -152,7 +152,7 @@ class Console(cmd.Cmd):
                     except InputException as e:
                         print(e.value)
 
-                if len(result) == 12:
+                elif len(result) == 12:
                     try:
                         inputV.check_valid_ability(result[9],
                                                    self.lm.get_all_abilities())
