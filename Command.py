@@ -93,7 +93,8 @@ class Console(cmd.Cmd):
             Uses three roster slots
         Ally
             MUST have a health value of d6
-            Select two skills to start at 3 dice and four skills to start at 2 dice
+            Select two skills to start at 2 dice and four skills to start at
+            1 dice
             All skills start at d6
             Can choose 1 ability at level 1 to 2
             Uses two roster slots
@@ -115,6 +116,12 @@ class Console(cmd.Cmd):
             try:
                 inputV.check_valid_name(result[0])
                 inputV.check_valid_class(result[1])
+                inputV.check_valid_skill_dice(result[3])
+                inputV.check_valid_skill_dice(result[4])
+                inputV.check_valid_skill_dice(result[5])
+                inputV.check_valid_skill_dice(result[6])
+                inputV.check_valid_skill_dice(result[7])
+                inputV.check_valid_skill_dice(result[8])
 
                 if len(result) == 10:
                     try:
