@@ -208,6 +208,8 @@ class League(object):
             if character.get_name() == char.get_name():
                 print(character.get_name() + " Deleted // Change my output to view class. ")
                 self._all_my_characters.remove(character)
+                self._max_points += char.get_size()
+                print("League points: " + str(self._max_points))
 
     def export_league(self):
         output = []
