@@ -111,56 +111,60 @@ class Console(cmd.Cmd):
         result = args.split(" ")
         inputV = InputView()
 
-        try:
-            inputV.check_valid_name(result[0])
-            inputV.check_valid_class(result[1])
+        if len(result) >= 10:
+            try:
+                inputV.check_valid_name(result[0])
+                inputV.check_valid_class(result[1])
 
-            if len(result) == 10:
-                try:
-                    inputV.check_valid_ability(result[9],
-                                               self.lm.get_all_abilities())
-                    league.add_character(name=result[0],char_type=result[1],
-                                         health=result[2],brawl=result[3],
-                                         shoot=result[4],dodge=result[5],
-                                         might=result[6],finesse=result[7],
-                                         cunning=result[8],arg1=result[9])
-                except InputException as e:
-                    print(e.value)
+                if len(result) == 10:
+                    try:
+                        inputV.check_valid_ability(result[9],
+                                                   self.lm.get_all_abilities())
+                        league.add_character(name=result[0],char_type=result[1],
+                                             health=result[2],brawl=result[3],
+                                             shoot=result[4],dodge=result[5],
+                                             might=result[6],finesse=result[7],
+                                             cunning=result[8],arg1=result[9])
+                    except InputException as e:
+                        print(e.value)
 
-            if len(result) == 11:
-                try:
-                    inputV.check_valid_ability(result[9],
-                                               self.lm.get_all_abilities())
-                    inputV.check_valid_ability(result[10],
-                                               self.lm.get_all_abilities())
-                    league.add_character(name=result[0],char_type=result[1],
-                                         health=result[2],brawl=result[3],
-                                         shoot=result[4],dodge=result[5],
-                                         might=result[6], finesse=result[7],
-                                         cunning=result[8],arg1=result[9],
-                                         arg2=result[10])
-                except InputException as e:
-                    print(e.value)
+                if len(result) == 11:
+                    try:
+                        inputV.check_valid_ability(result[9],
+                                                   self.lm.get_all_abilities())
+                        inputV.check_valid_ability(result[10],
+                                                   self.lm.get_all_abilities())
+                        league.add_character(name=result[0],char_type=result[1],
+                                             health=result[2],brawl=result[3],
+                                             shoot=result[4],dodge=result[5],
+                                             might=result[6], finesse=result[7],
+                                             cunning=result[8],arg1=result[9],
+                                             arg2=result[10])
+                    except InputException as e:
+                        print(e.value)
 
-            if len(result) == 12:
-                try:
-                    inputV.check_valid_ability(result[9],
-                                               self.lm.get_all_abilities())
-                    inputV.check_valid_ability(result[10],
-                                               self.lm.get_all_abilities())
-                    inputV.check_valid_ability(result[11],
-                                               self.lm.get_all_abilities())
-                    league.add_character(name=result[0],char_type=result[1],
-                                         health=result[2],brawl=result[3],
-                                         shoot=result[4],dodge=result[5],
-                                         might=result[6],finesse=result[7],
-                                         cunning=result[8],arg1=result[9],
-                                         arg2=result[10], arg3=result[11])
-                except InputException as e:
-                    print(e.value)
+                if len(result) == 12:
+                    try:
+                        inputV.check_valid_ability(result[9],
+                                                   self.lm.get_all_abilities())
+                        inputV.check_valid_ability(result[10],
+                                                   self.lm.get_all_abilities())
+                        inputV.check_valid_ability(result[11],
+                                                   self.lm.get_all_abilities())
+                        league.add_character(name=result[0],char_type=result[1],
+                                             health=result[2],brawl=result[3],
+                                             shoot=result[4],dodge=result[5],
+                                             might=result[6],finesse=result[7],
+                                             cunning=result[8],arg1=result[9],
+                                             arg2=result[10], arg3=result[11])
+                    except InputException as e:
+                        print(e.value)
 
-        except InputException as e:
-            print(e.value)
+            except InputException as e:
+                print(e.value)
+        else:
+            print("You have not entered enough arguments to create a character "
+                  "Please try again.")
 
     def do_rename_character(self,args):
         '''
@@ -177,7 +181,7 @@ class Console(cmd.Cmd):
         # try:
         character.set_name(result[1])
         # except
-        print(result[0] + " renamed to " + character.get_name())
+        print(result[0] + " has been renamed to " + character.get_name())
 
     def do_delete_character(self,args):
         '''
@@ -197,7 +201,7 @@ class Console(cmd.Cmd):
         '''
         result = args.split(" ")
         if len(result) < 3:
-            print("Not enou/gh arguments. Please try again")
+            print("Not enough arguments. Please try again")
             # What if there are too many arguments ???
             return
         inputV = InputView()

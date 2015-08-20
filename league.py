@@ -4,7 +4,6 @@ from leader import Leader
 from side_kick import SideKick
 from ally import Ally
 from follower import Follower
-from edice import EDice
 import unittest
 
 class League(object):
@@ -41,8 +40,6 @@ class League(object):
                       cunning="", **abilities):
         """
         Adds a new character to the league
-        >>>2 + 2
-        4
         """
 
         # First need to check that the user has not created a character with
@@ -1019,6 +1016,6 @@ class League(object):
         return False
         """
 
-if __name__ == "__main__":
-   import doctest
-   doctest.testmod()
+# if __name__ == "__main__":
+#   import doctest
+#   doctest.testmod()
