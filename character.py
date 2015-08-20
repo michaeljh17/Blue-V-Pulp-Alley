@@ -10,6 +10,12 @@ class Character(metaclass=ABCMeta):
     """The Character class"""
     __metaclass__ = ABCMeta
 
+    # Class attributes
+    _level = 0
+    _size = 1
+    _number_abilities = 0
+    _base_health = 0
+
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
         self.__my_league = league
@@ -217,7 +223,8 @@ class Character(metaclass=ABCMeta):
             # Raise an exception
             raise CharacterException(name + " the " + char_class
                                      + " cannot have more than " +
-                                     str(self.number_abilities) + " abilities."
+                                     str(self._number_abilities) + " "
+                                                                    "abilities."
                                      + " Please try again.")
             result = False
 
@@ -225,7 +232,7 @@ class Character(metaclass=ABCMeta):
             # Raise an exception
             raise CharacterException(name + " the " + char_class +
                                      " does not have the correct number of " +
-                                     "abilities: " + str(self.number_abilities)
+                                     "abilities: " + str(self._number_abilities)
                                      + ". Please try again.")
             result = False
 
@@ -257,7 +264,7 @@ class Character(metaclass=ABCMeta):
 
     def add_ability(self, ability):
         self.__abilities.append(ability)
-
+    """
     def set_ability_1(self, ab_1):
         self.__ability_1 = ab_1
 
@@ -266,7 +273,7 @@ class Character(metaclass=ABCMeta):
 
     def set_ability_3(self, ab_3):
         self.__ability_3 = ab_3
-    
+    """
     def get_name(self):
         return self.__name
 
@@ -303,6 +310,19 @@ class Character(metaclass=ABCMeta):
     def get_abilities(self):
         return self.__abilities
 
+    def get_level(self):
+        return self._level
+
+    def get_size(self):
+        return self._size
+
+    def get_number_abilities(self):
+        return Character._number_abilities
+
+    def get_base_health(self):
+        return Character._base_health
+
+    """
     def get_ability_1(self):
         return self.__ability_1
 
@@ -311,7 +331,7 @@ class Character(metaclass=ABCMeta):
 
     def get_ability_3(self):
         return self.__ability_3
-
+    """
     def export_character(self):
         """
         # Method used to export the current character into an array
@@ -342,6 +362,34 @@ class Character(metaclass=ABCMeta):
         return None
         # Or could call an exception here?
 
+    def get_subclass_size(self, character_obj):
+        """
+        This method will get the value of _level for a subclass of Character
+        :param character: an instance of a Character subclass
+        :return: The value of _level
+        """
+        class_name = character_obj.__class__.__name__
+        result = 0
+        # Probably don't need to include error handling here ...?
+        for subChar in Character.__subclasses__():
+            if class_name == subChar.__name__:
+                return subChar.get_size(self)
+        return result
+
+    def get_subclass_level(self, character_obj):
+        """
+        This method will get the value of _level for a subclass of Character
+        :param character: an instance of a Character subclass
+        :return: The value of _level
+        """
+        class_name = character_obj.__class__.__name__
+        result = 0
+        # Probably don't need to include error handling here ...?
+        for subChar in Character.__subclasses__():
+            if class_name == subChar.__name__:
+                return subChar.get_level(self)
+        return result
+
     def replace_ability(self, charac, old_ability_name, new_ability_name):
         """
         This function will replace one of a character's abilities with another
@@ -364,15 +412,8 @@ class Character(metaclass=ABCMeta):
                                       self.__my_league.get_my_league_model()
                                               .get_all_abilities())
 
-        class_name = charac.__class__.__name__
-        max_level = 0
-
-        # Probably don't need to include error handling here ...?
-        for sub in Character.__subclasses__():
-            if class_name == sub.__name__:
-                max_level = sub.level
-                print("Max level of " + charac.get_name() + ": " +
-                      str(max_level))
+        max_level = self.get_subclass_level(charac)
+        # print("Max level of " + charac.get_name() + ": " + str(max_level))
 
         if old_abili:
             if new_abili:

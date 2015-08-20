@@ -4,7 +4,7 @@ from leader import Leader
 from side_kick import SideKick
 from ally import Ally
 from follower import Follower
-import unittest
+from character import Character
 
 class League(object):
     """
@@ -45,6 +45,7 @@ class League(object):
         # First need to check that the user has not created a character with
         # the same name as an existing character: These 'if not' statements
         # are saying if the result is False then ...
+
         if not self.check_duplicate_name(name):
             # This is the same as returning None
             return
@@ -71,8 +72,8 @@ class League(object):
 
         # Check that the character class string the user has entered matches a
         # valid character class
-        if not self.check_valid_character(char_type):
-            return
+        # if not self.check_valid_character(char_type):
+        #    return
 
         # There needs to be a check that only one Leader and one Side-Kick can
         # be in the league
@@ -102,16 +103,30 @@ class League(object):
             elif char_type == Ally.__name__:
                 new_character = Ally(self, name, health, brawl, shoot, dodge,
                                      might, finesse, cunning, **abilities)
-
             elif char_type == SideKick.__name__:
                 new_character = SideKick(self, name, health, brawl, shoot, dodge,
                                          might, finesse, cunning, **abilities)
             elif char_type == Follower.__name__:
                 new_character = Follower(self, name, health, brawl, shoot, dodge,
                                          might, finesse, cunning, **abilities)
+
+            # Deduct points from the max total:
+            # self._max_points -= new_character.get_subclass_size(
+            # new_character) Or:
+
+            if self._max_points < new_character.get_size():
+                raise CharacterException("There are not enough league points "
+                                         "left to add " +
+                                         new_character.get_name() + " the " +
+                                         new_character.__class__.__name__ +
+                                         " to the league.")
+            else:
+                self._max_points -= new_character.get_size()
+
             print("Character creation of " + name + " the " + char_type +
-                      " has been successful!")
+                  " has been successful!")
             self._all_my_characters.append(new_character)
+            print("League points remaining: " + str(self._max_points))
             return new_character
 
         except CharacterException as e:
@@ -182,8 +197,9 @@ class League(object):
     def check_duplicate_name(self, name):
         for c in self._all_my_characters:
             if name == c.get_name():
-                print("User has tried to create a character with the name of"
-                      " an existing character.")
+                print("The name, " + name + ", is already the name of an "
+                                            "existing character. Please try "
+                                            "again.")
                 return
         return True
 

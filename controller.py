@@ -36,14 +36,35 @@ lm.get_current_league().add_character("A", char_type="Ally", health="d6",
                                       arg3="")
 
 print("\r")
-lm.get_current_league().add_character("W", char_type="Follower", health="d6",
+lm.get_current_league().add_character("A", char_type="Follower", health="d6",
                                       brawl="1d6", shoot="1d6", dodge="1d6",
                                       might="1d6", finesse="1d6", cunning="1d6",
                                       arg1="Mighty", arg2="",
                                       arg3="")
 print("\r")
+
+lm.get_current_league().add_character("B", char_type="Ally", health="d6",
+                                      brawl="2d6", shoot="2d6", dodge="1d6",
+                                      might="1d6", finesse="1d6", cunning="1d6",
+                                      arg1="Mighty", arg2="",
+                                      arg3="")
+print("\r")
+lm.get_current_league().add_character("C", char_type="Ally", health="d6",
+                                      brawl="2d6", shoot="2d6", dodge="1d6",
+                                      might="1d6", finesse="1d6", cunning="1d6",
+                                      arg1="Mighty", arg2="",
+                                      arg3="")
+print("\r")
+lm.get_current_league().add_character("D", char_type="Ally", health="d6",
+                                      brawl="2d6", shoot="2d6", dodge="1d6",
+                                      might="1d6", finesse="1d6", cunning="1d6",
+                                      arg1="Mighty", arg2="",
+                                      arg3="")
+print("\r")
+
+
 l = lm.get_current_league().find_character("L")
-w = lm.get_current_league().find_character("W")
+w = lm.get_current_league().find_character("A")
 
 # Testing export strings array
 print("League export")
@@ -66,13 +87,10 @@ if l is not None:
     print("\r")
     print("League name: " + l.get_my_league().get_name())
     # the above line is the same as: print(lm.get_current_league())
-
-    print("\r")
-    print("Character name = " + str(l))
     print("\r")
 
     l.replace_ability(l, "Mighty", "Brash")
-    print("\r")
+
     """
     print(str(j) + "'s abilities:")
     for abili in j.get_abilities():
@@ -110,7 +128,7 @@ if l is not None:
 if l is not None and w is not None:
     print("\r")
     # Interesting test (if two characters add the same ability):
-    if l.get_ability_1 is w.get_ability_1:
+    if l.get_abilities()[0] is w.get_abilities()[0]:
         print("The instances of " + l.get_abilities()[0].get_name() +
               " and " + w.get_abilities()[0].get_name() + " for " +
               str(l) + " and " + str(w) + " are the same")
@@ -119,7 +137,7 @@ if l is not None and w is not None:
         print("The instances of " + l.get_abilities()[0].get_name() +
               " and " + w.get_abilities()[0].get_name() + " for " +
               str(l) + " and " + str(w) + " are different.")
-
+print("\r")
 
 # if __name__ == "__main__":
 #   import doctest
