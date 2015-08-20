@@ -6,3 +6,5 @@
 *.cpython-*
 *.xml
 *.iml
+*.xml
+*.pyc

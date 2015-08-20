@@ -209,10 +209,9 @@ class Character(metaclass=ABCMeta):
                 if abilities[new_ab] == existing_ab.get_name():
                     new_abilities.append(existing_ab)
                     break
-            # call an exception here - if the loop ends and it hasn't returned
-            # then an exception should be called as the name of the ability
-            # passed in by the user will not be a valid ability
-
+            # call an exception here if the loop ends and it hasn't found
+            # that the ability name is a valid ability? Not necessary - as
+            # the input-view does this validation
 
         if len(new_abilities) > number_allowed:
             # Raise an exception
