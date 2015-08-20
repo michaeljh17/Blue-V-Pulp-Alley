@@ -1,4 +1,3 @@
-# __author__ = 'User'
 from input_exception import InputException
 from character_exception import CharacterException
 from leader import Leader
@@ -6,10 +5,12 @@ from side_kick import SideKick
 from ally import Ally
 from follower import Follower
 from edice import EDice
-
+import unittest
 
 class League(object):
-    """The League class"""
+    """
+    The League class
+    """
 
     def __init__(self, league_model, name, all_my_chars=[], max_points=10):
         self._name = name
@@ -38,7 +39,11 @@ class League(object):
     def add_character(self, name="", char_type="", health="", brawl="",
                       shoot="", dodge="", might="", finesse="",
                       cunning="", **abilities):
-        """Adds a new character to the league"""
+        """
+        Adds a new character to the league
+        >>>2 + 2
+        4
+        """
 
         # First need to check that the user has not created a character with
         # the same name as an existing character: These 'if not' statements
@@ -185,6 +190,20 @@ class League(object):
                 return
         return True
 
+    def remove_character(self,char):
+        for character in self._all_my_characters:
+            if character.get_name() == char.get_name():
+                print(character.get_name() + " Deleted // Change my output to view class. ")
+                self._all_my_characters.remove(character)
+
+    def export_league(self):
+        output = []
+        for character in self._all_my_characters:
+            output.append(character.export_character())
+
+        return output
+
+    """
     def check_health_input(self, char_type, health):
         results = self.get_skill_values(health)
         # print("Number: " + results[0])
@@ -249,7 +268,7 @@ class League(object):
             return False
 
     def check_number_dice(self, char_type, number_dice_list):
-        """
+        """ """
         This function checks the number of dice which the user would like the
         skills to have has been done correctly according to the class of the
         character to be created
@@ -262,7 +281,7 @@ class League(object):
         is correct
         >>>check_number_dice("Leader", [3, 3, 3, 3, 2, 2])
         True
-        """
+        """ """
         number_3_dice_skills = 0
         number_2_dice_skills = 0
         number_1_dice_skills = 0
@@ -339,14 +358,14 @@ class League(object):
 
     @staticmethod
     def check_dice_type(char_type, dice_type_list):
-        """
+        """ """
         This function will check whether the new character's skills going to
         be being assigned the correct dice types
         :param char_type: The character class (string)
         :param dice_type_list: list of strings which represent the type of
         die the user has inputted
         :return:
-        """
+        """ """
         number_d6_dice = 0
         number_d8_dice = 0
         number_d10_dice = 0
@@ -420,7 +439,7 @@ class League(object):
 
     @staticmethod
     def get_skill_values(skill_input):
-        """
+        """ """
         This function was actually initially created to check the skill input
         was in this format: 2d10brawl
         However, it can still handle this format: 2d10 ... I have now changed
@@ -428,7 +447,7 @@ class League(object):
         :param skill_input: a string representing the number of dice and type
         of dice a user would like to assign to a character's skill
         :return:
-        """
+        """ """
         number_dice = []
         alpha_array = []
         i = 0
@@ -476,12 +495,12 @@ class League(object):
         return False
 
     def check_abilities(self, abilities):
-        """
+        """ """
         This method checks whether the abilities a user is trying to add are
         valid abilities
         :param abilities: a dictionary of strings which are names of abilities
         :return: Boolean result
-        """
+        """ """
         abili_names = []
         invalid_abili = []
         for ab in self._my_league_model.get_all_abilities():
@@ -522,12 +541,12 @@ class League(object):
 
     @staticmethod
     def check_number_skill_dice(new_char):
-        """
+        """ """
         This function checks the number of dice assigned to the skills has
         been done correctly
         according to the class of the character to be created
         :param new_char: an instance of a subclass of the Character class
-        """
+        """ """
         number_3_dice_skills = 0
         number_2_dice_skills = 0
         number_1_dice_skills = 0
@@ -619,12 +638,12 @@ class League(object):
 
     @staticmethod
     def check_type_skill_dice(new_char):
-        """
+        """ """
         This function checks the type of dice assigned to the skills has been
         done correctly
         according to the class of the character to be created
         :param new_char: an instance of a subclass of the Character class
-        """
+        """ """
         number_d6_dice = 0
         number_d8_dice = 0
         number_d10_dice = 0
@@ -706,11 +725,11 @@ class League(object):
 
     @staticmethod
     def check_number_abilities(character):
-        """
+        """ """
         This is a function to set the abilities of the new character
         :param new_char: an instance of a subclass of the Character class
         :return:
-        """
+        """ """
         abilities_list = character.get_abilities()
 
         if character.__class__.__name__ == "Leader":
@@ -758,7 +777,7 @@ class League(object):
 
     @staticmethod
     def check_level_abili(character, input_level):
-        """
+        """ """
         This method checks the level(s) of the ability or abilities which the
         user has been given are legal according
         to the character creation rules
@@ -766,7 +785,7 @@ class League(object):
         :param ability: an ability the character has
         :return: A boolean value which indicates whether the character be given
         an ability of a certain level
-        """
+        """ """
 
         if character.__class__.__name__ == "Leader":
             # Leaders are allowed to choose an ability of any level
@@ -806,7 +825,7 @@ class League(object):
                 return False
 
     def char_remove_ability(self, ability_name, char_name):
-        """
+        """ """
         This function will check that a character exists in the league. If so,
          then the method attempt to remove an
         ability from the character's abilities list
@@ -815,7 +834,7 @@ class League(object):
         :param char: the String name of a char
         :return: A boolean value to indicate whether the removal has been
         successful or not
-        """
+        """ """
         for ch in self._all_my_characters:
 
             if ch.get_name() == char_name:
@@ -842,20 +861,16 @@ class League(object):
         print("A character called " + char_name + " does not exist in the " +
               self._name + " league")
         return False
+    """
 
-    def remove_character(self,char):
-        for character in self._all_my_characters:
-            if character.get_name() == char.get_name():
-                print(character.get_name() + " Deleted // Change my output to view class. ")
-                self._all_my_characters.remove(character)
-
+    """
     @staticmethod
     def check_add_ability(character):
-        """
+        """ """
         This is a function to add an ability to a new character
         :param character: an instance of a subclass of the Character class
         :return:
-        """
+        """ """
         # Perhaps the error message printed here should be called from the
         # method which calls this method
         abilities_list = character.get_abilities()
@@ -894,13 +909,13 @@ class League(object):
 
     @staticmethod
     def check_add_ability_level(character):
-        """
+        """ """
         This method checks the level(s) of the ability or abilities which the
         user has been given are legal according
         to the character creation rules
         :param new_char: an instance of a subclass of the Character class
         :return:
-        """
+        """ """
         abilities_list = character.get_abilities()
 
         if character.__class__.__name__ == "Leader":
@@ -945,7 +960,7 @@ class League(object):
                     return False
 
     def char_add_ability(self, ability_name, char_name):
-        """
+        """ """
         This function will first check that a character exists in the league.
         If so, then the method attempt to add an ability
         to the character's abilities list
@@ -953,7 +968,7 @@ class League(object):
          to remove
         :return: A boolean value to indicate whether the removal has been
          successful or not
-        """
+        """ """
         # Instead of the else statements, exceptions could be raised.
 
         for ch in self._all_my_characters:
@@ -1002,14 +1017,8 @@ class League(object):
         print("A character called " + char_name + " does not exist in the " +
               self._name + " league")
         return False
+        """
 
-    def export_league(self):
-        output = []
-        for character in self._all_my_characters:
-            output.append(character.export_character())
-        
-        return output
-
-    # if __name__ == "__main__":
-    #    import doctest
-    #    doctest.testmod()
+if __name__ == "__main__":
+   import doctest
+   doctest.testmod()

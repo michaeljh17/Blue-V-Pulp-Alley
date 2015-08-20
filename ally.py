@@ -50,7 +50,7 @@ class Ally(Character):
                 number_d6_dice += 1
         # print(number_d6_dice)
         if number_d6_dice != 6:
-            raise CharacterException("Incorrect dice type have been set for" +
+            raise CharacterException("Incorrect dice type have been set for "
                                      + name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")

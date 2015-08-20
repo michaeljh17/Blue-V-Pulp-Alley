@@ -107,7 +107,7 @@ class Character(metaclass=ABCMeta):
         elif skill_type == ESkill.cunning:
             return Skill(ESkill.cunning, type_dice, number_dice_str)
         else:
-            # An exception should really never occur here
+            # An exception should actually never occur here
             try:
                 raise InputException("'" + skill_type + "' is an unknown skill"
                                                         " type")
@@ -188,9 +188,8 @@ class Character(metaclass=ABCMeta):
 
     def check_abilities(self, name, char_class, ability_level, number_allowed,
                         **abilities):
-    # def check_abilities(self, **abilities):
         """
-        This is a function to set the abilities of a character
+        This is a function to check the abilities of a character
         :param abilities: A dictionary of strings of the names of abilities.
         The keys are: 'arg1', 'arg2', 'arg3'
         :return: A boolean value, which is True if the user has entered valid
@@ -268,8 +267,8 @@ class Character(metaclass=ABCMeta):
     def get_name(self):
         return self.__name
 
-    def get_name(self):
-        return self.__name
+    def set_name(self, new_name):
+        self.__name = new_name
 
     def get_health(self):
         return self.__health
@@ -340,7 +339,7 @@ class Character(metaclass=ABCMeta):
         return None
         # Or could call an exception here?
 
-    def replace_ability(self, character, old_ability_name, new_ability_name):
+    def replace_ability(self, charac, old_ability_name, new_ability_name):
         """
         This function will replace one of a character's abilities with another
         one.
@@ -348,34 +347,29 @@ class Character(metaclass=ABCMeta):
         belonging to a character who exists in the league.
         2) the names of both the old ability and new ability have been checked
         as being valid abilities.
-        :param character: the instance of the character
+        :param charac: the instance of the character
         :param old_ability_name: the name of the old ability
         :param new_ability_name: the name of the new ability
-        :return: A Boolean to indicate that the change has been successful
+        :return: ? A Boolean to indicate that the change has been successful ?
         """
 
         # First we really need to check that both the old ability and the new
         # ability are valid abilities
-        old_abili = character.find_ability(character, old_ability_name,
+        old_abili = charac.find_ability(charac, old_ability_name,
                                            self.__abilities)
-        new_abili = character.find_ability(character, new_ability_name,
+        new_abili = charac.find_ability(charac, new_ability_name,
                                       self.__my_league.get_my_league_model()
                                               .get_all_abilities())
 
-        # I know this looks bad - it's hard-coded - but I couldn't work out
-        # any other way to get the value of a class attribute of a subclass
-        # from the parent class
-        class_name = character.__class__.__name__
+        class_name = charac.__class__.__name__
         max_level = 0
 
-        if class_name == "Leader":
-            max_level = 3
-        elif class_name == "SideKick":
-            max_level = 3
-        elif class_name == "Ally":
-            max_level = 2
-        elif class_name == "Follower":
-            max_level = 1
+        # Probably don't need to include error handling here ...?
+        for sub in Character.__subclasses__():
+            if class_name == sub.__name__:
+                max_level = sub.level
+                print("Max level of " + charac.get_name() + ": " +
+                      str(max_level))
 
         if old_abili:
             if new_abili:
@@ -388,12 +382,12 @@ class Character(metaclass=ABCMeta):
                     self.__abilities.remove(old_abili)
                     # Add the new ability to the character
                     self.__abilities.append(new_abili)
-                    print(character.get_name() + "'s ability, " +
+                    print(charac.get_name() + "'s ability, " +
                           old_ability_name + ", has been removed and the "
                                              "character now has a new "
                           "ability: " + new_ability_name)
                 else:
-                    print(character.get_name() + " cannot have the ability, "
+                    print(charac.get_name() + " cannot have the ability, "
                           + new_ability_name + ", because its level is too "
                                                "high. The attempt to replace "
                                                "abilities has failed.")
@@ -401,7 +395,7 @@ class Character(metaclass=ABCMeta):
                 print(new_ability_name + " is not a valid ability. The attempt "
                                          "to replace abilities has failed.")
         else:
-            print(character.get_name() + " does not the ability, " +
+            print(charac.get_name() + " does not the ability, " +
                   old_ability_name + ". The attempt to replace abilities has "
                                      "failed.")
 
