@@ -1,5 +1,3 @@
-__author__ = 'User'
-
 from enum import Enum, unique
 
 

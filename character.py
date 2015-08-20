@@ -10,13 +10,6 @@ class Character(metaclass=ABCMeta):
     """The Character class"""
     __metaclass__ = ABCMeta
 
-    # Class attributes
-    """
-    level = None
-    size = None
-    number_abilities = None
-    base_health = None """
-
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
         self.__my_league = league
@@ -57,13 +50,12 @@ class Character(metaclass=ABCMeta):
                 print(e.value)
 
     @staticmethod
-    def set_skill(skill_type, skill_input):
+    def obtain_dice_data(skill_input):
         """
-        :param skill_type: Type of skill which the user would like to add, as a
-        string
-        :param skill_input: The number of dice, and the type of die, of the
-        skill to be set, as a string
-        :return:
+        Obtains the number of dice and the dice type from a string which is
+        passed to this method
+        :param skill_input: string input
+        :return: 2 strings: 1) The number of dice 2) The type of dice
         """
         number_dice = []
         alpha_array = []
@@ -77,12 +69,24 @@ class Character(metaclass=ABCMeta):
                 while j < len(skill_input):
                     if skill_input[j].isalpha():
                         alpha_array.append(j)
-                        # print(alphaArray[len(alphaArray) - 1])
                     j += 1
                 break
 
         number_dice_str = "".join(number_dice)
         type_dice_str = skill_input[alpha_array[0]:]
+
+        return number_dice_str, type_dice_str
+
+    @staticmethod
+    def set_skill(skill_type, skill_input):
+        """
+        :param skill_type: Type of skill which the user would like to add, as a
+        string
+        :param skill_input: The number of dice, and the type of die, of the
+        skill to be set, as a string
+        :return:
+        """
+        number_dice_str, type_dice_str = Character.obtain_dice_data(skill_input)
 
         # When passing the dice-type to the Skill constructor, it should be an
         # EDice type instead of just a string

@@ -47,7 +47,8 @@ w = lm.get_current_league().find_character("W")
 
 # Testing export strings array
 print("League export")
-# print(str(lm.export_league()))
+print(str(lm.export_league()))
+print("\r")
 tableB = TableBuilder()
 tableB.build_table(lm.export_league())
 print("\r")
@@ -120,7 +121,6 @@ if l is not None and w is not None:
               str(l) + " and " + str(w) + " are different.")
 
 
-
 # if __name__ == "__main__":
-#    import doctest
-#    doctest.testmod()
+#   import doctest
+#   doctest.testmod()
