@@ -141,6 +141,8 @@ class Console(cmd.Cmd):
                                                    self.lm.get_all_abilities())
                         inputV.check_valid_ability(result[10],
                                                    self.lm.get_all_abilities())
+                        inputV.check_duplicate_values(result[9], result[10])
+
                         league.add_character(name=result[0],char_type=result[1],
                                              health=result[2],brawl=result[3],
                                              shoot=result[4],dodge=result[5],
@@ -158,6 +160,8 @@ class Console(cmd.Cmd):
                                                    self.lm.get_all_abilities())
                         inputV.check_valid_ability(result[11],
                                                    self.lm.get_all_abilities())
+                        inputV.check_duplicate_values(result[9], result[10],
+                                                      result[11])
                         league.add_character(name=result[0],char_type=result[1],
                                              health=result[2],brawl=result[3],
                                              shoot=result[4],dodge=result[5],

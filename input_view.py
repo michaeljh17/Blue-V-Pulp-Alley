@@ -37,8 +37,24 @@ class InputView(object):
                 return
         raise InputException("Invalid dice type entry. Please try again")
 
-    def check_valid_ability(self, input_ability, all_abilities):
+    @staticmethod
+    def check_valid_ability(input_ability, all_abilities):
         for abili in all_abilities:
             if input_ability == abili.get_name():
                 return
         raise InputException("Invalid ability name entry. Please try again")
+
+    @staticmethod
+    def check_duplicate_values(*collection):
+        a_dict = dict()
+
+        for a in collection:
+            if a not in a_dict:
+                a_dict[a] = 1
+            else:
+                a_dict[a] += 1
+
+        for b in a_dict:
+            if a_dict[b] > 1:
+                raise InputException("Invalid entry: duplicate ability names "
+                                     "detected. Please try again")
