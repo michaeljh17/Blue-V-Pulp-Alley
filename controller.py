@@ -1,6 +1,8 @@
 # __author__ = 'User'
 
 from league_model import LeagueModel
+from ViewModel.TableBuilder import TableBuilder
+
 
 lm = LeagueModel()
 lm.set_abilities_file(lm.read_file("Abilities.txt"))
@@ -45,7 +47,9 @@ w = lm.get_current_league().find_character("W")
 
 # Testing export strings array
 print("League export")
-print(str(lm.export_league()))
+# print(str(lm.export_league()))
+tableB = TableBuilder()
+tableB.build_table(lm.export_league())
 print("\r")
 
 if l is not None:

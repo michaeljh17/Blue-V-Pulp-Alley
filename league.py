@@ -1,4 +1,3 @@
-# __author__ = 'User'
 from input_exception import InputException
 from character_exception import CharacterException
 from leader import Leader
@@ -6,10 +5,12 @@ from side_kick import SideKick
 from ally import Ally
 from follower import Follower
 from edice import EDice
-
+import unittest
 
 class League(object):
-    """The League class"""
+    """
+    The League class
+    """
 
     def __init__(self, league_model, name, all_my_chars=[], max_points=10):
         self._name = name
@@ -38,7 +39,11 @@ class League(object):
     def add_character(self, name="", char_type="", health="", brawl="",
                       shoot="", dodge="", might="", finesse="",
                       cunning="", **abilities):
-        """Adds a new character to the league"""
+        """
+        Adds a new character to the league
+        >>>2 + 2
+        4
+        """
 
         # First need to check that the user has not created a character with
         # the same name as an existing character: These 'if not' statements
@@ -1014,6 +1019,6 @@ class League(object):
         return False
         """
 
-# if __name__ == "__main__":
-#    import doctest
-#    doctest.testmod() """
+if __name__ == "__main__":
+   import doctest
+   doctest.testmod()

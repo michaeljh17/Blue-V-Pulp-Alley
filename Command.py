@@ -234,7 +234,8 @@ class Console(cmd.Cmd):
         if len(result) == 2:
             character.set_abilities(arg1 = result[1], arg2 = result[2])
         if len(result) == 3:
-            character.set_abilities(arg1 = result[1], arg2 = result[2], arg3 = result[3])
+            character.set_abilities(arg1 = result[1], arg2 = result[2],
+                                    arg3 = result[3])
 
     def do_edit_skills(self,args):
         '''
