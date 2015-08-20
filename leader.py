@@ -4,10 +4,10 @@ from edice import EDice
 
 
 class Leader(Character):
-    level = 4
-    size = 0
-    number_abilities = 3
-    base_health = EDice.d10.name
+    _level = 4
+    _size = 0
+    _number_abilities = 3
+    _base_health = EDice.d10.name
     
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
@@ -18,7 +18,7 @@ class Leader(Character):
                                              finesse, cunning)
 
         # Check the health type
-        if health != self.base_health:
+        if health != self._base_health:
             # raise an exception
             raise CharacterException("Incorrect health input")
 
@@ -52,21 +52,17 @@ class Leader(Character):
         # print(number_d8_dice)
         if number_d10_dice != 4 or number_d8_dice != 2:
             # raise an exception
-            raise CharacterException("Incorrect dice type have been set for" +
+            raise CharacterException("Incorrect dice type have been set for "
                                      + name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
 
         # Check the abilities which the user has entered
-        super().check_abilities( name, self.__class__.__name__, self.level,
-                                self.number_abilities, **abilities)
+        super().check_abilities( name, self.__class__.__name__, self._level,
+                                self._number_abilities, **abilities)
 
         # Check for duplicate abilities entered here? Or just leave the
         # ModelInputView to handle this?"""
 
     def __del__(self):
         print(self.__class__.__name__ + " object has been removed.")
-
-    @staticmethod
-    def get_level():
-        return Character.level

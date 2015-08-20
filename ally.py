@@ -6,10 +6,10 @@ from character_exception import CharacterException
 
 
 class Ally(Character):
-    level = 2
-    size = 2
-    number_abilities = 1
-    base_health = EDice.d6.name
+    _level = 2
+    _size = 2
+    _number_abilities = 1
+    _base_health = EDice.d6.name
     
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
@@ -20,7 +20,7 @@ class Ally(Character):
                                              finesse, cunning)
 
         # Check the health type
-        if health != self.base_health:
+        if health != self._base_health:
             # raise an exception
             raise CharacterException("Incorrect health input")
 
@@ -50,14 +50,14 @@ class Ally(Character):
                 number_d6_dice += 1
         # print(number_d6_dice)
         if number_d6_dice != 6:
-            raise CharacterException("Incorrect dice type have been set for" +
+            raise CharacterException("Incorrect dice type have been set for "
                                      + name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
 
         # Check the abilities which the user has entered
-        super().check_abilities(name, self.__class__.__name__, self.level,
-                                self.number_abilities, **abilities)
+        super().check_abilities(name, self.__class__.__name__, self._level,
+                                self._number_abilities, **abilities)
 
         # Check for duplicate abilities entered here? Or just leave the
         # ModelInputView to handle this?"""

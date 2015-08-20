@@ -6,10 +6,10 @@ from character import Character
 
 
 class Follower(Character):
-    level = 1
-    size = 1
-    number_abilities = 1
-    base_health = EDice.d6.name
+    _level = 1
+    _size = 1
+    _number_abilities = 1
+    _base_health = EDice.d6.name
     
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
@@ -20,7 +20,7 @@ class Follower(Character):
                                              finesse, cunning)
 
         # Check the health type
-        if health != self.base_health:
+        if health != self._base_health:
             # raise an exception
             raise CharacterException("Incorrect health input")
 
@@ -46,14 +46,14 @@ class Follower(Character):
         # print(number_d6_dice)
         if number_d6_dice != 6:
             # raise an exception
-            raise CharacterException("Incorrect dice type have been set for" +
+            raise CharacterException("Incorrect dice type have been set for"
                                      + name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
 
         # Check the abilities which the user has entered
-        super().check_abilities( name, self.__class__.__name__, self.level,
-                                self.number_abilities, **abilities)
+        super().check_abilities( name, self.__class__.__name__, self._level,
+                                self._number_abilities, **abilities)
 
         # Check for duplicate abilities entered here? Or just leave the
         # ModelInputView to handle this?"""
@@ -61,6 +61,3 @@ class Follower(Character):
     def __del__(self):
         print(self.__class__.__name__ + " object has been removed.")
 
-    @staticmethod
-    def get_level():
-        return Character.level

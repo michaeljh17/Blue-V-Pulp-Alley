@@ -11,11 +11,10 @@ class Character(metaclass=ABCMeta):
     __metaclass__ = ABCMeta
 
     # Class attributes
-    """
-    level = None
-    size = None
-    number_abilities = None
-    base_health = None """
+    _level = 0
+    _size = 1
+    _number_abilities = 0
+    _base_health = 0
 
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
@@ -57,13 +56,12 @@ class Character(metaclass=ABCMeta):
                 print(e.value)
 
     @staticmethod
-    def set_skill(skill_type, skill_input):
+    def obtain_dice_data(skill_input):
         """
-        :param skill_type: Type of skill which the user would like to add, as a
-        string
-        :param skill_input: The number of dice, and the type of die, of the
-        skill to be set, as a string
-        :return:
+        Obtains the number of dice and the dice type from a string which is
+        passed to this method
+        :param skill_input: string input
+        :return: 2 strings: 1) The number of dice 2) The type of dice
         """
         number_dice = []
         alpha_array = []
@@ -77,12 +75,24 @@ class Character(metaclass=ABCMeta):
                 while j < len(skill_input):
                     if skill_input[j].isalpha():
                         alpha_array.append(j)
-                        # print(alphaArray[len(alphaArray) - 1])
                     j += 1
                 break
 
         number_dice_str = "".join(number_dice)
         type_dice_str = skill_input[alpha_array[0]:]
+
+        return number_dice_str, type_dice_str
+
+    @staticmethod
+    def set_skill(skill_type, skill_input):
+        """
+        :param skill_type: Type of skill which the user would like to add, as a
+        string
+        :param skill_input: The number of dice, and the type of die, of the
+        skill to be set, as a string
+        :return:
+        """
+        number_dice_str, type_dice_str = Character.obtain_dice_data(skill_input)
 
         # When passing the dice-type to the Skill constructor, it should be an
         # EDice type instead of just a string
@@ -107,7 +117,7 @@ class Character(metaclass=ABCMeta):
         elif skill_type == ESkill.cunning:
             return Skill(ESkill.cunning, type_dice, number_dice_str)
         else:
-            # An exception should really never occur here
+            # An exception should actually never occur here
             try:
                 raise InputException("'" + skill_type + "' is an unknown skill"
                                                         " type")
@@ -188,9 +198,8 @@ class Character(metaclass=ABCMeta):
 
     def check_abilities(self, name, char_class, ability_level, number_allowed,
                         **abilities):
-    # def check_abilities(self, **abilities):
         """
-        This is a function to set the abilities of a character
+        This is a function to check the abilities of a character
         :param abilities: A dictionary of strings of the names of abilities.
         The keys are: 'arg1', 'arg2', 'arg3'
         :return: A boolean value, which is True if the user has entered valid
@@ -206,16 +215,16 @@ class Character(metaclass=ABCMeta):
                 if abilities[new_ab] == existing_ab.get_name():
                     new_abilities.append(existing_ab)
                     break
-            # call an exception here - if the loop ends and it hasn't returned
-            # then an exception should be called as the name of the ability
-            # passed in by the user will not be a valid ability
-
+            # call an exception here if the loop ends and it hasn't found
+            # that the ability name is a valid ability? Not necessary - as
+            # the input-view does this validation
 
         if len(new_abilities) > number_allowed:
             # Raise an exception
             raise CharacterException(name + " the " + char_class
                                      + " cannot have more than " +
-                                     str(self.number_abilities) + " abilities."
+                                     str(self._number_abilities) + " "
+                                                                    "abilities."
                                      + " Please try again.")
             result = False
 
@@ -223,7 +232,7 @@ class Character(metaclass=ABCMeta):
             # Raise an exception
             raise CharacterException(name + " the " + char_class +
                                      " does not have the correct number of " +
-                                     "abilities: " + str(self.number_abilities)
+                                     "abilities: " + str(self._number_abilities)
                                      + ". Please try again.")
             result = False
 
@@ -255,7 +264,7 @@ class Character(metaclass=ABCMeta):
 
     def add_ability(self, ability):
         self.__abilities.append(ability)
-
+    """
     def set_ability_1(self, ab_1):
         self.__ability_1 = ab_1
 
@@ -264,12 +273,12 @@ class Character(metaclass=ABCMeta):
 
     def set_ability_3(self, ab_3):
         self.__ability_3 = ab_3
-    
+    """
     def get_name(self):
         return self.__name
 
-    def get_name(self):
-        return self.__name
+    def set_name(self, new_name):
+        self.__name = new_name
 
     def get_health(self):
         return self.__health
@@ -301,6 +310,19 @@ class Character(metaclass=ABCMeta):
     def get_abilities(self):
         return self.__abilities
 
+    def get_level(self):
+        return self._level
+
+    def get_size(self):
+        return self._size
+
+    def get_number_abilities(self):
+        return Character._number_abilities
+
+    def get_base_health(self):
+        return Character._base_health
+
+    """
     def get_ability_1(self):
         return self.__ability_1
 
@@ -309,7 +331,7 @@ class Character(metaclass=ABCMeta):
 
     def get_ability_3(self):
         return self.__ability_3
-
+    """
     def export_character(self):
         """
         # Method used to export the current character into an array
@@ -340,7 +362,35 @@ class Character(metaclass=ABCMeta):
         return None
         # Or could call an exception here?
 
-    def replace_ability(self, character, old_ability_name, new_ability_name):
+    def get_subclass_size(self, character_obj):
+        """
+        This method will get the value of _level for a subclass of Character
+        :param character: an instance of a Character subclass
+        :return: The value of _level
+        """
+        class_name = character_obj.__class__.__name__
+        result = 0
+        # Probably don't need to include error handling here ...?
+        for subChar in Character.__subclasses__():
+            if class_name == subChar.__name__:
+                return subChar.get_size(self)
+        return result
+
+    def get_subclass_level(self, character_obj):
+        """
+        This method will get the value of _level for a subclass of Character
+        :param character: an instance of a Character subclass
+        :return: The value of _level
+        """
+        class_name = character_obj.__class__.__name__
+        result = 0
+        # Probably don't need to include error handling here ...?
+        for subChar in Character.__subclasses__():
+            if class_name == subChar.__name__:
+                return subChar.get_level(self)
+        return result
+
+    def replace_ability(self, charac, old_ability_name, new_ability_name):
         """
         This function will replace one of a character's abilities with another
         one.
@@ -348,34 +398,22 @@ class Character(metaclass=ABCMeta):
         belonging to a character who exists in the league.
         2) the names of both the old ability and new ability have been checked
         as being valid abilities.
-        :param character: the instance of the character
+        :param charac: the instance of the character
         :param old_ability_name: the name of the old ability
         :param new_ability_name: the name of the new ability
-        :return: A Boolean to indicate that the change has been successful
+        :return: ? A Boolean to indicate that the change has been successful ?
         """
 
         # First we really need to check that both the old ability and the new
         # ability are valid abilities
-        old_abili = character.find_ability(character, old_ability_name,
+        old_abili = charac.find_ability(charac, old_ability_name,
                                            self.__abilities)
-        new_abili = character.find_ability(character, new_ability_name,
+        new_abili = charac.find_ability(charac, new_ability_name,
                                       self.__my_league.get_my_league_model()
                                               .get_all_abilities())
 
-        # I know this looks bad - it's hard-coded - but I couldn't work out
-        # any other way to get the value of a class attribute of a subclass
-        # from the parent class
-        class_name = character.__class__.__name__
-        max_level = 0
-
-        if class_name == "Leader":
-            max_level = 3
-        elif class_name == "SideKick":
-            max_level = 3
-        elif class_name == "Ally":
-            max_level = 2
-        elif class_name == "Follower":
-            max_level = 1
+        max_level = self.get_subclass_level(charac)
+        # print("Max level of " + charac.get_name() + ": " + str(max_level))
 
         if old_abili:
             if new_abili:
@@ -388,12 +426,12 @@ class Character(metaclass=ABCMeta):
                     self.__abilities.remove(old_abili)
                     # Add the new ability to the character
                     self.__abilities.append(new_abili)
-                    print(character.get_name() + "'s ability, " +
+                    print(charac.get_name() + "'s ability, " +
                           old_ability_name + ", has been removed and the "
                                              "character now has a new "
                           "ability: " + new_ability_name)
                 else:
-                    print(character.get_name() + " cannot have the ability, "
+                    print(charac.get_name() + " cannot have the ability, "
                           + new_ability_name + ", because its level is too "
                                                "high. The attempt to replace "
                                                "abilities has failed.")
@@ -401,7 +439,7 @@ class Character(metaclass=ABCMeta):
                 print(new_ability_name + " is not a valid ability. The attempt "
                                          "to replace abilities has failed.")
         else:
-            print(character.get_name() + " does not the ability, " +
+            print(charac.get_name() + " does not the ability, " +
                   old_ability_name + ". The attempt to replace abilities has "
                                      "failed.")
 

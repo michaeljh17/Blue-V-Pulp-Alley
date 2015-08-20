@@ -1,4 +1,4 @@
-﻿from CellBuilder import *
+﻿from ViewModel.CellBuilder import *
 
 class RowBuilder(object):
     """description of class"""
