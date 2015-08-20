@@ -96,8 +96,18 @@ class League(object):
         # There could be a check here that the character is being given a
         # ability with a permitted level, instead of
         # being done after the character creation block
-
+        
+        #***Check that the user has not attempted to add a character that breaks the character member rules - MS
+            # May only have one leader.
+            # May only have one sidekick unless 'Company of Heroes' perk is chosen
+            
+        #***Check that adding the character does not exceed the number of slots remaining for the league - MS
+        
         # If no errors have been found then the characters can be created
+            
+        
+            
+        
         new_character = ""
 
         try:
