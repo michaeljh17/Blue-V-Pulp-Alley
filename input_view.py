@@ -1,7 +1,7 @@
 from input_exception import InputException
-from character import Character
 from edice import EDice
-import string
+from character import Character
+import re
 
 
 class InputView(object):
@@ -32,6 +32,23 @@ class InputView(object):
         """
         number_dice, type_dice = Character.obtain_dice_data(input_dice)
 
+        # This will check the number of dice:
+
+        if len(number_dice) > 0:
+            print("Match group 1: " + number_dice)
+        else:
+            raise InputException("You have not entered the number of dice for a"
+                                 " skill. Please try again")
+
+        # This will check the type of dice:
+
+        if len(type_dice) > 0:
+            print("Match group 1: " + type_dice)
+        else:
+            raise InputException("You have not entered a dice type for a "
+                                 "skill. Please try again")
+
+        # Checking whether a valid dice type has been entered by the user:
         for edice in EDice:
             if type_dice == edice.name:
                 return

@@ -4,6 +4,7 @@ from eskill import ESkill
 from edice import EDice
 from input_exception import InputException
 from character_exception import CharacterException
+import re
 
 
 class Character(metaclass=ABCMeta):
@@ -59,9 +60,31 @@ class Character(metaclass=ABCMeta):
     def obtain_dice_data(skill_input):
         """
         Obtains the number of dice and the dice type from a string which is
-        passed to this method
+        passed to this method.
+        This method is used to test skill values as well as the health value
         :param skill_input: string input
         :return: 2 strings: 1) The number of dice 2) The type of dice
+        """
+
+        # This will return the first match of zero (in case the health
+        # attribute is being tested) or any number of numbers at the start of
+        # the string:
+        match = re.search(r'^\d?\d*', skill_input)
+        if match is not None:
+            number_dice_str = match.group(0)
+        else:
+            number_dice_str = ""
+
+        # This will return the first match of a letter followed by any
+        # alphanumeric characters in the string:
+        match = re.search(r'[a-zA-Z]\w*', skill_input)
+        if match is not None:
+            type_dice_str = match.group(0)
+        else:
+            type_dice_str = ""
+
+        return number_dice_str, type_dice_str
+
         """
         number_dice = []
         alpha_array = []
@@ -71,7 +94,7 @@ class Character(metaclass=ABCMeta):
                 number_dice.append(skill_input[i])
                 i += 1
             elif skill_input[i].isalpha():
-                j = 0
+                j = i
                 while j < len(skill_input):
                     if skill_input[j].isalpha():
                         alpha_array.append(j)
@@ -79,9 +102,13 @@ class Character(metaclass=ABCMeta):
                 break
 
         number_dice_str = "".join(number_dice)
-        type_dice_str = skill_input[alpha_array[0]:]
+        if len(alpha_array) > 0:
+            type_dice_str = skill_input[alpha_array[0]:]
+        else:
+            type_dice_str = ""
 
         return number_dice_str, type_dice_str
+        """
 
     @staticmethod
     def set_skill(skill_type, skill_input):
@@ -151,7 +178,7 @@ class Character(metaclass=ABCMeta):
         results = [number_dice_str, type_dice_str]
         return results
 
-    def check_skills_input(self, brawl, shoot, dodge, might, finesse, cunning):
+    def get_skills_input(self, brawl, shoot, dodge, might, finesse, cunning):
         number_dice_list = []
         dice_type_list = []
 
