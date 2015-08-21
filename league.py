@@ -108,8 +108,12 @@ class League(object):
         # May only have one leader.
         # May only have one sidekick unless 'Company of Heroes' perk is
         # chosen
-        if not self.check_duplicate_type(char_type):
+        try:
+            self.check_duplicate_type(char_type)
+        except CharacterException as e:
+            print(e.value)
             return
+
         #***Check that adding the character does not exceed the number of slots remaining for the league - MS
 
         # If no errors have been found then the characters can be created
@@ -238,14 +242,13 @@ class League(object):
             # Check the leagues current characters to ensure that
             # there isn't already a character of the same type
             for theCharacter in self._all_my_characters:
-                # If there is a match, return false
+                # If there is a match, raise exception
                 if str(theCharacter.__class__.__name__) == str(char_type):
-                    print("Your league already has a " + char_type + ". You "
-                          + "may only have one " + char_type + " in your " +
-                          "league")
-                    return False
-            # If there is not a match, return True
-            return True
+                    raise CharacterException("Too many " + char_type +
+                                             "s. You may only have one " +
+                                             char_type)
+
+            # If there is not a match, carry on
 
     def remove_character(self, char):
         for character in self._all_my_characters:
