@@ -1,4 +1,5 @@
-﻿from RowBuilder import *
+﻿from ViewModel.RowBuilder import *
+
 
 class TableBuilder(object):
     """Class design to take an input 2D STring array and format into a table"""
@@ -16,10 +17,12 @@ class TableBuilder(object):
 
         count = 0
         for entry in input_2d_array[0]:            
-            print(entry)            
+            """
+            print(entry)
             print(len(entry))
             print(count)
             print(self.cell_widths)
+            """
             self.cell_widths.append(len(entry) + 2)
             count += 1
 

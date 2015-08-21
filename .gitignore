@@ -4,3 +4,7 @@
 *sln
 *.suo
 *.cpython-*
+*.xml
+*.iml
+*.xml
+*.pyc
