@@ -4,14 +4,14 @@ from leader import Leader
 from side_kick import SideKick
 from ally import Ally
 from follower import Follower
-<<<<<<< HEAD
+#<<<<<<< HEAD
 from edice import EDice
 from _overlapped import NULL
 from test.test_audioop import INVALID_DATA
 
-=======
+#=======
 from character import Character
->>>>>>> master
+#>>>>>>> master
 
 class League(object):
     """
@@ -45,14 +45,14 @@ class League(object):
     def add_character(self, name="", char_type="", health="", brawl="",
                       shoot="", dodge="", might="", finesse="",
                       cunning="", **abilities):
-<<<<<<< HEAD
+#<<<<<<< HEAD
         """Adds a new character to the league"""
-=======
+#=======
         """
         Adds a new character to the league
         """
 
->>>>>>> master
+#>>>>>>> master
         # First need to check that the user has not created a character with
         # the same name as an existing character: These 'if not' statements
         # are saying if the result is False then ...
