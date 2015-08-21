@@ -9,6 +9,7 @@ from _overlapped import NULL
 from test.test_audioop import INVALID_DATA
 from character import Character
 
+
 class League(object):
     """
     The League class
@@ -41,11 +42,10 @@ class League(object):
     def add_character(self, name="", char_type="", health="", brawl="",
                       shoot="", dodge="", might="", finesse="",
                       cunning="", **abilities):
-
         """
         Adds a new character to the league
         """
-        
+
         # First need to check that the user has not created a character with
         # the same name as an existing character: These 'if not' statements
         # are saying if the result is False then ...
@@ -58,7 +58,7 @@ class League(object):
         #  missed out
         """ Handle empty arguments - MS """
         """if (name == NULL):
-            try: 
+            try:
                 raise InputException("Invalid name input")
             except InputException:
                 print(name" is not a valid entry for the character name.")"""
@@ -102,18 +102,18 @@ class League(object):
         # There could be a check here that the character is being given a
         # ability with a permitted level, instead of
         # being done after the character creation block
-        
-        #***Check that the user has not attempted to add a character that breaks the character member rules - MS
-            # May only have one leader.
-            # May only have one sidekick unless 'Company of Heroes' perk is chosen
-            
+
+        # Check that the user has not attempted to add a character that breaks
+        # the character member rules - MS
+        # May only have one leader.
+        # May only have one sidekick unless 'Company of Heroes' perk is
+        # chosen
+        if not self.check_duplicate_type(char_type):
+            return
         #***Check that adding the character does not exceed the number of slots remaining for the league - MS
-        
+
         # If no errors have been found then the characters can be created
-            
-        
-            
-        
+
         new_character = ""
 
         try:
@@ -150,8 +150,8 @@ class League(object):
             return new_character
 
         except CharacterException as e:
-                print(e.value)
-                del new_character
+            print(e.value)
+            del new_character
 
         # These commented out checks are now performed before the character
         # creation:
@@ -211,12 +211,12 @@ class League(object):
         for each_character in self._all_my_characters:
             if (the_character == each_character):
                 del self._all_my_characters[count]
-                count += 1 
+                count += 1
 
     @staticmethod
     def check_valid_character(char_type):
         if char_type == Leader.__name__ or char_type == Ally.__name__ or \
-                        char_type == SideKick.__name__ or char_type \
+            char_type == SideKick.__name__ or char_type \
                 == Follower.__name__:
             return True
         else:
@@ -231,10 +231,29 @@ class League(object):
                 return
         return True
 
-    def remove_character(self,char):
+    def check_duplicate_type(self, char_type):
+        # -MS-
+        # If the new character's type is Leader or Sidekick
+        if char_type == 'Leader' or 'SideKick':
+            # Check the leagues current characters to ensure that
+            # there isn't already a character of the same type
+            for theCharacter in self._all_my_characters:
+                # If there is a match, halt the creation of the new character
+                if str(theCharacter.__class__.__name__) == str(char_type):
+                    print("Your league already has a " + char_type + ". You "
+                          + "may only have one " + char_type + " in your " +
+                          "league")
+                    return False
+            # If there is not a match, continue with the process of
+            # adding a new character.
+            return True
+
+    def remove_character(self, char):
         for character in self._all_my_characters:
             if character.get_name() == char.get_name():
-                print(character.get_name() + " Deleted // Change my output to view class. ")
+                print(
+                    character.get_name() +
+                    " Deleted // Change my output to view class. ")
                 self._all_my_characters.remove(character)
                 self._max_points += char.get_size()
                 print("League points: " + str(self._max_points))
@@ -263,9 +282,9 @@ class League(object):
 
     @staticmethod
     def check_health_dice_type(char_type, health_dice_type):
-    # Why is the user entering a dice type that may or may not be compatible with 
-    # the character type? Wouldnt it be better if this was set according to the 
-    # character type rather than a parameter. 
+    # Why is the user entering a dice type that may or may not be compatible with
+    # the character type? Wouldnt it be better if this was set according to the
+    # character type rather than a parameter.
     # This check seems to happen somewhere else. - MS
         if char_type == Leader.__name__ \
                 and health_dice_type == str(EDice.d10.name):
@@ -343,7 +362,7 @@ class League(object):
             if number_3_dice_skills != 4 or number_2_dice_skills != 2:
                 try:
                     #changed text output so that a user could better understand the error - MS
-                    raise InputException("An error was made when you assigned the " 
+                    raise InputException("An error was made when you assigned the "
                                         "Leader's dice. A leader must have four skills "
                                         "that start at 3 dice, and two skills that "
                                         "start at 2 dice.")
