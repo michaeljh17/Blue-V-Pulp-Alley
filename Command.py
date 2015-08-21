@@ -225,9 +225,8 @@ class Console(cmd.Cmd):
                 inputV.check_valid_ability(result[1], self.lm.get_all_abilities())
                 inputV.check_valid_ability(result[2], self.lm.get_all_abilities())
                 character.replace_ability(character, result[1] ,result[2])
-                print(result[0] + " has had the ability " + result[1] + " replaced "
-                                                                        "with " +
-                      result[2])
+                print(result[0] + " has had the ability " + result[1] +
+                      " replaced with " + result[2])
             except InputException as e:
                 print(e.value)
         else:
@@ -258,6 +257,29 @@ class Console(cmd.Cmd):
 
         Edits the value for the skills for a character
         '''
+        result = args.split(" ")
+        league = self.lm.get_current_league()
+        character = league.find_character(result[0])
+        inputV = InputView()
+
+        if character is not None:
+            if len(result) < 6:
+                try:
+                    inputV.check_valid_skill_dice(result[1])
+                    inputV.check_valid_skill_dice(result[2])
+                    inputV.check_valid_skill_dice(result[3])
+                    inputV.check_valid_skill_dice(result[4])
+                    inputV.check_valid_skill_dice(result[5])
+                    inputV.check_valid_skill_dice(result[6])
+
+                    # character.
+                except InputException as e:
+                    print(e.value)
+            else:
+                print("You have not entered enough data for all of the skills. "
+                      "Please try again")
+        else:
+            print("Invalid character name entered. Please try again.")
 
     def do_display_character(self,args):
         '''

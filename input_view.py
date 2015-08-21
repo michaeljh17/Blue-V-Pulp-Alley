@@ -10,12 +10,18 @@ class InputView(object):
         pass
 
     def check_valid_name(self, input_name):
+        match = re.search(r'[^\w\d]+', input_name)
+        if match is None:
+            pass
+        else:
+            raise InputException("Invalid name entry: Please use only "
+                                 "alphanumeric characters for the name of a "
+                                 "new character.")
         if input_name != "":
             return input
         else:
-            print("The user must enter a name for this character. Please try"
-                  " again")
-            raise InputException("Invalid name entry. Please try again")
+            raise InputException("The user must enter a name for this character"
+                                 ". Please try again")
 
     def check_valid_class(self, input_class):
         for charac in Character.__subclasses__():
