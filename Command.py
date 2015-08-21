@@ -272,7 +272,7 @@ class Console(cmd.Cmd):
                     inputV.check_valid_skill_dice(result[5])
                     inputV.check_valid_skill_dice(result[6])
 
-                    character.
+                    # character.
                 except InputException as e:
                     print(e.value)
             else:
