@@ -13,10 +13,10 @@ class Follower(Character):
     
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
-        Character.__init__(self, league, name, health, brawl, shoot, dodge,
+        super().__init__(self, league, name, health, brawl, shoot, dodge,
                            might, finesse, cunning, **abilities)
 
-        results = super().check_skills_input(brawl, shoot, dodge, might,
+        results = super().get_skills_input(brawl, shoot, dodge, might,
                                              finesse, cunning)
 
         # Check the health type
@@ -54,9 +54,6 @@ class Follower(Character):
         # Check the abilities which the user has entered
         super().check_abilities( name, self.__class__.__name__, self._level,
                                 self._number_abilities, **abilities)
-
-        # Check for duplicate abilities entered here? Or just leave the
-        # ModelInputView to handle this?"""
 
     def __del__(self):
         print(self.__class__.__name__ + " object has been removed.")

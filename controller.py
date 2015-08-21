@@ -16,7 +16,7 @@ print("\r")
 lm.add_league("Buffalo")
 
 lm.get_current_league().add_character("L", char_type="Leader", health="d10",
-                                      brawl="3d10", shoot="2d10", dodge="3d8",
+                                      brawl="310", shoot="2d10", dodge="3d8",
                                       might="3d10", finesse="2d10",
                                       cunning="3d8", arg1="Mighty",
                                       arg2="Brash", arg3="Crafty")
