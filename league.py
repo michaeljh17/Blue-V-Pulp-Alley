@@ -238,14 +238,13 @@ class League(object):
             # Check the leagues current characters to ensure that
             # there isn't already a character of the same type
             for theCharacter in self._all_my_characters:
-                # If there is a match, halt the creation of the new character
+                # If there is a match, return false
                 if str(theCharacter.__class__.__name__) == str(char_type):
                     print("Your league already has a " + char_type + ". You "
                           + "may only have one " + char_type + " in your " +
                           "league")
                     return False
-            # If there is not a match, continue with the process of
-            # adding a new character.
+            # If there is not a match, return True
             return True
 
     def remove_character(self, char):
