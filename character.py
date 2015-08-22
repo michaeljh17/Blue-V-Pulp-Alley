@@ -595,8 +595,8 @@ class Character(metaclass=ABCMeta):
         dice_type_1 = char_instance.__class__._dice_type_1
         dice_type_2 = char_instance.__class__._dice_type_2
         print("dice_type_1[0]: " + str(dice_type_1[0]))
-        if 
-        print("dice_type_2[0]: " + str(dice_type_2[0]))
+        if dice_type_2 is not None:
+            print("dice_type_2[0]: " + str(dice_type_2[0]))
 
         count_1 = 0
         count_2 = 0
@@ -606,7 +606,7 @@ class Character(metaclass=ABCMeta):
             if x == dice_type_1[0].name:
                 count_1 += 1
         # print(count_1)
-        if count_1 != dice_type_1[1].name:
+        if count_1 != dice_type_1[1]:
             # raise an exception
             raise CharacterException("Incorrect dice type have been set for"
                                      + char_instance.get_name() + " the " +
@@ -623,8 +623,14 @@ class Character(metaclass=ABCMeta):
                 # raise an exception
                 raise CharacterException("Incorrect dice type have been set for"
                                          + char_instance.get_name() + " the " +
-                                         self.__class__.__name__ + ". Please try "
-                                                                   "again")
+                                         self.__class__.__name__ + ". Please "
+                                                                   "try again")
+
+    def check_health(self, health, base_health):
+        # Check the health type
+        if health != base_health:
+            # raise an exception
+            raise CharacterException("Incorrect health input")
 
     # @staticmethod
     # def get_level():

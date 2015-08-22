@@ -2,7 +2,7 @@
 
 from league_model import LeagueModel
 #from ViewModel.TableBuilder import TableBuilder
-from ViewModel.ViewModel import ViewModel
+from ViewModel.viewModel import ViewModel
 
 
 lm = LeagueModel()

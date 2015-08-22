@@ -22,11 +22,13 @@ class SideKick(Character):
         results = super().get_skills_input(brawl, shoot, dodge, might,
                                              finesse, cunning)
 
-        # Check the health type
-        if health != self._base_health:
-            # raise an exception
-            raise CharacterException("Incorrect health input")
+        super().check_health(health, self._base_health)
 
+        super().check_number_dice(self, results[0])
+
+        super().check_number_dice(self, results[1])
+
+        """
         number_2_dice_skills = 0
         number_3_dice_skills = 0
         number_d6_dice = 0
@@ -60,6 +62,7 @@ class SideKick(Character):
                                      name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
+        """
 
         # Check the abilities which the user has entered
         super().check_abilities( name, self.__class__.__name__, self._level,

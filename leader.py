@@ -23,10 +23,7 @@ class Leader(Character):
         results = super().get_skills_input(brawl, shoot, dodge, might,
                                              finesse, cunning)
 
-        # Check the health type
-        if health != self._base_health:
-            # raise an exception
-            raise CharacterException("Incorrect health input")
+        super().check_health(health, self._base_health)
 
         number_2_dice_skills = 0
         number_3_dice_skills = 0
