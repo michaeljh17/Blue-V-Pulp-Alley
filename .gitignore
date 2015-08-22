@@ -4,9 +4,12 @@ __pycache__/
 **/__pycache__/
 .idea/
 *sln
+*.sln
 *.suo
 *.cpython-*
 *.xml
 *.iml
 *.xml
 **.pyc
+***.xml
+**.idea/

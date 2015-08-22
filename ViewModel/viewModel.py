@@ -7,6 +7,6 @@ class ViewModel(object):
     def build_table(self,input_2d_array):
         tbl = TableBuilder()
         return tbl.build_table(input_2d_array)
-
+        ## stuff
     def display(self, input):
         print(input)
