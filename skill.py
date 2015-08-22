@@ -12,8 +12,8 @@ class Skill(object):
     def __init__(self, skill_name, dice_type, number_dice=1):
         # self.skill_name = RevealAccess(skill_name)
         self._skill_name = skill_name
-        self._number_dice = number_dice
         self._dice_type = dice_type
+        self._number_dice = number_dice
 
     # def __get__(self, instance, owner):
     #   print ('Retrieving this skill: ', self.name)

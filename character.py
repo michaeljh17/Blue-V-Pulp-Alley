@@ -37,6 +37,9 @@ class Character(metaclass=ABCMeta):
         # __abilities is a list of Ability objects
         self.__abilities = self.set_abilities(**abilities)
 
+        print("Checking: " + self.__brawl.get_skill_name() + " " +
+              self.__brawl.get_dice_type().name)
+
         """self.__ability_1 = self.__abilities[0]
         # Could use exception handling instead of the if statement when setting
         # ability 2 or 3
@@ -91,7 +94,7 @@ class Character(metaclass=ABCMeta):
         else:
             type_dice_str = ""
 
-        return number_dice_str, type_dice_str
+        return [number_dice_str, type_dice_str]
 
         """
         number_dice = []
@@ -118,8 +121,20 @@ class Character(metaclass=ABCMeta):
         return number_dice_str, type_dice_str
         """
 
-    @staticmethod
-    def set_skill(skill_type, skill_input):
+    def find_edice(self, input_string):
+        """
+        This method will try to find if the input string matches a valid
+        EDice type
+        :param input_string:
+        :return: An Edice type if a match is made
+        """
+        for x in EDice:
+            if input_string == x.name:
+                return x
+        raise InputException("You have not entered a valid dice type for a "
+                             "skill. Please try again")
+
+    def set_skill(self, skill_type, skill_input):
         """
         :param skill_type: Type of skill which the user would like to add, as a
         string
@@ -127,30 +142,28 @@ class Character(metaclass=ABCMeta):
         skill to be set, as a string
         :return:
         """
-        number_dice_str, type_dice_str = Character.obtain_dice_data(skill_input)
+        dice_str_data = Character.obtain_dice_data(skill_input)
 
         # When passing the dice-type to the Skill constructor, it should be an
         # EDice type instead of just a string
-        type_dice = ""
-        for x in EDice:
-            if type_dice_str == x.name:
-                type_dice = x
+
+        type_dice = self.find_edice(dice_str_data[1])
 
         if skill_type == ESkill.health:
             # print("Adding a health skill")
-            return Skill(ESkill.health, type_dice, number_dice_str)
+            return Skill(ESkill.health, type_dice, dice_str_data[0])
         elif skill_type == ESkill.brawl:
-            return Skill(ESkill.brawl, type_dice, number_dice_str)
+            return Skill(ESkill.brawl, type_dice, dice_str_data[0])
         elif skill_type == ESkill.shoot:
-            return Skill(ESkill.shoot, type_dice, number_dice_str)
+            return Skill(ESkill.shoot, type_dice, dice_str_data[0])
         elif skill_type == ESkill.dodge:
-            return Skill(ESkill.dodge, type_dice, number_dice_str)
+            return Skill(ESkill.dodge, type_dice, dice_str_data[0])
         elif skill_type == ESkill.might:
-            return Skill(ESkill.might, type_dice, number_dice_str)
+            return Skill(ESkill.might, type_dice, dice_str_data[0])
         elif skill_type == ESkill.finesse:
-            return Skill(ESkill.finesse, type_dice, number_dice_str)
+            return Skill(ESkill.finesse, type_dice, dice_str_data[0])
         elif skill_type == ESkill.cunning:
-            return Skill(ESkill.cunning, type_dice, number_dice_str)
+            return Skill(ESkill.cunning, type_dice, dice_str_data[0])
         else:
             # An exception should actually never occur here
             try:
@@ -158,6 +171,8 @@ class Character(metaclass=ABCMeta):
                                                         " type")
             except InputException as e:
                 print(e.value)
+
+        print()
 
     @staticmethod
     def get_skill_values(skill_input):
@@ -379,12 +394,18 @@ class Character(metaclass=ABCMeta):
         output_key_pair = dict()
 
 
-        output_key_pair["brawl"] = str(self.get_brawl().get_number_dice() + self.get_brawl().get_dice_type().name)
-        output_key_pair["shoot"] = str(self.get_shoot().get_number_dice() + self.get_shoot().get_dice_type().name)
-        output_key_pair["dodge"] = str(self.get_dodge().get_number_dice() + self.get_dodge().get_dice_type().name)
-        output_key_pair["might"] = str(self.get_might().get_number_dice() + self.get_might().get_dice_type().name)
-        output_key_pair["finesse"] = str(self.get_finesse().get_number_dice() + self.get_finesse().get_dice_type().name)
-        output_key_pair["cunning"] = str(self.get_cunning().get_number_dice() + self.get_cunning().get_dice_type().name)
+        output_key_pair["brawl"] = str(self.get_brawl().get_number_dice() +
+                                       self.get_brawl().get_dice_type().name)
+        output_key_pair["shoot"] = str(self.get_shoot().get_number_dice() +
+                                       self.get_shoot().get_dice_type().name)
+        output_key_pair["dodge"] = str(self.get_dodge().get_number_dice() +
+                                       self.get_dodge().get_dice_type().name)
+        output_key_pair["might"] = str(self.get_might().get_number_dice() +
+                                       self.get_might().get_dice_type().name)
+        output_key_pair["finesse"] = str(self.get_finesse().get_number_dice() +
+                                         self.get_finesse().get_dice_type().name)
+        output_key_pair["cunning"] = str(self.get_cunning().get_number_dice() +
+                                         self.get_cunning().get_dice_type().name)
 
         for ability in self.__abilities:
             if ability.get_modifier() != 0:
@@ -495,8 +516,6 @@ class Character(metaclass=ABCMeta):
         if old_abili:
             if new_abili:
                 # check the level of the new ability
-                # The following line doesn't quite work
-                # if int(new_abili.get_level()) <= character.__class__.get_level():
                 if int(new_abili.get_level()) <= max_level:
                     # Remove the unwanted ability from the character
                     self.__abilities.remove(old_abili)

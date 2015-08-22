@@ -7,7 +7,8 @@ from input_exception import InputException
 from character_exception import CharacterException
 from ViewModel.ViewModel import ViewModel
 from FilerModule.FilerModule import FilerModule
-from league import League
+from skill import Skill
+from eskill import ESkill
 from character import Character
 import sys
 
@@ -284,12 +285,12 @@ class Console(cmd.Cmd):
                     del result[0]
 
                     for i in range(len(result)):
-                        number_dice_str, type_dice_str = \
+                        dice_str_data = \
                             Character.obtain_dice_data(result[i])
                         # print("number_dice_str: "+ number_dice_str)
                         # print("type_dice_str: " + type_dice_str)
-                        num_dice_list.append(number_dice_str)
-                        type_dice_list.append(type_dice_str)
+                        num_dice_list.append(dice_str_data[0])
+                        type_dice_list.append(dice_str_data[1])
 
                     try:
                         character.check_number_dice(character, num_dice_list)
@@ -299,12 +300,42 @@ class Console(cmd.Cmd):
 
                             # Then it's okay to remove the original skills
                             # and replace them with the changed skills:
-                            character.set_brawl(result[0])
-                            character.set_shoot(result[1])
-                            character.set_dodge(result[2])
-                            character.set_might(result[3])
-                            character.set_finesse(result[4])
-                            character.set_cunning(result[5])
+
+                            skills_result = Character.obtain_dice_data(
+                                result[0])
+                            character.set_brawl(Skill(ESkill.brawl,
+                                                      character.find_edice(skills_result[1]),
+                                                      skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[1])
+                            character.set_shoot(Skill(ESkill.shoot,
+                                                      character.find_edice(skills_result[1]),
+                                                      skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[2])
+                            character.set_dodge(Skill(ESkill.dodge,
+                                                      character.find_edice(skills_result[1]),
+                                                      skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[3])
+                            character.set_might(Skill(ESkill.might,
+                                                      character.find_edice(skills_result[1]),
+                                                      skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[4])
+                            character.set_finesse(Skill(ESkill.finesse,
+                                                        character.find_edice(skills_result[1]),
+                                                        skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[5])
+                            character.set_cunning(Skill(ESkill.cunning,
+                                                        character.find_edice(skills_result[1]),
+                                                      skills_result[0]))
 
                             print(character.get_name() + "'s skills have "
                                                          "successfuly been "
