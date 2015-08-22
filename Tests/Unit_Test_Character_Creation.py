@@ -28,43 +28,60 @@ class MainTests(unittest.TestCase):
                                                    arg1="Mighty", arg2="Brash",
                                                    arg3="Crafty")
 
-        self.lm.get_current_league().add_character("SideKick01", char_type="SideKick", health="d8",
-                                                   brawl="2d6", shoot="3d6", dodge="2d6",
+        self.lm.get_current_league().add_character("SideKick01",
+                                                   char_type="SideKick",
+                                                   health="d8", brawl="2d6",
+                                                   shoot="3d6", dodge="2d6",
                                                    might="3d8", finesse="2d8",
-                                                   cunning="3d8", arg1="Mighty",
+                                                   cunning="3d8",
+                                                   arg1="Mighty",
                                                    arg2="Brash", arg3="")
 
-        self.lm.get_current_league().add_character("Ally01", char_type="Ally", health="d6",
-                                                   brawl="2d6", shoot="2d6", dodge="1d6",
-                                                   might="1d6", finesse="1d6", cunning="1d6",
+        self.lm.get_current_league().add_character("Ally01", char_type="Ally",
+                                                   health="d6", brawl="2d6",
+                                                   shoot="2d6", dodge="1d6",
+                                                   might="1d6", finesse="1d6",
+                                                   cunning="1d6",
                                                    arg1="Mighty", arg2="",
                                                    arg3="")
 
-        self.lm.get_current_league().add_character("Ally02", char_type="Ally", health="d6",
-                                                   brawl="2d6", shoot="2d6", dodge="1d6",
-                                                   might="1d6", finesse="1d6", cunning="1d6",
+        self.lm.get_current_league().add_character("Ally02", char_type="Ally",
+                                                   health="d6", brawl="2d6",
+                                                   shoot="2d6", dodge="1d6",
+                                                   might="1d6", finesse="1d6",
+                                                   cunning="1d6",
                                                    arg1="Mighty", arg2="",
                                                    arg3="")
 
-        self.lm.get_current_league().add_character("Ally03", char_type="Ally", health="d6",
-                                                   brawl="2d6", shoot="2d6", dodge="1d6",
-                                                   might="1d6", finesse="1d6", cunning="1d6",
+        self.lm.get_current_league().add_character("Ally03", char_type="Ally",
+                                                   health="d6", brawl="2d6",
+                                                   shoot="2d6", dodge="1d6",
+                                                   might="1d6", finesse="1d6",
+                                                   cunning="1d6",
                                                    arg1="Mighty", arg2="",
                                                    arg3="")
 
-        self.lm.get_current_league().add_character("Follower01", char_type="Follower", health="d6",
-                                                   brawl="1d6", shoot="1d6", dodge="1d6",
-                                                   might="1d6", finesse="1d6", cunning="1d6",
+        self.lm.get_current_league().add_character("Follower01",
+                                                   char_type="Follower",
+                                                   health="d6", brawl="1d6",
+                                                   shoot="1d6", dodge="1d6",
+                                                   might="1d6", finesse="1d6",
+                                                   cunning="1d6",
                                                    arg1="Mighty", arg2="",
                                                    arg3="")
 
-        self.lm.get_current_league().add_character("Follower02", char_type="Follower", health="d6",
-                                                   brawl="1d6", shoot="1d6", dodge="1d6",
-                                                   might="1d6", finesse="1d6", cunning="1d6",
+        self.lm.get_current_league().add_character("Follower02",
+                                                   char_type="Follower",
+                                                   health="d6",
+                                                   brawl="1d6", shoot="1d6",
+                                                   dodge="1d6", might="1d6",
+                                                   finesse="1d6",
+                                                   cunning="1d6",
                                                    arg1="Mighty", arg2="",
                                                    arg3="")
 
         self.assertTrue(
             self.lm.get_current_league().find_character("Follower02") == None)
+
 if __name__ == "__main__":
     unittest.main()
