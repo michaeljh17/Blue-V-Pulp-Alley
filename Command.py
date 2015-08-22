@@ -55,13 +55,6 @@ class Console(cmd.Cmd):
         self.vm.display("Leagues go here")
         self.vm.display(self.vm.build_table(self.lm.export_league()))
 
-    def do_displayAbilities(self,args):
-        '''
-        displayAbilities
-        This command will display all the abilities of the current league
-        '''
-        ##Output for displaying abilities here
-
     def do_addCharacter(self,args):
         '''
         addCharacter [CharacterName] [CharacterType] [Health] [Brawl] [Shoot] [Dodge] [Might] [Finesse] [Cunning]

@@ -60,6 +60,3 @@ class LeagueModel(object):
 
     def export_league(self):
         return self._my_league.export_league()
-
-
-
