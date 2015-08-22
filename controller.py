@@ -3,7 +3,22 @@
 from league_model import LeagueModel
 #from ViewModel.TableBuilder import TableBuilder
 from ViewModel.ViewModel import ViewModel
+import pickle
 
+vm = ViewModel()
+
+print("loading pickles")
+with open('data.pickle', 'rb') as f:
+    imported_pickles_from_tina = pickle.load(f)
+
+
+print(imported_pickles_from_tina.export_league())
+print(imported_pickles_from_tina._my_league)
+print(dir(imported_pickles_from_tina))
+print(imported_pickles_from_tina.__dict__)
+vm.display(vm.build_table(imported_pickles_from_tina.export_league()))
+
+print("\r\r")
 
 lm = LeagueModel()
 lm.set_abilities_file(lm.read_file("Abilities.txt"))
@@ -73,7 +88,7 @@ print(str(lm.export_league()))
 print("\r")
 
 print("View model version")
-vm = ViewModel()
+
 vm.display(vm.build_table(lm.export_league()))
 
 print("\r")
@@ -146,3 +161,19 @@ print("\r")
 # if __name__ == "__main__":
 #   import doctest
 #   doctest.testmod()
+
+
+print("Saving Pickles")
+
+
+with open('data.pickle', 'wb') as f:
+    pickle.dump(lm, f)
+
+del lm
+
+'''
+with open('data.pickle', 'rb') as f:
+    imported_pickles_from_tina = pickle.load(f)
+
+print(imported_pickles_from_tina.export_league())
+'''
