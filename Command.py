@@ -5,6 +5,7 @@ from league_model import LeagueModel
 from input_view import InputView
 from input_exception import InputException
 from ViewModel.ViewModel import ViewModel
+from FilerModule.FilerModule import FilerModule
 from league import League
 from character import Character
 import sys
@@ -18,6 +19,7 @@ class Console(cmd.Cmd):
         self.intro = "Welcome to Burger King, Please place your order"
         self.lm = LeagueModel()
         self.vm = ViewModel()
+        self.fm = FilerModule()
 
     ## Commands are below
 
