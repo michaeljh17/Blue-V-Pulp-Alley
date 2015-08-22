@@ -251,13 +251,16 @@ class League(object):
 
     def remove_character(self, char):
         for character in self._all_my_characters:
-            if character.get_name() == char.get_name():
-                print(
-                    character.get_name() +
-                    " Deleted // Change my output to view class. ")
-                self._all_my_characters.remove(character)
-                self._max_points += char.get_size()
-                print("League points: " + str(self._max_points))
+            if char.__class__.__name__ is not Leader.__name__:
+                if character.get_name() == char.get_name():
+                    print(
+                        character.get_name() +
+                        " Deleted // Change my output to view class. ")
+                    self._all_my_characters.remove(character)
+                    self._max_points += char.get_size()
+                    print("League points: " + str(self._max_points))
+            else:
+                print("You are not allowed to delete the leader of a league.")
 
     def export_league(self):
         output = []

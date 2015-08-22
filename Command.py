@@ -187,13 +187,14 @@ class Console(cmd.Cmd):
         > Error handling: need to check that the new name is not an empty string
         '''
         result = args.split(" ")
-        print("Results: " + result[0] + " " + result[1])
+        # self.vm.display("Results: " + result[0] + " " + result[1])
         league = self.lm.get_current_league()
         character = league.find_character(result[0])
         # try:
         character.set_name(result[1])
         # except
-        print(result[0] + " has been renamed to " + character.get_name())
+        self.vm.display(result[0] + " has been renamed to " +
+                        character.get_name())
 
     def do_delete_character(self,args):
         '''
@@ -203,7 +204,12 @@ class Console(cmd.Cmd):
         '''
         league = self.lm.get_current_league()
         character = league.find_character(args)
-        league.remove_character(character)
+        if character is not None:
+            league.remove_character(character)
+        else:
+            self.vm.display("'" + args + "' is not recorded as being in the "
+                                         "league. No character has been "
+                                         "deleted.")
 
     def do_replace_ability(self,args):
         '''
