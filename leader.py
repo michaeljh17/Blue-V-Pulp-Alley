@@ -8,10 +8,10 @@ class Leader(Character):
     _size = 0
     _number_abilities = 3
     _base_health = EDice.d10.name
-    # Dice type - values: 1) Edice 2) number of these Edice
+    # Dice type - list contains: 1) Edice 2) number of these Edice
     _dice_type_1 = [EDice.d10, 4]
     _dice_type_2 = [EDice.d8, 2]
-    # Dice numbers - values: 1) dice numbers 2) numbers of these dice
+    # Dice numbers - list contains: 1) dice numbers 2) numbers of these dice
     _dice_numbers_1 = [3, 4]
     _dice_numbers_2 = [2, 2]
     

@@ -49,6 +49,7 @@ class Character(metaclass=ABCMeta):
     def __str__(self):
         return self.__name
 
+    """
     @staticmethod
     def set_health(health):
         bool_test = False
@@ -61,6 +62,7 @@ class Character(metaclass=ABCMeta):
                 raise InputException("Invalid health input")
             except InputException as e:
                 print(e.value)
+    """
 
     @staticmethod
     def obtain_dice_data(skill_input):
@@ -299,16 +301,7 @@ class Character(metaclass=ABCMeta):
 
     def add_ability(self, ability):
         self.__abilities.append(ability)
-    """
-    def set_ability_1(self, ab_1):
-        self.__ability_1 = ab_1
 
-    def set_ability_2(self, ab_2):
-        self.__ability_2 = ab_2
-
-    def set_ability_3(self, ab_3):
-        self.__ability_3 = ab_3
-    """
     def get_name(self):
         return self.__name
 
@@ -375,16 +368,6 @@ class Character(metaclass=ABCMeta):
     def get_base_health(self):
         return Character._base_health
 
-    """
-    def get_ability_1(self):
-        return self.__ability_1
-
-    def get_ability_2(self):
-        return self.__ability_2
-
-    def get_ability_3(self):
-        return self.__ability_3
-    """
     def export_character(self):
         """
         # Method used to export the current character into an array
@@ -515,7 +498,6 @@ class Character(metaclass=ABCMeta):
                 # The following line doesn't quite work
                 # if int(new_abili.get_level()) <= character.__class__.get_level():
                 if int(new_abili.get_level()) <= max_level:
-                    # print("hello")
                     # Remove the unwanted ability from the character
                     self.__abilities.remove(old_abili)
                     # Add the new ability to the character
@@ -549,14 +531,14 @@ class Character(metaclass=ABCMeta):
         dice_number_1 = char_instance.__class__._dice_numbers_1
         dice_number_2 = char_instance.__class__._dice_numbers_2
 
-        print("dice_number_1[0]: " + str(dice_number_1[0]))
-        if dice_number_2 is not None:
-            print("dice_number_2[0]: " + str(dice_number_2[0]))
+        # print("dice_number_1[0]: " + str(dice_number_1[0]))
+        # if dice_number_2 is not None:
+            # print("dice_number_2[0]: " + str(dice_number_2[0]))
 
-        count = 0
-        for x in num_dice_list:
-            print("num_dice_list item: " + num_dice_list[int(count)])
-            count += 1
+        # count = 0
+        # for x in num_dice_list:
+            # print("num_dice_list item: " + num_dice_list[int(count)])
+            # count += 1
 
         count_1 = 0
         count_2 = 0
@@ -564,9 +546,9 @@ class Character(metaclass=ABCMeta):
         # Check the first set of dice numbers
         for x in num_dice_list:
             if x == str(dice_number_1[0]):
-                print("dice_number_1[0]: " + str(dice_number_1[0]))
+                # print("dice_number_1[0]: " + str(dice_number_1[0]))
                 count_1 += 1
-        print("Count: " + str(count_1))
+        # print("Count: " + str(count_1))
         if count_1 != dice_number_1[1]:
             # raise an exception
             raise CharacterException("Incorrect dice numbers have been set for"
@@ -597,9 +579,9 @@ class Character(metaclass=ABCMeta):
         # I'm just getting these values atm without get() methods
         dice_type_1 = char_instance.__class__._dice_type_1
         dice_type_2 = char_instance.__class__._dice_type_2
-        print("dice_type_1[0]: " + str(dice_type_1[0]))
-        if dice_type_2 is not None:
-            print("dice_type_2[0]: " + str(dice_type_2[0]))
+        # print("dice_type_1[0]: " + str(dice_type_1[0]))
+        # if dice_type_2 is not None:
+            # print("dice_type_2[0]: " + str(dice_type_2[0]))
 
         count_1 = 0
         count_2 = 0
@@ -635,11 +617,6 @@ class Character(metaclass=ABCMeta):
             # raise an exception
             raise CharacterException("Incorrect health input")
 
-    # @staticmethod
-    # def get_level():
-    #    return Character.level
-
 # if __name__ == "__main__":
 #    import doctest
 #    doctest.testmod()
-
