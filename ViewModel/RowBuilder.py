@@ -8,7 +8,7 @@ class RowBuilder(object):
         self.my_table_builder = table_builder
 
     def build_row(self, input_array, border_character):
-        print(input_array)
+        #print(input_array)
         output = "|"
         count = 0
         for entry in input_array:

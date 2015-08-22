@@ -108,7 +108,10 @@ class League(object):
         # May only have one leader.
         # May only have one sidekick unless 'Company of Heroes' perk is
         # chosen
-        if not self.check_duplicate_type(char_type):
+        try:
+            self.check_duplicate_type(char_type)
+        except CharacterException as e:
+            print(e)
             return
         #***Check that adding the character does not exceed the number of slots remaining for the league - MS
 
@@ -142,11 +145,12 @@ class League(object):
                                          " to the league.")
             else:
                 self._max_points -= new_character.get_size()
-
+            '''
             print("Character creation of " + name + " the " + char_type +
-                  " has been successful!")
+                  " has been successful!")'''
             self._all_my_characters.append(new_character)
-            print("League points remaining: " + str(self._max_points))
+            '''
+            print("League points remaining: " + str(self._max_points))'''
             return new_character
 
         except CharacterException as e:
@@ -238,17 +242,12 @@ class League(object):
             # Check the leagues current characters to ensure that
             # there isn't already a character of the same type
             for theCharacter in self._all_my_characters:
-                # If there is a match, halt the creation of the new character
-                if str(theCharacter.__class__.__name__) == str(char_type):
-                    print("Your league already has a " + char_type + ". You "
-                          + "may only have one " + char_type + " in your " +
-                          "league")
-                    return False
+                # If there is a match, throw exception
+                if theCharacter.__class__.__name__ == char_type:
+                    raise CharacterException("You may only have one" +
+                                             char_type)
             # If there is not a match, continue with the process of
             # adding a new character.
-            return True
-        else:
-            return True
 
     def remove_character(self, char):
         for character in self._all_my_characters:
@@ -262,11 +261,26 @@ class League(object):
 
     def export_league(self):
         output = []
+
+        headings_array = []
+        headings_array.append("Class")
+        headings_array.append("Name")
+        headings_array.append("Health")
+        headings_array.append("Brawl")
+        headings_array.append("Shoot")
+        headings_array.append("Dodge")
+        headings_array.append("Might")
+        headings_array.append("Finesse")
+        headings_array.append("Cunning")
+        headings_array.append("Abilities")
+        output.append(headings_array)
+
         for character in self._all_my_characters:
             output.append(character.export_character())
-
+        #print(output)
         return output
 
 # if __name__ == "__main__":
 #   import doctest
 #   doctest.testmod()
+

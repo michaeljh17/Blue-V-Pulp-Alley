@@ -1,9 +1,12 @@
-from TableBuilder import *
-from RowBuilder import *
-from CellBuilder import *
+from ViewModel.TableBuilder import *
+#from ViewModel.RowBuilder import *
+#from ViewModel.CellBuilder import *
 
-test_data = [["Stallone","American","Short","Angry"],["Willis","Mexican","Bald","Epic"],["T-800","?","Tank","Liquid"]]
-print(test_data[0])
-tbl = TableBuilder()
+class ViewModel(object):
 
-print(tbl.build_table(test_data))
+    def build_table(self,input_2d_array):
+        tbl = TableBuilder()
+        return tbl.build_table(input_2d_array)
+
+    def display(self, input):
+        print(input)

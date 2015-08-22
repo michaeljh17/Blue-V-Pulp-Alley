@@ -5,18 +5,20 @@ from league_model import LeagueModel
 from input_view import InputView
 from input_exception import InputException
 from character_exception import CharacterException
+from ViewModel.viewModel import ViewModel
 from league import League
 from character import Character
 import sys
 
 class Console(cmd.Cmd):
 
-    lm = LeagueModel()
 
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "=>>"
         self.intro = "Welcome to Burger King, Please place your order"
+        self.lm = LeagueModel()
+        self.vm = ViewModel()
 
     ## Commands are below
 
@@ -50,6 +52,8 @@ class Console(cmd.Cmd):
         This command will display ???
         '''
         print("Leagues go here")
+        self.vm.display("Leagues go here")
+        self.vm.display(self.vm.build_table(self.lm.export_league()))
 
     def do_displayAbilities(self,args):
         '''
