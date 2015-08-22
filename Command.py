@@ -5,13 +5,14 @@ from league_model import LeagueModel
 from input_view import InputView
 from input_exception import InputException
 from character_exception import CharacterException
-from ViewModel.viewModel import ViewModel
+from ViewModel.ViewModel import ViewModel
+from FilerModule.FilerModule import FilerModule
 from league import League
 from character import Character
 import sys
 
-class Console(cmd.Cmd):
 
+class Console(cmd.Cmd):
 
     def __init__(self):
         cmd.Cmd.__init__(self)
@@ -19,8 +20,9 @@ class Console(cmd.Cmd):
         self.intro = "Welcome to Burger King, Please place your order"
         self.lm = LeagueModel()
         self.vm = ViewModel()
+        self.fm = FilerModule()
 
-    ## Commands are below
+    # Commands are below
 
     def do_exit(self, args):
         'Exits the program'
