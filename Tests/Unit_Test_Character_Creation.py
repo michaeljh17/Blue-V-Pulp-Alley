@@ -52,5 +52,19 @@ class MainTests(unittest.TestCase):
                                                    arg1="Mighty", arg2="",
                                                    arg3="")
 
+        self.lm.get_current_league().add_character("Follower01", char_type="Follower", health="d6",
+                                                   brawl="1d6", shoot="1d6", dodge="1d6",
+                                                   might="1d6", finesse="1d6", cunning="1d6",
+                                                   arg1="Mighty", arg2="",
+                                                   arg3="")
+
+        self.lm.get_current_league().add_character("Follower02", char_type="Follower", health="d6",
+                                                   brawl="1d6", shoot="1d6", dodge="1d6",
+                                                   might="1d6", finesse="1d6", cunning="1d6",
+                                                   arg1="Mighty", arg2="",
+                                                   arg3="")
+
+        self.assertTrue(
+            self.lm.get_current_league().find_character("Follower02") == None)
 if __name__ == "__main__":
     unittest.main()
