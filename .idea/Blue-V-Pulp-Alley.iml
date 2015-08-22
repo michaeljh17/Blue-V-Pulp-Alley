@@ -2,7 +2,7 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.4.3 (E:\CPIT - BCIT\BCPR301\IDE_Text_Editors\Python34\python.exe) (4)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.4.1 (H:\pyCHarm\PyCharm Educational Edition 1.0.1\python\python34\python.exe)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
