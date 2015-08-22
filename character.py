@@ -16,6 +16,12 @@ class Character(metaclass=ABCMeta):
     _size = 1
     _number_abilities = 0
     _base_health = 0
+    # Dice type - values: 1) Edice 2) number of these Edice
+    _dice_type_1 = [0, 0]
+    _dice_type_2 = [0, 0]
+    # Dice numbers - values: 1) dice numbers 2) numbers of these dice numbers
+    _dice_numbers_1 = [0, 0]
+    _dice_numbers_2 = [0, 0]
 
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
@@ -315,20 +321,38 @@ class Character(metaclass=ABCMeta):
     def get_brawl(self):
         return self.__brawl
 
+    def set_brawl(self, input):
+        self.__brawl = input
+
     def get_dodge(self):
         return self.__dodge
+
+    def set_dodge(self, input):
+        self.__dodge = input
 
     def get_might(self):
         return self.__might
 
+    def set_might(self, input):
+        self.__might = input
+
     def get_shoot(self):
         return self.__shoot
+
+    def set_shoot(self, input):
+        self.__shoot = input
 
     def get_finesse(self):
         return self.__finesse
 
+    def set_finesse(self, input):
+        self.__finesse = input
+
     def get_cunning(self):
         return self.__cunning
+
+    def set_cunning(self, input):
+        self.__cunning = input
 
     def get_name(self):
         return self.__name
@@ -472,6 +496,95 @@ class Character(metaclass=ABCMeta):
                   old_ability_name + ". The attempt to replace abilities has "
                                      "failed.")
 
+    def check_number_dice(self, char_instance, num_dice_list):
+        """
+        :param char_instance: instance of a character
+        :param num_dice_list: contains: 1) dice numbers 2) numbers of these
+        dice numbers
+        :return: none
+        """
+
+        # I'm just getting these values atm without get() methods
+        dice_number_1 = char_instance.__class__._dice_numbers_1
+        dice_number_2 = char_instance.__class__._dice_numbers_2
+
+        print("dice_number_1[0]: " + str(dice_number_1[0]))
+        if dice_number_2 is not None:
+            print("dice_number_2[0]: " + str(dice_number_2[0]))
+        for x in num_dice_list:
+            print("num_dice_list item: " + num_dice_list[int(x)])
+
+        count_1 = 0
+        count_2 = 0
+
+        # Check the first set of dice numbers
+        for x in num_dice_list:
+            if x == str(dice_number_1[0]):
+                print("dice_number_1[0]: " + str(dice_number_1[0]))
+                count_1 += 1
+        print("Count: " + str(count_1))
+        if count_1 != dice_number_1[1]:
+            # raise an exception
+            raise CharacterException("Incorrect dice numbers have been set for"
+                                     + " " + char_instance.get_name() + " the "
+                                     + self.__class__.__name__ + ". Please try "
+                                                                 "again")
+
+        # Check the second set of dice numbers (if applicable)
+        if dice_number_2 is not None:
+            for x in num_dice_list:
+                if x == str(dice_number_2[0]):
+                    count_2 += 1
+            # print(count_2)
+            if count_2 != dice_number_2[1]:
+                # raise an exception
+                raise CharacterException("Incorrect dice numbers have been set for"
+                                         + " " + char_instance.get_name() + " the "
+                                         + self.__class__.__name__ + ". Please try "
+                                                                     "again")
+
+    def check_type_dice(self, char_instance, dice_type_list):
+        """
+        :param char_instance: instance od a character
+        :param dice_type_list: contains: 1) Edice 2) number of these Edice
+        :return: none
+        """
+
+        # I'm just getting these values atm without get() methods
+        dice_type_1 = char_instance.__class__._dice_type_1
+        dice_type_2 = char_instance.__class__._dice_type_2
+        print("dice_type_1[0]: " + str(dice_type_1[0]))
+        if 
+        print("dice_type_2[0]: " + str(dice_type_2[0]))
+
+        count_1 = 0
+        count_2 = 0
+
+        # Check the first set of dice type
+        for x in dice_type_list:
+            if x == dice_type_1[0].name:
+                count_1 += 1
+        # print(count_1)
+        if count_1 != dice_type_1[1].name:
+            # raise an exception
+            raise CharacterException("Incorrect dice type have been set for"
+                                     + char_instance.get_name() + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
+
+        # Check the second set of dice type (if applicable)
+        if dice_type_2 is not None:
+            for x in dice_type_list:
+                if x == dice_type_1[0].name:
+                    count_2 += 1
+            # print(count_1)
+            if count_2 != dice_type_1[1].name:
+                # raise an exception
+                raise CharacterException("Incorrect dice type have been set for"
+                                         + char_instance.get_name() + " the " +
+                                         self.__class__.__name__ + ". Please try "
+                                                                   "again")
+
     # @staticmethod
     # def get_level():
     #    return Character.level
@@ -479,3 +592,4 @@ class Character(metaclass=ABCMeta):
 # if __name__ == "__main__":
 #    import doctest
 #    doctest.testmod()
+

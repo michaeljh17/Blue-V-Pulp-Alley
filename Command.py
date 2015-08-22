@@ -4,6 +4,7 @@ import cmd
 from league_model import LeagueModel
 from input_view import InputView
 from input_exception import InputException
+from character_exception import CharacterException
 from league import League
 from character import Character
 import sys
@@ -263,7 +264,7 @@ class Console(cmd.Cmd):
         inputV = InputView()
 
         if character is not None:
-            if len(result) < 6:
+            if len(result) == 7:
                 try:
                     inputV.check_valid_skill_dice(result[1])
                     inputV.check_valid_skill_dice(result[2])
@@ -272,7 +273,50 @@ class Console(cmd.Cmd):
                     inputV.check_valid_skill_dice(result[5])
                     inputV.check_valid_skill_dice(result[6])
 
-                    # character.
+                    # Then need to get the skills data from each of the args
+                    # and add this to a collection
+
+                    num_dice_list = []
+                    type_dice_list = []
+                    # start with the first skill input data, not the name
+                    # x = 1
+                    # remove the character name from the results list
+                    # result list is now length 6
+                    del result[0]
+
+                    for i in range(len(result)):
+                        number_dice_str, type_dice_str = \
+                            Character.obtain_dice_data(result[i])
+                        # print("number_dice_str: "+ number_dice_str)
+                        # print("type_dice_str: " + type_dice_str)
+                        num_dice_list.append(number_dice_str)
+                        type_dice_list.append(type_dice_str)
+
+                    try:
+                        character.check_number_dice(character, num_dice_list)
+
+                        try:
+                            character.check_type_dice(character, type_dice_list)
+
+                            # Then it's okay to remove the original skills
+                            # and replace them with the changed skills:
+                            character.set_brawl(result[0])
+                            character.set_shoot(result[1])
+                            character.set_dodge(result[2])
+                            character.set_might(result[3])
+                            character.set_finesse(result[4])
+                            character.set_cunning(result[5])
+
+                            print(character.get_name() + "'s skills have "
+                                                         "successfuly been "
+                                                         "replaced.")
+
+                        except CharacterException as e:
+                            print(e.value)
+
+                    except CharacterException as e:
+                        print(e.value)
+
                 except InputException as e:
                     print(e.value)
             else:

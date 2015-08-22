@@ -36,7 +36,7 @@ lm.get_current_league().add_character("A", char_type="Ally", health="d6",
                                       arg3="")
 
 print("\r")
-lm.get_current_league().add_character("A", char_type="Follower", health="d6",
+lm.get_current_league().add_character("G", char_type="Follower", health="d6",
                                       brawl="1d6", shoot="1d6", dodge="1d6",
                                       might="1d6", finesse="1d6", cunning="1d6",
                                       arg1="Mighty", arg2="",

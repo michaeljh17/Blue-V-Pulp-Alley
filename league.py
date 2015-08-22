@@ -234,7 +234,7 @@ class League(object):
     def check_duplicate_type(self, char_type):
         # -MS-
         # If the new character's type is Leader or Sidekick
-        if char_type == 'Leader' or 'SideKick':
+        if char_type == 'Leader' or char_type == 'SideKick':
             # Check the leagues current characters to ensure that
             # there isn't already a character of the same type
             for theCharacter in self._all_my_characters:
@@ -246,6 +246,8 @@ class League(object):
                     return False
             # If there is not a match, continue with the process of
             # adding a new character.
+            return True
+        else:
             return True
 
     def remove_character(self, char):

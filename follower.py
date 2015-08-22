@@ -10,10 +10,16 @@ class Follower(Character):
     _size = 1
     _number_abilities = 1
     _base_health = EDice.d6.name
+    # Dice type - values: 1) Edice 2) number of these Edice
+    _dice_type_1 = [EDice.d6, 6]
+    _dice_type_2 = None
+    # Dice numbers - values: 1) dice numbers 2) numbers of these dice
+    _dice_numbers_1 = [1, 6]
+    _dice_numbers_2 = None
     
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
-        super().__init__(self, league, name, health, brawl, shoot, dodge,
+        super().__init__(league, name, health, brawl, shoot, dodge,
                            might, finesse, cunning, **abilities)
 
         results = super().get_skills_input(brawl, shoot, dodge, might,

@@ -8,6 +8,12 @@ class SideKick(Character):
     _size = 3
     _number_abilities = 2
     _base_health = EDice.d8.name
+    # Dice type - values: 1) Edice 2) number of these Edice
+    _dice_type_1 = [EDice.d8, 3]
+    _dice_type_2 = [EDice.d6, 3]
+    # Dice numbers - values: 1) dice numbers 2) numbers of these dice
+    _dice_numbers_1 = [3, 3]
+    _dice_numbers_2 = [2, 3]
 
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
