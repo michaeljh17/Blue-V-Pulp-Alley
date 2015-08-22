@@ -1,11 +1,12 @@
 *.pyc
 *.pyproj
-**/__pycache__
+**__pycache__/
 *sln
 *.suo
 *.cpython-*
 *.xml
 *.iml
 *.xml
-*.pyc
+***.pyc
 ***.xml
+**.idea/
