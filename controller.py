@@ -1,7 +1,8 @@
 # __author__ = 'User'
 
 from league_model import LeagueModel
-from ViewModel.TableBuilder import TableBuilder
+#from ViewModel.TableBuilder import TableBuilder
+from ViewModel.ViewModel import ViewModel
 
 
 lm = LeagueModel()
@@ -16,7 +17,7 @@ print("\r")
 lm.add_league("Buffalo")
 
 lm.get_current_league().add_character("L", char_type="Leader", health="d10",
-                                      brawl="310", shoot="2d10", dodge="3d8",
+                                      brawl="3d10", shoot="2d10", dodge="3d8",
                                       might="3d10", finesse="2d10",
                                       cunning="3d8", arg1="Mighty",
                                       arg2="Brash", arg3="Crafty")
@@ -34,7 +35,7 @@ lm.get_current_league().add_character("A", char_type="Ally", health="d6",
                                       might="1d6", finesse="1d6", cunning="1d6",
                                       arg1="Mighty", arg2="",
                                       arg3="")
-
+'''
 print("\r")
 lm.get_current_league().add_character("A", char_type="Follower", health="d6",
                                       brawl="1d6", shoot="1d6", dodge="1d6",
@@ -61,7 +62,7 @@ lm.get_current_league().add_character("D", char_type="Ally", health="d6",
                                       arg1="Mighty", arg2="",
                                       arg3="")
 print("\r")
-
+'''
 
 l = lm.get_current_league().find_character("L")
 w = lm.get_current_league().find_character("A")
@@ -70,10 +71,13 @@ w = lm.get_current_league().find_character("A")
 print("League export")
 print(str(lm.export_league()))
 print("\r")
-tableB = TableBuilder()
-tableB.build_table(lm.export_league())
-print("\r")
 
+print("View model version")
+vm = ViewModel()
+vm.display(vm.build_table(lm.export_league()))
+
+print("\r")
+'''
 if l is not None:
     print("Some of " + str(l) + "'s skills and abilities:")
     print("Health: " + l.get_health().get_number_dice()
@@ -138,7 +142,7 @@ if l is not None and w is not None:
               " and " + w.get_abilities()[0].get_name() + " for " +
               str(l) + " and " + str(w) + " are different.")
 print("\r")
-
+'''
 # if __name__ == "__main__":
 #   import doctest
 #   doctest.testmod()

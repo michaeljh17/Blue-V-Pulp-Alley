@@ -365,19 +365,60 @@ class Character(metaclass=ABCMeta):
         # formatted like a character sheet
         :return: An array containing the characters name, skills, and abilities
         """
+
         output = []
+        output_key_pair = dict()
+
+
+        output_key_pair["brawl"] = str(self.get_brawl().get_number_dice() + self.get_brawl().get_dice_type().name)
+        output_key_pair["shoot"] = str(self.get_shoot().get_number_dice() + self.get_shoot().get_dice_type().name)
+        output_key_pair["dodge"] = str(self.get_dodge().get_number_dice() + self.get_dodge().get_dice_type().name)
+        output_key_pair["might"] = str(self.get_might().get_number_dice() + self.get_might().get_dice_type().name)
+        output_key_pair["finesse"] = str(self.get_finesse().get_number_dice() + self.get_finesse().get_dice_type().name)
+        output_key_pair["cunning"] = str(self.get_cunning().get_number_dice() + self.get_cunning().get_dice_type().name)
+
+        for ability in self.__abilities:
+            if ability.get_modifier() != 0:
+                #find dict value die count
+                base_die_count = int(output_key_pair[ability.get_effected_skill()][0])
+                base_die_count += ability.get_modifier()
+                #output_key_pair[ability.get_effected_skill()][0] = str(base_die_count)
+                output_key_pair[ability.get_effected_skill()] = str(base_die_count) + output_key_pair[ability.get_effected_skill()][1:]
+                output_key_pair[ability.get_effected_skill()] += "*"
+
+
+
         output.append(str(type(self).__name__))
         output.append(str(self.get_name()))
         output.append(str(self.get_health().get_dice_type().name))
+
+
+        output.append(output_key_pair["brawl"])
+        output.append(output_key_pair["shoot"])
+        output.append(output_key_pair["dodge"])
+        output.append(output_key_pair["might"])
+        output.append(output_key_pair["finesse"])
+        output.append(output_key_pair["cunning"])
+
+        '''
+        #Old Way
         output.append(str(self.get_brawl().get_number_dice()) + str(self.get_brawl().get_dice_type().name))
         output.append(str(self.get_shoot().get_number_dice()) + str(self.get_shoot().get_dice_type().name))
         output.append(str(self.get_dodge().get_number_dice()) + str(self.get_dodge().get_dice_type().name))
         output.append(str(self.get_might().get_number_dice()) + str(self.get_might().get_dice_type().name))
         output.append(str(self.get_finesse().get_number_dice()) + str(self.get_finesse().get_dice_type().name))
         output.append(str(self.get_cunning().get_number_dice()) + str(self.get_cunning().get_dice_type().name))
+        '''
 
+
+
+        skill_string = ""
         for ability in self.__abilities:
-            output.append(str(ability.get_name()))
+            #output.append(str(ability.get_name()))
+            skill_string += str(ability.get_name()) + ", "
+        # remove the trailing comma
+        skill_string = skill_string[:(len(skill_string) - 2)]
+        output.append(skill_string)
 
         return output
 

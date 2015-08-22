@@ -142,11 +142,12 @@ class League(object):
                                          " to the league.")
             else:
                 self._max_points -= new_character.get_size()
-
+            '''
             print("Character creation of " + name + " the " + char_type +
-                  " has been successful!")
+                  " has been successful!")'''
             self._all_my_characters.append(new_character)
-            print("League points remaining: " + str(self._max_points))
+            '''
+            print("League points remaining: " + str(self._max_points))'''
             return new_character
 
         except CharacterException as e:
@@ -260,9 +261,23 @@ class League(object):
 
     def export_league(self):
         output = []
+
+        headings_array = []
+        headings_array.append("Class")
+        headings_array.append("Name")
+        headings_array.append("Health")
+        headings_array.append("Brawl")
+        headings_array.append("Shoot")
+        headings_array.append("Dodge")
+        headings_array.append("Might")
+        headings_array.append("Finesse")
+        headings_array.append("Cunning")
+        headings_array.append("Abilities")
+        output.append(headings_array)
+
         for character in self._all_my_characters:
             output.append(character.export_character())
-
+        #print(output)
         return output
 
     """
@@ -1089,3 +1104,4 @@ class League(object):
 # if __name__ == "__main__":
 #   import doctest
 #   doctest.testmod()
+
