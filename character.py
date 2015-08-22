@@ -552,8 +552,11 @@ class Character(metaclass=ABCMeta):
         print("dice_number_1[0]: " + str(dice_number_1[0]))
         if dice_number_2 is not None:
             print("dice_number_2[0]: " + str(dice_number_2[0]))
+
+        count = 0
         for x in num_dice_list:
-            print("num_dice_list item: " + num_dice_list[int(x)])
+            print("num_dice_list item: " + num_dice_list[int(count)])
+            count += 1
 
         count_1 = 0
         count_2 = 0
@@ -619,7 +622,7 @@ class Character(metaclass=ABCMeta):
                 if x == dice_type_1[0].name:
                     count_2 += 1
             # print(count_1)
-            if count_2 != dice_type_1[1].name:
+            if count_2 != dice_type_1[1]:
                 # raise an exception
                 raise CharacterException("Incorrect dice type have been set for"
                                          + char_instance.get_name() + " the " +

@@ -17,7 +17,8 @@ class SideKick(Character):
 
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
-        super().__init__(league, name, health, brawl, shoot, dodge, might, finesse, cunning, **abilities)
+        super().__init__(league, name, health, brawl, shoot, dodge, might,
+                         finesse, cunning, **abilities)
 
         results = super().get_skills_input(brawl, shoot, dodge, might,
                                              finesse, cunning)
@@ -26,7 +27,7 @@ class SideKick(Character):
 
         super().check_number_dice(self, results[0])
 
-        super().check_number_dice(self, results[1])
+        super().check_type_dice(self, results[1])
 
         """
         number_2_dice_skills = 0

@@ -12,7 +12,7 @@ class Leader(Character):
     _dice_type_1 = [EDice.d10, 4]
     _dice_type_2 = [EDice.d8, 2]
     # Dice numbers - values: 1) dice numbers 2) numbers of these dice
-    _dice_numbers_1 = [4, 3]
+    _dice_numbers_1 = [3, 4]
     _dice_numbers_2 = [2, 2]
     
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
@@ -24,6 +24,12 @@ class Leader(Character):
                                              finesse, cunning)
 
         super().check_health(health, self._base_health)
+
+        super().check_number_dice(self, results[0])
+
+        super().check_type_dice(self, results[1])
+
+        """
 
         number_2_dice_skills = 0
         number_3_dice_skills = 0
@@ -59,6 +65,7 @@ class Leader(Character):
                                      + name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
+        """
 
         # Check the abilities which the user has entered
         super().check_abilities( name, self.__class__.__name__, self._level,

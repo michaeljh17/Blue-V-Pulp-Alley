@@ -27,6 +27,11 @@ class Follower(Character):
 
         super().check_health(health, self._base_health)
 
+        super().check_number_dice(self, results[0])
+
+        super().check_type_dice(self, results[1])
+
+        """
         number_1_dice_skills = 0
         number_d6_dice = 0
 
@@ -53,6 +58,7 @@ class Follower(Character):
                                      + name + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
+        """
 
         # Check the abilities which the user has entered
         super().check_abilities(name, self.__class__.__name__, self._level,
