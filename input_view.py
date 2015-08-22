@@ -16,7 +16,7 @@ class InputView(object):
         else:
             raise InputException("Invalid name entry: Please use only "
                                  "alphanumeric characters for the name of a "
-                                 "new character.")
+                                 "new character. Please try again")
         if input_name != "":
             return input
         else:
@@ -41,7 +41,8 @@ class InputView(object):
         # This will check the number of dice:
 
         if len(number_dice) > 0:
-            print("Match group 1: " + number_dice)
+            pass
+            # print("Match group 1: " + number_dice)
         else:
             raise InputException("You have not entered the number of dice for a"
                                  " skill. Please try again")
@@ -49,7 +50,8 @@ class InputView(object):
         # This will check the type of dice:
 
         if len(type_dice) > 0:
-            print("Match group 1: " + type_dice)
+            pass
+            # print("Match group 1: " + type_dice)
         else:
             raise InputException("You have not entered a dice type for a "
                                  "skill. Please try again")
