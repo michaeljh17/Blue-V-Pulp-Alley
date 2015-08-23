@@ -45,17 +45,17 @@ class Console(cmd.Cmd):
     def do_deleteLeague(self, args):
         '''
         deleteLeague [LeagueName]
-        This command will delete you specify with a league name
+        This command will delete the league you specify with a league name
         '''
         print("League deleted (Not actually shhhh)")
 
     def do_displayLeague(self, args):
         '''
         displayLeague
-        This command will display ???
+        This command will display your current league. It will list the
+        current characters and their skills
         '''
-        print("Leagues go here")
-        self.vm.display("Leagues go here")
+        self.vm.display(self.lm.get_current_league())
         self.vm.display(self.vm.build_table(self.lm.export_league()))
 
     def do_addCharacter(self, args):
@@ -141,7 +141,8 @@ class Console(cmd.Cmd):
                                              char_type=result[1],
                                              health=result[2], brawl=result[3],
                                              shoot=result[4], dodge=result[5],
-                                             might=result[6], finesse=result[7],
+                                             might=result[
+                                                 6], finesse=result[7],
                                              cunning=result[8], arg1=result[9])
                     except InputException as e:
                         print(e.value)
@@ -154,11 +155,12 @@ class Console(cmd.Cmd):
                                                    self.lm.get_all_abilities())
                         inputV.check_duplicate_values(result[9], result[10])
 
-                        league.add_character(name=result[0],char_type=result[1],
-                                             health=result[2],brawl=result[3],
-                                             shoot=result[4],dodge=result[5],
-                                             might=result[6], finesse=result[7],
-                                             cunning=result[8],arg1=result[9],
+                        league.add_character(name=result[0], char_type=result[1],
+                                             health=result[2], brawl=result[3],
+                                             shoot=result[4], dodge=result[5],
+                                             might=result[
+                                                 6], finesse=result[7],
+                                             cunning=result[8], arg1=result[9],
                                              arg2=result[10])
                     except InputException as e:
                         print(e.value)
@@ -173,11 +175,12 @@ class Console(cmd.Cmd):
                                                    self.lm.get_all_abilities())
                         inputV.check_duplicate_values(result[9], result[10],
                                                       result[11])
-                        league.add_character(name=result[0],char_type=result[1],
-                                             health=result[2],brawl=result[3],
-                                             shoot=result[4],dodge=result[5],
-                                             might=result[6],finesse=result[7],
-                                             cunning=result[8],arg1=result[9],
+                        league.add_character(name=result[0], char_type=result[1],
+                                             health=result[2], brawl=result[3],
+                                             shoot=result[4], dodge=result[5],
+                                             might=result[
+                                                 6], finesse=result[7],
+                                             cunning=result[8], arg1=result[9],
                                              arg2=result[10], arg3=result[11])
                     except InputException as e:
                         print(e.value)
@@ -190,7 +193,7 @@ class Console(cmd.Cmd):
             print("You have not entered enough arguments to create a character "
                   "Please try again.")
 
-    def do_rename_character(self,args):
+    def do_rename_character(self, args):
         '''
         rename_character [oldName] [newName]
         Renames the character with a new name provided
@@ -208,7 +211,7 @@ class Console(cmd.Cmd):
         self.vm.display(result[0] + " has been renamed to " +
                         character.get_name())
 
-    def do_delete_character(self,args):
+    def do_delete_character(self, args):
         '''
         delete_character [Character Name]
 
@@ -223,7 +226,7 @@ class Console(cmd.Cmd):
                                          "league. No character has been "
                                          "deleted.")
 
-    def do_replace_ability(self,args):
+    def do_replace_ability(self, args):
         '''
         replace_ability [Character Name] [Old Ability] [New Ability]
 
@@ -245,7 +248,7 @@ class Console(cmd.Cmd):
                                             self.lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
                                             self.lm.get_all_abilities())
-                character.replace_ability(character, result[1] ,result[2])
+                character.replace_ability(character, result[1], result[2])
                 # print(result[0] + " has had the ability " + result[1] +
                 #      " replaced with " + result[2])
             except InputException as e:
@@ -257,7 +260,7 @@ class Console(cmd.Cmd):
 
     # Two methods for replacing all of a character's abilities:
 
-    def do_replace_all_abilities(self,args):
+    def do_replace_all_abilities(self, args):
         '''
         replace_all_abilities [Character Name] [new ability1] [new ability 2]
         [new ability 3]
@@ -267,12 +270,13 @@ class Console(cmd.Cmd):
         result = args.split(" ")
         league = self.lm.get_current_league()
         character = league.find_character(result[0])
-        
+
         # Error handling:
         if character is not None:
             self.replace_all_abilities(result, character)
         else:
-            print("Please include the name of a character who is in the league")
+            print(
+                "Please include the name of a character who is in the league")
 
     def replace_all_abilities(self, result, character):
         """
@@ -290,7 +294,7 @@ class Console(cmd.Cmd):
             try:
                 # Valdiate the input:
                 input_v.check_valid_ability(result[1],
-                                           self.lm.get_all_abilities())
+                                            self.lm.get_all_abilities())
                 character.check_abilities(character.get_name(),
                                           character.__class__.__name__,
                                           character.get_subclass_level
@@ -315,7 +319,7 @@ class Console(cmd.Cmd):
                 input_v.check_valid_ability(result[1],
                                             self.lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
-                                           self.lm.get_all_abilities())
+                                            self.lm.get_all_abilities())
                 character.check_abilities(character.get_name(),
                                           character.__class__.__name__,
                                           character.get_subclass_level
@@ -339,11 +343,11 @@ class Console(cmd.Cmd):
             try:
                 # Valdiate the input:
                 input_v.check_valid_ability(result[1],
-                                           self.lm.get_all_abilities())
+                                            self.lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
-                                           self.lm.get_all_abilities())
+                                            self.lm.get_all_abilities())
                 input_v.check_valid_ability(result[3],
-                                           self.lm.get_all_abilities())
+                                            self.lm.get_all_abilities())
                 character.check_abilities(character.get_name(),
                                           character.__class__.__name__,
                                           character.get_subclass_level
@@ -370,7 +374,7 @@ class Console(cmd.Cmd):
 
     # Three methods involved in editing a character's skills:
 
-    def do_edit_skills(self,args):
+    def do_edit_skills(self, args):
         """
         edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse]
         [Cunning]
@@ -484,7 +488,7 @@ class Console(cmd.Cmd):
                     character.set_cunning(Skill(ESkill.cunning,
                                                 character.find_edice
                                                 (skills_result[1]),
-                                              skills_result[0]))
+                                                skills_result[0]))
 
                     print(character.get_name() + "'s skills have "
                                                  "successfuly been "
@@ -496,21 +500,23 @@ class Console(cmd.Cmd):
         except InputException as e:
             print(e.value)
 
-    def do_display_character(self,args):
+    def do_display_character(self, args):
         '''
         display_character [Character Name]
 
         Displays all information for a character
         '''
+        result = self.vm.build_character_table(self.lm.export_character(args))
+        self.vm.display(result)
 
-    def do_import(self,args):
+    def do_import(self, args):
         '''
         import [file location] [file name]
 
         Imports a file from a specified location and loads it
         '''
 
-    def do_save(self,args):
+    def do_save(self, args):
         '''
         save [file location] [file name]
 
@@ -524,8 +530,8 @@ class Console(cmd.Cmd):
         try:
             exec(line) in self._locals, self._globals
         except Exception as e:
-            print (e.__class__, ":", e)
+            print(e.__class__, ":", e)
 
 if __name__ == '__main__':
-        console = Console()
-        console.cmdloop()
+    console = Console()
+    console.cmdloop()
