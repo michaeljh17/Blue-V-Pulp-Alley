@@ -8,6 +8,7 @@ del path
 from league_model import *
 from league import *
 from character import *
+from FilerModule.FilerModule import *
 
 
 class MainTests(unittest.TestCase):
@@ -16,7 +17,8 @@ class MainTests(unittest.TestCase):
         self.lm = LeagueModel()
         self.lm.add_league("Test League")
         self.cl = self.lm.get_current_league()
-        self.lm.set_abilities_file(self.lm.read_file("..\Abilities.txt"))
+        self.fm = FilerModule()
+        self.lm.set_abilities_file(self.fm.read_file("..\Abilities.txt"))
 
     def test_01(self):
         print("Test 01 - Add Sidekick with incorrect health")
@@ -31,7 +33,7 @@ class MainTests(unittest.TestCase):
     def test_02(self):
         print("Test 02 - Add Sidekick with - incorrect dice type")
         self.cl.add_character("Kicky", char_type="SideKick", health="d8",
-                              brawl="2d6", shoot="3d10", dodge="2d6",
+                              brawl="3d6", shoot="3d10", dodge="2d6",
                               might="3d8", finesse="2d8",
                               cunning="3d8", arg1="Mighty",
                               arg2="Brash", arg3="")

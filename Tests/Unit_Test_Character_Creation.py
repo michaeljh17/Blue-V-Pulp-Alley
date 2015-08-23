@@ -8,6 +8,7 @@ del path
 from league_model import *
 from league import *
 from character import *
+from FilerModule.FilerModule import *
 
 
 class MainTests(unittest.TestCase):
@@ -15,7 +16,8 @@ class MainTests(unittest.TestCase):
     def setUp(self):
         self.lm = LeagueModel()
         self.lm.add_league("Test League")
-        self.lm.set_abilities_file(self.lm.read_file("..\Abilities.txt"))
+        self.fm = FilerModule()
+        self.lm.set_abilities_file(self.fm.read_file("..\Abilities.txt"))
 
     def test_01(self):
         print("Test 01 - With all slots full can a new character be created")
