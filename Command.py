@@ -122,6 +122,10 @@ class Console(cmd.Cmd):
         result = args.split(" ")
         inputV = InputView()
 
+        if self.lm.get_current_league() is None:
+            print("You need to create a league first!")
+            return
+
         if len(result) >= 10:
             try:
                 inputV.check_valid_name(result[0])
