@@ -34,7 +34,7 @@ class Console(cmd.Cmd):
         > Error handling: need to make sure that the new league is not given
         an empty string as a name
         '''
-        self.lm.set_abilities_file(self.lm.read_file("abilities.txt"))
+        self.lm.set_abilities_file(self.fm.read_file("abilities.txt"))
         # change to handle file systems
         if args != "":
             self.lm.add_league(args)
@@ -246,8 +246,8 @@ class Console(cmd.Cmd):
                 input_v.check_valid_ability(result[2],
                                             self.lm.get_all_abilities())
                 character.replace_ability(character, result[1] ,result[2])
-                print(result[0] + " has had the ability " + result[1] +
-                      " replaced with " + result[2])
+                # print(result[0] + " has had the ability " + result[1] +
+                #      " replaced with " + result[2])
             except InputException as e:
                 print(e.value)
         else:

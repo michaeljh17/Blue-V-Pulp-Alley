@@ -1,6 +1,7 @@
 __author__ = 'sef0097'
 from FilerModule.FilerExeption import FilerException
 import pickle
+import string
 
 class FilerModule(object):
 
@@ -23,4 +24,25 @@ class FilerModule(object):
         :param input_2d_array:
         :return:
         '''
-        Print("Hello!")
+        print("Hello!")
+
+    # File handling and reading functions:
+
+    def read_file(self, filename):
+        data = []
+        file_content = open(filename, "r")
+        for line in file_content:
+            if line != "\n":
+                self.get_line_data(line, data)
+        file_content.close()
+        return data
+
+    @staticmethod
+    def get_line_data(line, data):
+        # line = line.replace('/', ' ')
+        ability_details = []
+        for attr in line.split(','):
+            # attr = attr.lower() ?
+            attr = attr.strip(string.punctuation + string.whitespace)
+            ability_details.append(attr)
+        data.append(ability_details)
