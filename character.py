@@ -37,8 +37,8 @@ class Character(metaclass=ABCMeta):
         # __abilities is a list of Ability objects
         self.__abilities = self.set_abilities(**abilities)
 
-        print("Checking: " + self.__brawl.get_skill_name() + " " +
-              self.__brawl.get_dice_type().name)
+        # print("Checking: " + self.__brawl.get_skill_name() + " " +
+        #      self.__brawl.get_dice_type().name)
 
         """self.__ability_1 = self.__abilities[0]
         # Could use exception handling instead of the if statement when setting
@@ -51,21 +51,6 @@ class Character(metaclass=ABCMeta):
 
     def __str__(self):
         return self.__name
-
-    """
-    @staticmethod
-    def set_health(health):
-        bool_test = False
-        for dice in EDice:
-            if health == dice.name:
-                return dice
-
-        if not bool_test:
-            try:
-                raise InputException("Invalid health input")
-            except InputException as e:
-                print(e.value)
-    """
 
     @staticmethod
     def obtain_dice_data(skill_input):
@@ -95,31 +80,6 @@ class Character(metaclass=ABCMeta):
             type_dice_str = ""
 
         return [number_dice_str, type_dice_str]
-
-        """
-        number_dice = []
-        alpha_array = []
-        i = 0
-        while i < len(skill_input):
-            if skill_input[i].isdigit():
-                number_dice.append(skill_input[i])
-                i += 1
-            elif skill_input[i].isalpha():
-                j = i
-                while j < len(skill_input):
-                    if skill_input[j].isalpha():
-                        alpha_array.append(j)
-                    j += 1
-                break
-
-        number_dice_str = "".join(number_dice)
-        if len(alpha_array) > 0:
-            type_dice_str = skill_input[alpha_array[0]:]
-        else:
-            type_dice_str = ""
-
-        return number_dice_str, type_dice_str
-        """
 
     def find_edice(self, input_string):
         """
@@ -244,6 +204,7 @@ class Character(metaclass=ABCMeta):
                     new_abilities.append(existing_ab)
                     break
 
+        self.__abilities = new_abilities
         return new_abilities
 
     def check_abilities(self, name, char_class, ability_level, number_allowed,
@@ -276,7 +237,6 @@ class Character(metaclass=ABCMeta):
                                      str(self._number_abilities) + " "
                                                                     "abilities."
                                      + " Please try again.")
-            result = False
 
         if len(new_abilities) != number_allowed:
             # Raise an exception
@@ -284,7 +244,6 @@ class Character(metaclass=ABCMeta):
                                      " does not have the correct number of " +
                                      "abilities: " + str(self._number_abilities)
                                      + ". Please try again.")
-            result = False
 
         # Check the level of the abilities which the user has entered
         for abili in new_abilities:
@@ -292,8 +251,7 @@ class Character(metaclass=ABCMeta):
                 # raise an exception
                 raise CharacterException("The " + char_class + " cannot have "
                                          + "an ability with a level higher "
-                                           "than " + str(self.level))
-                result = False
+                                           "than " + str(self._level))
 
         return result
 
@@ -378,10 +336,10 @@ class Character(metaclass=ABCMeta):
         return self._size
 
     def get_number_abilities(self):
-        return Character._number_abilities
+        return self._number_abilities
 
     def get_base_health(self):
-        return Character._base_health
+        return self._base_health
 
     def export_character(self):
         """
@@ -459,6 +417,21 @@ class Character(metaclass=ABCMeta):
                 return abili
         return None
         # Or could call an exception here?
+
+    def get_subclass_abili_allowed(self, character_obj):
+        """
+        This method will get the value of _number_abilities for a subclass of
+        Character
+        :param character: an instance of a Character subclass
+        :return: The value of _level
+        """
+        class_name = character_obj.__class__.__name__
+        result = 0
+        # Probably don't need to include error handling here ...?
+        for subChar in Character.__subclasses__():
+            if class_name == subChar.__name__:
+                return subChar.get_number_abilities(self)
+        return result
 
     def get_subclass_size(self, character_obj):
         """
@@ -538,6 +511,9 @@ class Character(metaclass=ABCMeta):
                   old_ability_name + ". The attempt to replace abilities has "
                                      "failed.")
 
+    def clear_abilities(self):
+        self.__abilities = []
+
     def check_number_dice(self, char_instance, num_dice_list):
         """
         :param char_instance: instance of a character
@@ -546,18 +522,9 @@ class Character(metaclass=ABCMeta):
         :return: none
         """
 
-        # I'm just getting these values atm without get() methods
+        # I'm just getting these values atm without using get() methods
         dice_number_1 = char_instance.__class__._dice_numbers_1
         dice_number_2 = char_instance.__class__._dice_numbers_2
-
-        # print("dice_number_1[0]: " + str(dice_number_1[0]))
-        # if dice_number_2 is not None:
-            # print("dice_number_2[0]: " + str(dice_number_2[0]))
-
-        # count = 0
-        # for x in num_dice_list:
-            # print("num_dice_list item: " + num_dice_list[int(count)])
-            # count += 1
 
         count_1 = 0
         count_2 = 0
