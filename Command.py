@@ -255,6 +255,8 @@ class Console(cmd.Cmd):
                   self.lm.get_current_league().get_name() + " league Please "
                                                             "try again.")
 
+    # Two methods for replacing all of a character's abilities:
+
     def do_replace_all_abilities(self,args):
         '''
         replace_all_abilities [Character Name] [new ability1] [new ability 2]
@@ -265,94 +267,138 @@ class Console(cmd.Cmd):
         result = args.split(" ")
         league = self.lm.get_current_league()
         character = league.find_character(result[0])
+        
+        # Error handling:
+        if character is not None:
+            self.replace_all_abilities(result, character)
+        else:
+            print("Please include the name of a character who is in the league")
+
+    def replace_all_abilities(self, result, character):
+        """
+        This method will check whether the character's abilities can be
+        replaced with new ones
+        :param result: a list con
+        :param character:
+        :return:
+        """
         input_v = InputView()
-        # Need exception / error handling here in case character is None
+
+        if len(result) == 1:
+            print("You have not set any abilities")
+        elif len(result) == 2:
+            try:
+                # Valdiate the input:
+                input_v.check_valid_ability(result[1],
+                                           self.lm.get_all_abilities())
+                character.check_abilities(character.get_name(),
+                                          character.__class__.__name__,
+                                          character.get_subclass_level
+                                          (character),
+                                          character.get_number_abilities(),
+                                          arg1=result[1])
+
+                # Delete the character's current abilities and set the new ones
+                character.clear_abilities()
+                character.set_abilities(arg1=result[1])
+                print("New abilities have been set for " +
+                      character.get_name() + ": " +
+                      character.get_abilities()[0].get_name())
+            except InputException as e:
+                print(e.value)
+            except CharacterException as e:
+                print(e.value)
+
+        elif len(result) == 3:
+            try:
+                # Valdiate the input:
+                input_v.check_valid_ability(result[1],
+                                            self.lm.get_all_abilities())
+                input_v.check_valid_ability(result[2],
+                                           self.lm.get_all_abilities())
+                character.check_abilities(character.get_name(),
+                                          character.__class__.__name__,
+                                          character.get_subclass_level
+                                          (character),
+                                          character.get_number_abilities(),
+                                          arg1=result[1], arg2=result[2])
+
+                # Delete the character's current abilities and set the new ones
+                character.clear_abilities()
+                character.set_abilities(arg1=result[1], arg2=result[2])
+                print("New abilities have been set for " +
+                      character.get_name() + ": " +
+                      character.get_abilities()[0].get_name() + " " +
+                      character.get_abilities()[1].get_name())
+            except InputException as e:
+                print(e.value)
+            except CharacterException as e:
+                print(e.value)
+
+        elif len(result) == 4:
+            try:
+                # Valdiate the input:
+                input_v.check_valid_ability(result[1],
+                                           self.lm.get_all_abilities())
+                input_v.check_valid_ability(result[2],
+                                           self.lm.get_all_abilities())
+                input_v.check_valid_ability(result[3],
+                                           self.lm.get_all_abilities())
+                character.check_abilities(character.get_name(),
+                                          character.__class__.__name__,
+                                          character.get_subclass_level
+                                          (character),
+                                          character.get_number_abilities(),
+                                          arg1=result[1], arg2=result[2],
+                                          arg3=result[3])
+
+                # Delete the character's current abilities and set the new ones
+                character.clear_abilities()
+                character.set_abilities(arg1=result[1], arg2=result[2],
+                                        arg3=result[3])
+                print("New abilities have been set for " +
+                      character.get_name() + ": " +
+                      character.get_abilities()[0].get_name() + " " +
+                      character.get_abilities()[1].get_name() + " " +
+                      character.get_abilities()[2].get_name())
+            except InputException as e:
+                print(e.value)
+            except CharacterException as e:
+                print(e.value)
+        else:
+            print("You have entered too many arguments. Please try again.")
+
+    # Three methods involved in editing a character's skills:
+
+    def do_edit_skills(self,args):
+        """
+        edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse]
+        [Cunning]
+
+        Edits the value for the skills for a character
+        """
+        result = args.split(" ")
+        league = self.lm.get_current_league()
+        character = league.find_character(result[0])
 
         if character is not None:
-            if len(result) == 0:
-                print("You have not specified a name. Please try again")
-            elif len(result) == 1:
-                print("You have not set any abilities")
-            elif len(result) == 2:
-                try:
-                    # Valdiate the input:
-                    input_v.check_valid_ability(result[1],
-                                               self.lm.get_all_abilities())
-                    character.check_abilities(character.get_name(),
-                                              character.__class__.__name__,
-                                              character.get_subclass_level
-                                              (character),
-                                              character.get_number_abilities(),
-                                              arg1=result[1])
-                    # Delete the character's current abilities and set the new
-                    # ones
-                    character.clear_abilities()
-                    character.set_abilities(arg1=result[1])
-                    print("New abilities have been set for " +
-                          character.get_name() + ": " +
-                          character.get_abilities()[0].get_name())
-                except InputException as e:
-                    print(e.value)
-                except CharacterException as e:
-                    print(e.value)
-
-            elif len(result) == 3:
-                try:
-                    # Valdiate the input:
-                    input_v.check_valid_ability(result[1],
-                                               self.lm.get_all_abilities())
-                    input_v.check_valid_ability(result[2],
-                                               self.lm.get_all_abilities())
-                    character.check_abilities(character.get_name(),
-                                              character.__class__.__name__,
-                                              character.get_subclass_level
-                                              (character),
-                                              character.get_number_abilities(),
-                                              arg1=result[1], arg2=result[2])
-                    character.clear_abilities()
-                    character.set_abilities(arg1=result[1], arg2=result[2])
-                    print("New abilities have been set for " +
-                          character.get_name() + ": " +
-                          character.get_abilities()[0].get_name() + " " +
-                          character.get_abilities()[1].get_name())
-                except InputException as e:
-                    print(e.value)
-                except CharacterException as e:
-                    print(e.value)
-
-            elif len(result) == 4:
-                try:
-                    # Valdiate the input:
-                    input_v.check_valid_ability(result[1],
-                                               self.lm.get_all_abilities())
-                    input_v.check_valid_ability(result[2],
-                                               self.lm.get_all_abilities())
-                    input_v.check_valid_ability(result[3],
-                                               self.lm.get_all_abilities())
-                    character.check_abilities(character.get_name(),
-                                              character.__class__.__name__,
-                                              character.get_subclass_level
-                                              (character),
-                                              character.get_number_abilities(),
-                                              arg1=result[1], arg2=result[2],
-                                              arg3=result[3])
-                    character.clear_abilities()
-                    character.set_abilities(arg1=result[1], arg2=result[2],
-                                            arg3=result[3])
-                    print("New abilities have been set for " +
-                          character.get_name() + ": " +
-                          character.get_abilities()[0].get_name() + " " +
-                          character.get_abilities()[1].get_name() + " " +
-                          character.get_abilities()[2].get_name())
-                except InputException as e:
-                    print(e.value)
-                except CharacterException as e:
-                    print(e.value)
-            else:
-                print("You have entered too many arguments. Please try again.")
+            self.edit_skills_middle(result, character)
         else:
-            print(result[0] + " is not in the " +
-                  self.lm.get_current_league().get_name() + " league")
+            print("Invalid character name entered. Please try again.")
+
+    def edit_skills_middle(self, result, character):
+        """
+        This function will continue the process of checking whether a
+        character's skills can be modified
+        :param result: a list containing the user's input
+        :param character: the instance of character
+        :return:
+        """
+        if len(result) == 7:
+            self.edit_skills_last(result, character)
+        else:
+            print("You have not entered enough data for all of the skills. "
+                  "Please try again")
 
     def edit_skills_last(self, result, character):
         """
@@ -449,36 +495,6 @@ class Console(cmd.Cmd):
                 print(e.value)
         except InputException as e:
             print(e.value)
-
-    def edit_skills_middle(self, result, character):
-        """
-        This function will continue the process of checking whether a
-        character's skills can be modified
-        :param result: a list containing the user's input
-        :param character: the instance of character
-        :return:
-        """
-        if len(result) == 7:
-            self.edit_skills_last(result, character)
-        else:
-            print("You have not entered enough data for all of the skills. "
-                  "Please try again")
-
-    def do_edit_skills(self,args):
-        """
-        edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse]
-        [Cunning]
-
-        Edits the value for the skills for a character
-        """
-        result = args.split(" ")
-        league = self.lm.get_current_league()
-        character = league.find_character(result[0])
-
-        if character is not None:
-            self.edit_skills_middle(result, character)
-        else:
-            print("Invalid character name entered. Please try again.")
 
     def do_display_character(self,args):
         '''
