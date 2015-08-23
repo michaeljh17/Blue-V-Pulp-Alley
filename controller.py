@@ -1,9 +1,24 @@
 # __author__ = 'User'
 
 from league_model import LeagueModel
-#from ViewModel.TableBuilder import TableBuilder
+# from ViewModel.TableBuilder import TableBuilder
 from ViewModel.ViewModel import ViewModel
+import pickle
 
+vm = ViewModel()
+
+print("loading pickles")
+with open('data.pickle', 'rb') as f:
+    imported_pickles_from_tina = pickle.load(f)
+
+
+print(imported_pickles_from_tina.export_league())
+print(imported_pickles_from_tina._my_league)
+print(dir(imported_pickles_from_tina))
+print(imported_pickles_from_tina.__dict__)
+vm.display(vm.build_table(imported_pickles_from_tina.export_league()))
+
+print("\r\r")
 
 lm = LeagueModel()
 lm.set_abilities_file(lm.read_file("Abilities.txt"))
@@ -37,7 +52,7 @@ lm.get_current_league().add_character("A", char_type="Ally", health="d6",
                                       arg3="")
 '''
 print("\r")
-lm.get_current_league().add_character("A", char_type="Follower", health="d6",
+lm.get_current_league().add_character("G", char_type="Follower", health="d6",
                                       brawl="1d6", shoot="1d6", dodge="1d6",
                                       might="1d6", finesse="1d6", cunning="1d6",
                                       arg1="Mighty", arg2="",
@@ -73,7 +88,7 @@ print(str(lm.export_league()))
 print("\r")
 
 print("View model version")
-vm = ViewModel()
+
 vm.display(vm.build_table(lm.export_league()))
 
 print("\r")
@@ -146,3 +161,19 @@ print("\r")
 # if __name__ == "__main__":
 #   import doctest
 #   doctest.testmod()
+
+
+print("Saving Pickles")
+
+
+with open('data.pickle', 'wb') as f:
+    pickle.dump(lm, f)
+
+del lm
+
+'''
+with open('data.pickle', 'rb') as f:
+    imported_pickles_from_tina = pickle.load(f)
+
+print(imported_pickles_from_tina.export_league())
+'''

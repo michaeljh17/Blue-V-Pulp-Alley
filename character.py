@@ -16,6 +16,12 @@ class Character(metaclass=ABCMeta):
     _size = 1
     _number_abilities = 0
     _base_health = 0
+    # Dice type - values: 1) Edice 2) number of these Edice
+    _dice_type_1 = [0, 0]
+    _dice_type_2 = [0, 0]
+    # Dice numbers - values: 1) dice numbers 2) numbers of these dice numbers
+    _dice_numbers_1 = [0, 0]
+    _dice_numbers_2 = [0, 0]
 
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
@@ -31,6 +37,9 @@ class Character(metaclass=ABCMeta):
         # __abilities is a list of Ability objects
         self.__abilities = self.set_abilities(**abilities)
 
+        # print("Checking: " + self.__brawl.get_skill_name() + " " +
+        #      self.__brawl.get_dice_type().name)
+
         """self.__ability_1 = self.__abilities[0]
         # Could use exception handling instead of the if statement when setting
         # ability 2 or 3
@@ -42,19 +51,6 @@ class Character(metaclass=ABCMeta):
 
     def __str__(self):
         return self.__name
-
-    @staticmethod
-    def set_health(health):
-        bool_test = False
-        for dice in EDice:
-            if health == dice.name:
-                return dice
-
-        if not bool_test:
-            try:
-                raise InputException("Invalid health input")
-            except InputException as e:
-                print(e.value)
 
     @staticmethod
     def obtain_dice_data(skill_input):
@@ -83,35 +79,22 @@ class Character(metaclass=ABCMeta):
         else:
             type_dice_str = ""
 
-        return number_dice_str, type_dice_str
+        return [number_dice_str, type_dice_str]
 
+    def find_edice(self, input_string):
         """
-        number_dice = []
-        alpha_array = []
-        i = 0
-        while i < len(skill_input):
-            if skill_input[i].isdigit():
-                number_dice.append(skill_input[i])
-                i += 1
-            elif skill_input[i].isalpha():
-                j = i
-                while j < len(skill_input):
-                    if skill_input[j].isalpha():
-                        alpha_array.append(j)
-                    j += 1
-                break
-
-        number_dice_str = "".join(number_dice)
-        if len(alpha_array) > 0:
-            type_dice_str = skill_input[alpha_array[0]:]
-        else:
-            type_dice_str = ""
-
-        return number_dice_str, type_dice_str
+        This method will try to find if the input string matches a valid
+        EDice type
+        :param input_string:
+        :return: An Edice type if a match is made
         """
+        for x in EDice:
+            if input_string == x.name:
+                return x
+        raise InputException("You have not entered a valid dice type for a "
+                             "skill. Please try again")
 
-    @staticmethod
-    def set_skill(skill_type, skill_input):
+    def set_skill(self, skill_type, skill_input):
         """
         :param skill_type: Type of skill which the user would like to add, as a
         string
@@ -119,30 +102,28 @@ class Character(metaclass=ABCMeta):
         skill to be set, as a string
         :return:
         """
-        number_dice_str, type_dice_str = Character.obtain_dice_data(skill_input)
+        dice_str_data = Character.obtain_dice_data(skill_input)
 
         # When passing the dice-type to the Skill constructor, it should be an
         # EDice type instead of just a string
-        type_dice = ""
-        for x in EDice:
-            if type_dice_str == x.name:
-                type_dice = x
+
+        type_dice = self.find_edice(dice_str_data[1])
 
         if skill_type == ESkill.health:
             # print("Adding a health skill")
-            return Skill(ESkill.health, type_dice, number_dice_str)
+            return Skill(ESkill.health, type_dice, dice_str_data[0])
         elif skill_type == ESkill.brawl:
-            return Skill(ESkill.brawl, type_dice, number_dice_str)
+            return Skill(ESkill.brawl, type_dice, dice_str_data[0])
         elif skill_type == ESkill.shoot:
-            return Skill(ESkill.shoot, type_dice, number_dice_str)
+            return Skill(ESkill.shoot, type_dice, dice_str_data[0])
         elif skill_type == ESkill.dodge:
-            return Skill(ESkill.dodge, type_dice, number_dice_str)
+            return Skill(ESkill.dodge, type_dice, dice_str_data[0])
         elif skill_type == ESkill.might:
-            return Skill(ESkill.might, type_dice, number_dice_str)
+            return Skill(ESkill.might, type_dice, dice_str_data[0])
         elif skill_type == ESkill.finesse:
-            return Skill(ESkill.finesse, type_dice, number_dice_str)
+            return Skill(ESkill.finesse, type_dice, dice_str_data[0])
         elif skill_type == ESkill.cunning:
-            return Skill(ESkill.cunning, type_dice, number_dice_str)
+            return Skill(ESkill.cunning, type_dice, dice_str_data[0])
         else:
             # An exception should actually never occur here
             try:
@@ -150,6 +131,8 @@ class Character(metaclass=ABCMeta):
                                                         " type")
             except InputException as e:
                 print(e.value)
+
+        print()
 
     @staticmethod
     def get_skill_values(skill_input):
@@ -221,6 +204,7 @@ class Character(metaclass=ABCMeta):
                     new_abilities.append(existing_ab)
                     break
 
+        self.__abilities = new_abilities
         return new_abilities
 
     def check_abilities(self, name, char_class, ability_level, number_allowed,
@@ -253,7 +237,6 @@ class Character(metaclass=ABCMeta):
                                      str(self._number_abilities) + " "
                                                                     "abilities."
                                      + " Please try again.")
-            result = False
 
         if len(new_abilities) != number_allowed:
             # Raise an exception
@@ -261,7 +244,6 @@ class Character(metaclass=ABCMeta):
                                      " does not have the correct number of " +
                                      "abilities: " + str(self._number_abilities)
                                      + ". Please try again.")
-            result = False
 
         # Check the level of the abilities which the user has entered
         for abili in new_abilities:
@@ -269,8 +251,7 @@ class Character(metaclass=ABCMeta):
                 # raise an exception
                 raise CharacterException("The " + char_class + " cannot have "
                                          + "an ability with a level higher "
-                                           "than " + str(self.level))
-                result = False
+                                           "than " + str(self._level))
 
         return result
 
@@ -293,16 +274,7 @@ class Character(metaclass=ABCMeta):
 
     def add_ability(self, ability):
         self.__abilities.append(ability)
-    """
-    def set_ability_1(self, ab_1):
-        self.__ability_1 = ab_1
 
-    def set_ability_2(self, ab_2):
-        self.__ability_2 = ab_2
-
-    def set_ability_3(self, ab_3):
-        self.__ability_3 = ab_3
-    """
     def get_name(self):
         return self.__name
 
@@ -315,20 +287,38 @@ class Character(metaclass=ABCMeta):
     def get_brawl(self):
         return self.__brawl
 
+    def set_brawl(self, input):
+        self.__brawl = input
+
     def get_dodge(self):
         return self.__dodge
+
+    def set_dodge(self, input):
+        self.__dodge = input
 
     def get_might(self):
         return self.__might
 
+    def set_might(self, input):
+        self.__might = input
+
     def get_shoot(self):
         return self.__shoot
+
+    def set_shoot(self, input):
+        self.__shoot = input
 
     def get_finesse(self):
         return self.__finesse
 
+    def set_finesse(self, input):
+        self.__finesse = input
+
     def get_cunning(self):
         return self.__cunning
+
+    def set_cunning(self, input):
+        self.__cunning = input
 
     def get_name(self):
         return self.__name
@@ -346,21 +336,11 @@ class Character(metaclass=ABCMeta):
         return self._size
 
     def get_number_abilities(self):
-        return Character._number_abilities
+        return self._number_abilities
 
     def get_base_health(self):
-        return Character._base_health
+        return self._base_health
 
-    """
-    def get_ability_1(self):
-        return self.__ability_1
-
-    def get_ability_2(self):
-        return self.__ability_2
-
-    def get_ability_3(self):
-        return self.__ability_3
-    """
     def export_character(self):
         """
         # Method used to export the current character into an array
@@ -372,12 +352,18 @@ class Character(metaclass=ABCMeta):
         output_key_pair = dict()
 
 
-        output_key_pair["brawl"] = str(self.get_brawl().get_number_dice() + self.get_brawl().get_dice_type().name)
-        output_key_pair["shoot"] = str(self.get_shoot().get_number_dice() + self.get_shoot().get_dice_type().name)
-        output_key_pair["dodge"] = str(self.get_dodge().get_number_dice() + self.get_dodge().get_dice_type().name)
-        output_key_pair["might"] = str(self.get_might().get_number_dice() + self.get_might().get_dice_type().name)
-        output_key_pair["finesse"] = str(self.get_finesse().get_number_dice() + self.get_finesse().get_dice_type().name)
-        output_key_pair["cunning"] = str(self.get_cunning().get_number_dice() + self.get_cunning().get_dice_type().name)
+        output_key_pair["brawl"] = str(self.get_brawl().get_number_dice() +
+                                       self.get_brawl().get_dice_type().name)
+        output_key_pair["shoot"] = str(self.get_shoot().get_number_dice() +
+                                       self.get_shoot().get_dice_type().name)
+        output_key_pair["dodge"] = str(self.get_dodge().get_number_dice() +
+                                       self.get_dodge().get_dice_type().name)
+        output_key_pair["might"] = str(self.get_might().get_number_dice() +
+                                       self.get_might().get_dice_type().name)
+        output_key_pair["finesse"] = str(self.get_finesse().get_number_dice() +
+                                         self.get_finesse().get_dice_type().name)
+        output_key_pair["cunning"] = str(self.get_cunning().get_number_dice() +
+                                         self.get_cunning().get_dice_type().name)
 
         for ability in self.__abilities:
             if ability.get_modifier() != 0:
@@ -431,6 +417,21 @@ class Character(metaclass=ABCMeta):
                 return abili
         return None
         # Or could call an exception here?
+
+    def get_subclass_abili_allowed(self, character_obj):
+        """
+        This method will get the value of _number_abilities for a subclass of
+        Character
+        :param character: an instance of a Character subclass
+        :return: The value of _level
+        """
+        class_name = character_obj.__class__.__name__
+        result = 0
+        # Probably don't need to include error handling here ...?
+        for subChar in Character.__subclasses__():
+            if class_name == subChar.__name__:
+                return subChar.get_number_abilities(self)
+        return result
 
     def get_subclass_size(self, character_obj):
         """
@@ -488,10 +489,7 @@ class Character(metaclass=ABCMeta):
         if old_abili:
             if new_abili:
                 # check the level of the new ability
-                # The following line doesn't quite work
-                # if int(new_abili.get_level()) <= character.__class__.get_level():
                 if int(new_abili.get_level()) <= max_level:
-                    # print("hello")
                     # Remove the unwanted ability from the character
                     self.__abilities.remove(old_abili)
                     # Add the new ability to the character
@@ -513,9 +511,97 @@ class Character(metaclass=ABCMeta):
                   old_ability_name + ". The attempt to replace abilities has "
                                      "failed.")
 
-    # @staticmethod
-    # def get_level():
-    #    return Character.level
+    def clear_abilities(self):
+        self.__abilities = []
+
+    def check_number_dice(self, char_instance, num_dice_list):
+        """
+        :param char_instance: instance of a character
+        :param num_dice_list: contains: 1) dice numbers 2) numbers of these
+        dice numbers
+        :return: none
+        """
+
+        # I'm just getting these values atm without using get() methods
+        dice_number_1 = char_instance.__class__._dice_numbers_1
+        dice_number_2 = char_instance.__class__._dice_numbers_2
+
+        count_1 = 0
+        count_2 = 0
+
+        # Check the first set of dice numbers
+        for x in num_dice_list:
+            if x == str(dice_number_1[0]):
+                # print("dice_number_1[0]: " + str(dice_number_1[0]))
+                count_1 += 1
+        # print("Count: " + str(count_1))
+        if count_1 != dice_number_1[1]:
+            # raise an exception
+            raise CharacterException("Incorrect dice numbers have been set for"
+                                     + " " + char_instance.get_name() + " the "
+                                     + self.__class__.__name__ + ". Please try "
+                                                                 "again")
+
+        # Check the second set of dice numbers (if applicable)
+        if dice_number_2 is not None:
+            for x in num_dice_list:
+                if x == str(dice_number_2[0]):
+                    count_2 += 1
+            # print(count_2)
+            if count_2 != dice_number_2[1]:
+                # raise an exception
+                raise CharacterException("Incorrect dice numbers have been set for"
+                                         + " " + char_instance.get_name() + " the "
+                                         + self.__class__.__name__ + ". Please try "
+                                                                     "again")
+
+    def check_type_dice(self, char_instance, dice_type_list):
+        """
+        :param char_instance: instance od a character
+        :param dice_type_list: contains: 1) Edice 2) number of these Edice
+        :return: none
+        """
+
+        # I'm just getting these values atm without get() methods
+        dice_type_1 = char_instance.__class__._dice_type_1
+        dice_type_2 = char_instance.__class__._dice_type_2
+        # print("dice_type_1[0]: " + str(dice_type_1[0]))
+        # if dice_type_2 is not None:
+            # print("dice_type_2[0]: " + str(dice_type_2[0]))
+
+        count_1 = 0
+        count_2 = 0
+
+        # Check the first set of dice type
+        for x in dice_type_list:
+            if x == dice_type_1[0].name:
+                count_1 += 1
+        # print(count_1)
+        if count_1 != dice_type_1[1]:
+            # raise an exception
+            raise CharacterException("Incorrect dice type have been set for"
+                                     + char_instance.get_name() + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
+
+        # Check the second set of dice type (if applicable)
+        if dice_type_2 is not None:
+            for x in dice_type_list:
+                if x == dice_type_1[0].name:
+                    count_2 += 1
+            # print(count_1)
+            if count_2 != dice_type_1[1]:
+                # raise an exception
+                raise CharacterException("Incorrect dice type have been set for"
+                                         + char_instance.get_name() + " the " +
+                                         self.__class__.__name__ + ". Please "
+                                                                   "try again")
+
+    def check_health(self, health, base_health):
+        # Check the health type
+        if health != base_health:
+            # raise an exception
+            raise CharacterException("Incorrect health input")
 
 # if __name__ == "__main__":
 #    import doctest

@@ -34,32 +34,7 @@ class LeagueModel(object):
     def get_current_league(self):
         return self._my_league
 
-    # File handling and reading functions:
-
-    def read_file(self, filename):
-        data = []
-        file_content = open(filename, "r")
-        for line in file_content:
-            if line != "\n":
-                # print(line)
-                self.get_line_data(line, data)
-        file_content.close()
-        return data
-
-    @staticmethod
-    def get_line_data(line, data):
-        # line = line.replace('/', ' ')
-        ability_details = []
-        for attr in line.split(','):
-            # attr = attr.lower()
-            attr = attr.strip(string.punctuation + string.whitespace)
-            ability_details.append(attr)
-        data.append(ability_details)
-
     # League Export functions
 
     def export_league(self):
         return self._my_league.export_league()
-
-
-

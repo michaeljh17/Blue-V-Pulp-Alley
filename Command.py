@@ -1,16 +1,18 @@
-__author__ = 'gazza'
+# __author__ = 'gazza'
 import os
 import cmd
 from league_model import LeagueModel
 from input_view import InputView
 from input_exception import InputException
+from character_exception import CharacterException
 from ViewModel.ViewModel import ViewModel
-from league import League
+from FilerModule.FilerModule import FilerModule
+from skill import Skill
+from eskill import ESkill
 from character import Character
-import sys
+
 
 class Console(cmd.Cmd):
-
 
     def __init__(self):
         cmd.Cmd.__init__(self)
@@ -18,34 +20,36 @@ class Console(cmd.Cmd):
         self.intro = "Welcome to Burger King, Please place your order"
         self.lm = LeagueModel()
         self.vm = ViewModel()
+        self.fm = FilerModule()
 
-    ## Commands are below
+    # Commands are below
 
     def do_exit(self, args):
         'Exits the program'
         return -1
 
-    def do_createLeague(self,args):
+    def do_createLeague(self, args):
         '''createLeague [LeagueName]
         This command creates a league with the given name.
         > Error handling: need to make sure that the new league is not given
         an empty string as a name
         '''
-        self.lm.set_abilities_file(self.lm.read_file("abilities.txt")) #change to handle file systems
+        self.lm.set_abilities_file(self.fm.read_file("abilities.txt"))
+        # change to handle file systems
         if args != "":
             self.lm.add_league(args)
             print(args + " created")
         else:
             print("The new league must have a name!")
 
-    def do_deleteLeague(self,args):
+    def do_deleteLeague(self, args):
         '''
         deleteLeague [LeagueName]
         This command will delete you specify with a league name
         '''
         print("League deleted (Not actually shhhh)")
 
-    def do_displayLeague(self,args):
+    def do_displayLeague(self, args):
         '''
         displayLeague
         This command will display ???
@@ -54,44 +58,46 @@ class Console(cmd.Cmd):
         self.vm.display("Leagues go here")
         self.vm.display(self.vm.build_table(self.lm.export_league()))
 
-    def do_displayAbilities(self,args):
+    def do_addCharacter(self, args):
         '''
-        displayAbilities
-        This command will display all the abilities of the current league
-        '''
-        ##Output for displaying abilities here
-
-    def do_addCharacter(self,args):
-        '''
-        addCharacter [CharacterName] [CharacterType] [Health] [Brawl] [Shoot] [Dodge] [Might] [Finesse] [Cunning]
+        addCharacter [CharacterName] [CharacterType] [Health] [Brawl] [Shoot]
+        [Dodge] [Might] [Finesse] [Cunning]
         [Ability 1] [Ability 2] [Ability 3]
-        --------------------------------------------------------------------------------------------------------
+        -----------------------------------------------------------------------
         This command adds a character to the current league.
         Your league starts with 10 roster slots.
-        --------------------------------------------------------------------------------------------------------
+        -----------------------------------------------------------------------
         [Character Name] = The character's name
-        [CharacterType] = Can be either 'Leader' 'SideKick' 'Ally' or 'Follower', You can only have ONE leader
+        [CharacterType] = Can be either 'Leader' 'SideKick' 'Ally' or
+        'Follower', You can only have ONE leader
 
         Skills. See below for examples on how to use this argument
 
         [Health] = A number used to represent your characters overall condition
         [Brawl] = Represents a character's overall hand-to-hand combat prowess
-        [Shoot] = Indicates a character's combat effectiveness with all manner of ranged weapons
-        [Dodge] = Determines the character's ability to avoid enemy attacks, perils, and other dangers.
-        [Might] = Indicates a character's power, fitness and general athleticism
-        [Finesse] = measures the character's co ordination, awareness and ability to manipulate
-        [Cunning] = Represents a character's knowledge, resolve and ability to solve complicated problems.
+        [Shoot] = Indicates a character's combat effectiveness with all manner
+                  of ranged weapons
+        [Dodge] = Determines the character's ability to avoid enemy attacks,
+                  perils, and other dangers.
+        [Might] = Indicates a character's power, fitness and general
+                  athleticism
+        [Finesse] = measures the character's co ordination, awareness and
+                  ability to manipulate
+        [Cunning] = Represents a character's knowledge, resolve and ability to
+                  solve complicated problems.
 
         Skill levels by type
 
         Leader
             MUST have a health value of d10
-            Select four skills to start at 3 dice and two skills to start at 2 dice
+            Select four skills to start at 3 dice and two skills to start at
+            2 dice
             Select four skills to start at d10 and two skills to start at d8
             Can choose 3 abilities at any level
         SideKick
             MUST have a health value of d8
-            Select three skills to start at 3 dice and three skills to start at 2 dice
+            Select three skills to start at 3 dice and three skills to start at
+            2 dice
             Select three skills to start at d8 and three skills to start at d6
             Can choose 2 abilities at level 1 to 3
             Uses three roster slots
@@ -131,11 +137,12 @@ class Console(cmd.Cmd):
                     try:
                         inputV.check_valid_ability(result[9],
                                                    self.lm.get_all_abilities())
-                        league.add_character(name=result[0],char_type=result[1],
-                                             health=result[2],brawl=result[3],
-                                             shoot=result[4],dodge=result[5],
-                                             might=result[6],finesse=result[7],
-                                             cunning=result[8],arg1=result[9])
+                        league.add_character(name=result[0],
+                                             char_type=result[1],
+                                             health=result[2], brawl=result[3],
+                                             shoot=result[4], dodge=result[5],
+                                             might=result[6], finesse=result[7],
+                                             cunning=result[8], arg1=result[9])
                     except InputException as e:
                         print(e.value)
 
@@ -174,7 +181,9 @@ class Console(cmd.Cmd):
                                              arg2=result[10], arg3=result[11])
                     except InputException as e:
                         print(e.value)
-
+                else:
+                    print("You have entered too many arguments. Please try "
+                          "again.")
             except InputException as e:
                 print(e.value)
         else:
@@ -190,13 +199,14 @@ class Console(cmd.Cmd):
         > Error handling: need to check that the new name is not an empty string
         '''
         result = args.split(" ")
-        print("Results: " + result[0] + " " + result[1])
+        # self.vm.display("Results: " + result[0] + " " + result[1])
         league = self.lm.get_current_league()
         character = league.find_character(result[0])
         # try:
         character.set_name(result[1])
         # except
-        print(result[0] + " has been renamed to " + character.get_name())
+        self.vm.display(result[0] + " has been renamed to " +
+                        character.get_name())
 
     def do_delete_character(self,args):
         '''
@@ -206,7 +216,12 @@ class Console(cmd.Cmd):
         '''
         league = self.lm.get_current_league()
         character = league.find_character(args)
-        league.remove_character(character)
+        if character is not None:
+            league.remove_character(character)
+        else:
+            self.vm.display("'" + args + "' is not recorded as being in the "
+                                         "league. No character has been "
+                                         "deleted.")
 
     def do_replace_ability(self,args):
         '''
@@ -219,55 +234,140 @@ class Console(cmd.Cmd):
             print("Not enough arguments. Please try again")
             # What if there are too many arguments ???
             return
-        inputV = InputView()
+        input_v = InputView()
         league = self.lm.get_current_league()
         # character = ""
 
         character = league.find_character(result[0])
         if character is not None:
             try:
-                inputV.check_valid_ability(result[1], self.lm.get_all_abilities())
-                inputV.check_valid_ability(result[2], self.lm.get_all_abilities())
+                input_v.check_valid_ability(result[1],
+                                            self.lm.get_all_abilities())
+                input_v.check_valid_ability(result[2],
+                                            self.lm.get_all_abilities())
                 character.replace_ability(character, result[1] ,result[2])
-                print(result[0] + " has had the ability " + result[1] +
-                      " replaced with " + result[2])
+                # print(result[0] + " has had the ability " + result[1] +
+                #      " replaced with " + result[2])
             except InputException as e:
                 print(e.value)
         else:
-            print("Invaid character name entered. Please try again.")
+            print(result[0] + " is not in the " +
+                  self.lm.get_current_league().get_name() + " league Please "
+                                                            "try again.")
 
     def do_replace_all_abilities(self,args):
         '''
-        replace_all_abilities [Character Name] [new ability1] [new ability 2] [new ability 3]
+        replace_all_abilities [Character Name] [new ability1] [new ability 2]
+        [new ability 3]
 
         Replaces all abilities on a character
         '''
         result = args.split(" ")
         league = self.lm.get_current_league()
         character = league.find_character(result[0])
-        if len(result) == 0:
-            print("You have not set any abilities")
-        if len(result) == 1:
-            character.set_abilities(arg1 = result[1])
-        if len(result) == 2:
-            character.set_abilities(arg1 = result[1], arg2 = result[2])
-        if len(result) == 3:
-            character.set_abilities(arg1 = result[1], arg2 = result[2],
-                                    arg3 = result[3])
+        input_v = InputView()
+        # Need exception / error handling here in case character is None
+
+        if character is not None:
+            if len(result) == 0:
+                print("You have not specified a name. Please try again")
+            elif len(result) == 1:
+                print("You have not set any abilities")
+            elif len(result) == 2:
+                try:
+                    # Valdiate the input:
+                    input_v.check_valid_ability(result[1],
+                                               self.lm.get_all_abilities())
+                    character.check_abilities(character.get_name(),
+                                              character.__class__.__name__,
+                                              character.get_subclass_level
+                                              (character),
+                                              character.get_number_abilities(),
+                                              arg1=result[1])
+                    # Delete the character's current abilities and set the new
+                    # ones
+                    character.clear_abilities()
+                    character.set_abilities(arg1=result[1])
+                    print("New abilities have been set for " +
+                          character.get_name() + ": " +
+                          character.get_abilities()[0].get_name())
+                except InputException as e:
+                    print(e.value)
+                except CharacterException as e:
+                    print(e.value)
+
+            elif len(result) == 3:
+                try:
+                    # Valdiate the input:
+                    input_v.check_valid_ability(result[1],
+                                               self.lm.get_all_abilities())
+                    input_v.check_valid_ability(result[2],
+                                               self.lm.get_all_abilities())
+                    character.check_abilities(character.get_name(),
+                                              character.__class__.__name__,
+                                              character.get_subclass_level
+                                              (character),
+                                              character.get_number_abilities(),
+                                              arg1=result[1], arg2=result[2])
+                    character.clear_abilities()
+                    character.set_abilities(arg1=result[1], arg2=result[2])
+                    print("New abilities have been set for " +
+                          character.get_name() + ": " +
+                          character.get_abilities()[0].get_name() + " " +
+                          character.get_abilities()[1].get_name())
+                except InputException as e:
+                    print(e.value)
+                except CharacterException as e:
+                    print(e.value)
+
+            elif len(result) == 4:
+                try:
+                    # Valdiate the input:
+                    input_v.check_valid_ability(result[1],
+                                               self.lm.get_all_abilities())
+                    input_v.check_valid_ability(result[2],
+                                               self.lm.get_all_abilities())
+                    input_v.check_valid_ability(result[3],
+                                               self.lm.get_all_abilities())
+                    character.check_abilities(character.get_name(),
+                                              character.__class__.__name__,
+                                              character.get_subclass_level
+                                              (character),
+                                              character.get_number_abilities(),
+                                              arg1=result[1], arg2=result[2],
+                                              arg3=result[3])
+                    character.clear_abilities()
+                    character.set_abilities(arg1=result[1], arg2=result[2],
+                                            arg3=result[3])
+                    print("New abilities have been set for " +
+                          character.get_name() + ": " +
+                          character.get_abilities()[0].get_name() + " " +
+                          character.get_abilities()[1].get_name() + " " +
+                          character.get_abilities()[2].get_name())
+                except InputException as e:
+                    print(e.value)
+                except CharacterException as e:
+                    print(e.value)
+            else:
+                print("You have entered too many arguments. Please try again.")
+        else:
+            print(result[0] + " is not in the " +
+                  self.lm.get_current_league().get_name() + " league")
 
     def do_edit_skills(self,args):
-        '''
-        edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse] [Cunning]
+        """
+        edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse]
+        [Cunning]
 
         Edits the value for the skills for a character
-        '''
+        """
         result = args.split(" ")
         league = self.lm.get_current_league()
         character = league.find_character(result[0])
         inputV = InputView()
 
         if character is not None:
-            if len(result) < 6:
+            if len(result) == 7:
                 try:
                     inputV.check_valid_skill_dice(result[1])
                     inputV.check_valid_skill_dice(result[2])
@@ -276,7 +376,86 @@ class Console(cmd.Cmd):
                     inputV.check_valid_skill_dice(result[5])
                     inputV.check_valid_skill_dice(result[6])
 
-                    # character.
+                    # Then need to get the skills data from each of the args
+                    # and add this to a collection
+
+                    num_dice_list = []
+                    type_dice_list = []
+                    # start with the first skill input data, not the name
+                    # x = 1
+                    # remove the character name from the results list
+                    # result list is now length 6
+                    del result[0]
+
+                    for i in range(len(result)):
+                        dice_str_data = \
+                            Character.obtain_dice_data(result[i])
+                        # print("number_dice_str: "+ number_dice_str)
+                        # print("type_dice_str: " + type_dice_str)
+                        num_dice_list.append(dice_str_data[0])
+                        type_dice_list.append(dice_str_data[1])
+
+                    try:
+                        character.check_number_dice(character, num_dice_list)
+
+                        try:
+                            character.check_type_dice(character, type_dice_list)
+
+                            # Then it's okay to remove the original skills
+                            # and replace them with the changed skills:
+
+                            skills_result = Character.obtain_dice_data(
+                                result[0])
+                            character.set_brawl(Skill(ESkill.brawl,
+                                                      character.find_edice
+                                                      (skills_result[1]),
+                                                      skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[1])
+                            character.set_shoot(Skill(ESkill.shoot,
+                                                      character.find_edice
+                                                      (skills_result[1]),
+                                                      skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[2])
+                            character.set_dodge(Skill(ESkill.dodge,
+                                                      character.find_edice
+                                                      (skills_result[1]),
+                                                      skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[3])
+                            character.set_might(Skill(ESkill.might,
+                                                      character.find_edice
+                                                      (skills_result[1]),
+                                                      skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[4])
+                            character.set_finesse(Skill(ESkill.finesse,
+                                                        character.find_edice
+                                                        (skills_result[1]),
+                                                        skills_result[0]))
+
+                            skills_result = Character.obtain_dice_data(
+                                result[5])
+                            character.set_cunning(Skill(ESkill.cunning,
+                                                        character.find_edice
+                                                        (skills_result[1]),
+                                                      skills_result[0]))
+
+                            print(character.get_name() + "'s skills have "
+                                                         "successfuly been "
+                                                         "replaced.")
+
+                        except CharacterException as e:
+                            print(e.value)
+
+                    except CharacterException as e:
+                        print(e.value)
+
                 except InputException as e:
                     print(e.value)
             else:
