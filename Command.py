@@ -55,6 +55,11 @@ class Console(cmd.Cmd):
         This command will display your current league. It will list the
         current characters and their skills
         '''
+        if self.lm.get_current_league() == "":
+            print("You need to create a league first before trying to display "
+                  "a league.")
+            return
+
         self.vm.display(self.lm.get_current_league())
         self.vm.display(self.vm.build_table(self.lm.export_league()))
 
@@ -119,6 +124,11 @@ class Console(cmd.Cmd):
             Brash Crafty
         '''
         league = self.lm.get_current_league()
+        if league == "":
+            print("You need to create a league first before adding a "
+                  "character.")
+            return
+
         result = args.split(" ")
         inputV = InputView()
 
@@ -155,11 +165,12 @@ class Console(cmd.Cmd):
                                                    self.lm.get_all_abilities())
                         inputV.check_duplicate_values(result[9], result[10])
 
-                        league.add_character(name=result[0], char_type=result[1],
+                        league.add_character(name=result[0],
+                                             char_type=result[1],
                                              health=result[2], brawl=result[3],
                                              shoot=result[4], dodge=result[5],
-                                             might=result[
-                                                 6], finesse=result[7],
+                                             might=result[6],
+                                             finesse=result[7],
                                              cunning=result[8], arg1=result[9],
                                              arg2=result[10])
                     except InputException as e:
@@ -175,7 +186,8 @@ class Console(cmd.Cmd):
                                                    self.lm.get_all_abilities())
                         inputV.check_duplicate_values(result[9], result[10],
                                                       result[11])
-                        league.add_character(name=result[0], char_type=result[1],
+                        league.add_character(name=result[0],
+                                             char_type=result[1],
                                              health=result[2], brawl=result[3],
                                              shoot=result[4], dodge=result[5],
                                              might=result[
@@ -190,20 +202,27 @@ class Console(cmd.Cmd):
             except InputException as e:
                 print(e.value)
         else:
-            print("You have not entered enough arguments to create a character "
-                  "Please try again.")
+            print("You have not entered enough arguments to create a character"
+                  ". Please try again.")
 
     def do_rename_character(self, args):
         '''
         rename_character [oldName] [newName]
+
         Renames the character with a new name provided
         Names must be one word with no spaces
-        > Error handling: need to check that the character exists in league
-        > Error handling: need to check that the new name is not an empty string
         '''
+        # > Error handling: need to check that the character exists in league
+        # > Error handling: need to check that the new name is not an empty
+        # string
         result = args.split(" ")
         # self.vm.display("Results: " + result[0] + " " + result[1])
         league = self.lm.get_current_league()
+        if league == "":
+            print("You need to create a league first before trying to rename "
+                  "one of its characters.")
+            return
+
         character = league.find_character(result[0])
         # try:
         character.set_name(result[1])
@@ -218,13 +237,18 @@ class Console(cmd.Cmd):
         This command will delete the character
         '''
         league = self.lm.get_current_league()
+        if league == "":
+            print("You need to create a league first before trying to delete "
+                  "one of its characters.")
+            return
+
         character = league.find_character(args)
         if character is not None:
             league.remove_character(character)
         else:
-            self.vm.display("'" + args + "' is not recorded as being in the "
-                                         "league. No character has been "
-                                         "deleted.")
+            self.vm.display("'" + args + "' is not recorded as being in "
+                                         "the league. No character has "
+                                         "been deleted.")
 
     def do_replace_ability(self, args):
         '''
@@ -232,16 +256,21 @@ class Console(cmd.Cmd):
 
         Replaces an ability on a character
         '''
+        league = self.lm.get_current_league()
+        if league == "":
+            print("You need to create a league first before trying to "
+                  "replace the ability of one of its characters.")
+            return
+
         result = args.split(" ")
         if len(result) < 3:
             print("Not enough arguments. Please try again")
-            # What if there are too many arguments ???
             return
-        input_v = InputView()
-        league = self.lm.get_current_league()
-        # character = ""
+            # What if there are too many arguments ???
 
+        input_v = InputView()
         character = league.find_character(result[0])
+
         if character is not None:
             try:
                 input_v.check_valid_ability(result[1],
@@ -269,6 +298,11 @@ class Console(cmd.Cmd):
         '''
         result = args.split(" ")
         league = self.lm.get_current_league()
+        if league == "":
+            print("You need to create a league first before trying to "
+                  "replace the abilities of one of its characters.")
+            return
+
         character = league.find_character(result[0])
 
         # Error handling:
@@ -383,6 +417,11 @@ class Console(cmd.Cmd):
         """
         result = args.split(" ")
         league = self.lm.get_current_league()
+        if league == "":
+            print("You need to create a league first before trying to "
+                  "replace the abilities of one of its characters.")
+            return
+
         character = league.find_character(result[0])
 
         if character is not None:
@@ -506,6 +545,11 @@ class Console(cmd.Cmd):
 
         Displays all information for a character
         '''
+        if self.lm.get_current_league() == "":
+            print("You need to create a league first before trying to "
+                  "view a character in a league.")
+            return
+
         result = self.vm.build_character_table(self.lm.export_character(args))
         self.vm.display(result)
 
