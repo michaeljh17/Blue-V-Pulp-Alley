@@ -354,6 +354,116 @@ class Console(cmd.Cmd):
             print(result[0] + " is not in the " +
                   self.lm.get_current_league().get_name() + " league")
 
+    def edit_skills_last(self, result, character):
+        """
+        This function is the final method which checks whether a
+        character's skills can be modified
+        :param result: a list containing the user's input
+        :param character: the instance of character
+        :return:
+        """
+        input_v = InputView()
+
+        try:
+            input_v.check_valid_skill_dice(result[1])
+            input_v.check_valid_skill_dice(result[2])
+            input_v.check_valid_skill_dice(result[3])
+            input_v.check_valid_skill_dice(result[4])
+            input_v.check_valid_skill_dice(result[5])
+            input_v.check_valid_skill_dice(result[6])
+
+            # Start with the first skill input data, not the name:
+            # remove the character name from the results list
+            # The result list will now be length 6
+            del result[0]
+
+            # Get the skills data from each of the args
+            num_dice_list = []
+            type_dice_list = []
+
+            for i in range(len(result)):
+                dice_str_data = \
+                    Character.obtain_dice_data(result[i])
+                # print("number_dice_str: "+ number_dice_str)
+                # print("type_dice_str: " + type_dice_str)
+                num_dice_list.append(dice_str_data[0])
+                type_dice_list.append(dice_str_data[1])
+
+            try:
+                character.check_number_dice(character, num_dice_list)
+
+                try:
+                    character.check_type_dice(character, type_dice_list)
+
+                    # If the previous tests pass then the original skills
+                    # can be removed and replaced with the updated skills:
+
+                    skills_result = Character.obtain_dice_data(
+                        result[0])
+                    character.set_brawl(Skill(ESkill.brawl,
+                                              character.find_edice
+                                              (skills_result[1]),
+                                              skills_result[0]))
+
+                    skills_result = Character.obtain_dice_data(
+                        result[1])
+                    character.set_shoot(Skill(ESkill.shoot,
+                                              character.find_edice
+                                              (skills_result[1]),
+                                              skills_result[0]))
+
+                    skills_result = Character.obtain_dice_data(
+                        result[2])
+                    character.set_dodge(Skill(ESkill.dodge,
+                                              character.find_edice
+                                              (skills_result[1]),
+                                              skills_result[0]))
+
+                    skills_result = Character.obtain_dice_data(
+                        result[3])
+                    character.set_might(Skill(ESkill.might,
+                                              character.find_edice
+                                              (skills_result[1]),
+                                              skills_result[0]))
+
+                    skills_result = Character.obtain_dice_data(
+                        result[4])
+                    character.set_finesse(Skill(ESkill.finesse,
+                                                character.find_edice
+                                                (skills_result[1]),
+                                                skills_result[0]))
+
+                    skills_result = Character.obtain_dice_data(
+                        result[5])
+                    character.set_cunning(Skill(ESkill.cunning,
+                                                character.find_edice
+                                                (skills_result[1]),
+                                              skills_result[0]))
+
+                    print(character.get_name() + "'s skills have "
+                                                 "successfuly been "
+                                                 "replaced.")
+                except CharacterException as e:
+                    print(e.value)
+            except CharacterException as e:
+                print(e.value)
+        except InputException as e:
+            print(e.value)
+
+    def edit_skills_middle(self, result, character):
+        """
+        This function will continue the process of checking whether a
+        character's skills can be modified
+        :param result: a list containing the user's input
+        :param character: the instance of character
+        :return:
+        """
+        if len(result) == 7:
+            self.edit_skills_last(result, character)
+        else:
+            print("You have not entered enough data for all of the skills. "
+                  "Please try again")
+
     def do_edit_skills(self,args):
         """
         edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse]
@@ -364,103 +474,9 @@ class Console(cmd.Cmd):
         result = args.split(" ")
         league = self.lm.get_current_league()
         character = league.find_character(result[0])
-        inputV = InputView()
 
         if character is not None:
-            if len(result) == 7:
-                try:
-                    inputV.check_valid_skill_dice(result[1])
-                    inputV.check_valid_skill_dice(result[2])
-                    inputV.check_valid_skill_dice(result[3])
-                    inputV.check_valid_skill_dice(result[4])
-                    inputV.check_valid_skill_dice(result[5])
-                    inputV.check_valid_skill_dice(result[6])
-
-                    # Then need to get the skills data from each of the args
-                    # and add this to a collection
-
-                    num_dice_list = []
-                    type_dice_list = []
-                    # start with the first skill input data, not the name
-                    # x = 1
-                    # remove the character name from the results list
-                    # result list is now length 6
-                    del result[0]
-
-                    for i in range(len(result)):
-                        dice_str_data = \
-                            Character.obtain_dice_data(result[i])
-                        # print("number_dice_str: "+ number_dice_str)
-                        # print("type_dice_str: " + type_dice_str)
-                        num_dice_list.append(dice_str_data[0])
-                        type_dice_list.append(dice_str_data[1])
-
-                    try:
-                        character.check_number_dice(character, num_dice_list)
-
-                        try:
-                            character.check_type_dice(character, type_dice_list)
-
-                            # Then it's okay to remove the original skills
-                            # and replace them with the changed skills:
-
-                            skills_result = Character.obtain_dice_data(
-                                result[0])
-                            character.set_brawl(Skill(ESkill.brawl,
-                                                      character.find_edice
-                                                      (skills_result[1]),
-                                                      skills_result[0]))
-
-                            skills_result = Character.obtain_dice_data(
-                                result[1])
-                            character.set_shoot(Skill(ESkill.shoot,
-                                                      character.find_edice
-                                                      (skills_result[1]),
-                                                      skills_result[0]))
-
-                            skills_result = Character.obtain_dice_data(
-                                result[2])
-                            character.set_dodge(Skill(ESkill.dodge,
-                                                      character.find_edice
-                                                      (skills_result[1]),
-                                                      skills_result[0]))
-
-                            skills_result = Character.obtain_dice_data(
-                                result[3])
-                            character.set_might(Skill(ESkill.might,
-                                                      character.find_edice
-                                                      (skills_result[1]),
-                                                      skills_result[0]))
-
-                            skills_result = Character.obtain_dice_data(
-                                result[4])
-                            character.set_finesse(Skill(ESkill.finesse,
-                                                        character.find_edice
-                                                        (skills_result[1]),
-                                                        skills_result[0]))
-
-                            skills_result = Character.obtain_dice_data(
-                                result[5])
-                            character.set_cunning(Skill(ESkill.cunning,
-                                                        character.find_edice
-                                                        (skills_result[1]),
-                                                      skills_result[0]))
-
-                            print(character.get_name() + "'s skills have "
-                                                         "successfuly been "
-                                                         "replaced.")
-
-                        except CharacterException as e:
-                            print(e.value)
-
-                    except CharacterException as e:
-                        print(e.value)
-
-                except InputException as e:
-                    print(e.value)
-            else:
-                print("You have not entered enough data for all of the skills. "
-                      "Please try again")
+            self.edit_skills_middle(result, character)
         else:
             print("Invalid character name entered. Please try again.")
 
