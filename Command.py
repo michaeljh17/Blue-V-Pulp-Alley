@@ -49,19 +49,19 @@ class Console(cmd.Cmd):
 
         """
         if args == "":
-            self.vm.display("You must type a new name to replace the old")
+            self._vm.display("You must type a new name to replace the old")
         else:
             try:
-                self.lm.get_current_league().set_name(args)
+                self._lm.get_current_league().set_name(args)
             except AttributeError:
-                self.vm.display("There is no league to rename. I suggest "
+                self._vm.display("There is no league to rename. I suggest "
                                 + "you create one")
                 return
             except Exception as e:
-                self.vm.display("You may not rename the league. " + str(e))
+                self._vm.display("You may not rename the league. " + str(e))
                 return
-        self.vm.display("The league is now named: " +
-                        self.lm.get_current_league().get_name())
+        self._vm.display("The league is now named: " +
+                        self._lm.get_current_league().get_name())
 
     def do_deleteLeague(self, args):
         '''
