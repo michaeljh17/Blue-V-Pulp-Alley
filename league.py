@@ -20,6 +20,7 @@ class League(object):
         self._all_my_characters = all_my_chars
         self._max_points = max_points
         self._my_league_model = league_model
+        self._leader_in_league = False
 
     def __str__(self):
         return self._name
@@ -49,7 +50,14 @@ class League(object):
         Adds a new character to the league
         """
 
-        # First need to check that the user has not created a character with
+        # Need to check whether a leader has been added to the league. If not
+        # then unless the new character is the leader, then the user should
+        # not be able to add the character to the league:
+
+        if not self.check_leader(char_type):
+            return
+
+        # Need to check that the user has not created a character with
         # the same name as an existing character: These 'if not' statements
         # are saying if the result is False then ...
 
@@ -218,3 +226,22 @@ class League(object):
 
         # return an array of the character's attributes
         return result
+
+    def check_leader(self, char_type):
+        """
+        This function will raise an exception if the user attempts to add a
+        character which is not a leader to a league and the league does not
+        yet have a leader
+        :param char_type: class of character
+        :return: True, unless the exception is raised.
+        """
+        if self._leader_in_league:
+            return True
+        else:
+            if char_type == "Leader":
+                self._leader_in_league = True
+                return True
+            else:
+                raise CharacterException("You must first add a leader to a "
+                                         "league before adding any other type "
+                                         "of character.")
