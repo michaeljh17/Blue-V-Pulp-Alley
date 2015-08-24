@@ -2,10 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="880f60b7-9342-4f93-900e-2338f2e95c54" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmd_console.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.project" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.pydevproject" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/FilerModule/FilerExeption.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/FilerModule/FilerModule.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Test_Add_Character.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Test_Add_Leader.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Test_Display_Character.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Unit_Test_Ally_Creation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Unit_Test_Character_Creation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Unit_Test_Follower_Creation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Unit_Test_Leader_Creation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/Unit_Test_SideKick_Creation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ViewModel/ViewModel.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/FilerModule/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ViewModel/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/input_view.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ViewModel/viewModel.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Blue-V-Pulp-Alley.iml" afterPath="$PROJECT_DIR$/.idea/Blue-V-Pulp-Alley.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ViewModel/CellBuilder.py" afterPath="$PROJECT_DIR$/ViewModel/CellBuilder.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Command.py" afterPath="$PROJECT_DIR$/Command.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ViewModel/RowBuilder.py" afterPath="$PROJECT_DIR$/ViewModel/RowBuilder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ViewModel/TableBuilder.py" afterPath="$PROJECT_DIR$/ViewModel/TableBuilder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ability.py" afterPath="$PROJECT_DIR$/ability.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ally.py" afterPath="$PROJECT_DIR$/ally.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/character.py" afterPath="$PROJECT_DIR$/character.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller.py" afterPath="$PROJECT_DIR$/controller.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/edice.py" afterPath="$PROJECT_DIR$/edice.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/follower.py" afterPath="$PROJECT_DIR$/follower.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/leader.py" afterPath="$PROJECT_DIR$/leader.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/league.py" afterPath="$PROJECT_DIR$/league.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/league_model.py" afterPath="$PROJECT_DIR$/league_model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/side_kick.py" afterPath="$PROJECT_DIR$/side_kick.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/skill.py" afterPath="$PROJECT_DIR$/skill.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Blue-V-Pulp-Alley.iws" />
@@ -30,9 +62,11 @@
       <file leaf-file-name="league.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/league.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-27.814816">
-              <caret line="871" column="29" selection-start-line="871" selection-start-column="29" selection-end-line="871" selection-end-column="29" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="288" column="28" selection-start-line="288" selection-start-column="28" selection-end-line="288" selection-end-column="28" />
+              <folding>
+                <marker date="1440398632000" expanded="true" signature="13694:13714" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/controller.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -51,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/character.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="397" column="21" selection-start-line="397" selection-start-column="21" selection-end-line="397" selection-end-column="21" />
+              <caret line="521" column="21" selection-start-line="521" selection-start-column="21" selection-end-line="521" selection-end-column="21" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -62,8 +96,8 @@
       <file leaf-file-name="Command.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Command.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="7.0212765">
-              <caret line="181" column="48" selection-start-line="181" selection-start-column="48" selection-end-line="181" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.039893616">
+              <caret line="210" column="11" selection-start-line="210" selection-start-column="11" selection-end-line="210" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -73,9 +107,10 @@
         <entry file="file://$PROJECT_DIR$/follower.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="65" column="30" selection-start-line="63" selection-start-column="4" selection-end-line="65" selection-end-column="30" />
+              <caret line="38" column="30" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
               <folding>
                 <element signature="e#23#46#0" expanded="true" />
+                <marker date="1440398632000" expanded="true" signature="158:1353" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -85,9 +120,10 @@
         <entry file="file://$PROJECT_DIR$/side_kick.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
+              <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
+                <marker date="1440398632000" expanded="true" signature="135:1338" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -97,9 +133,10 @@
         <entry file="file://$PROJECT_DIR$/leader.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="71" column="30" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
+              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
+                <marker date="1440398632000" expanded="true" signature="133:1345" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -109,9 +146,10 @@
         <entry file="file://$PROJECT_DIR$/ally.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
+              <caret line="38" column="68" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="68" />
               <folding>
                 <element signature="e#21#52#0" expanded="true" />
+                <marker date="1440398632000" expanded="true" signature="152:1349" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -151,6 +189,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="2" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="716" />
@@ -194,28 +233,18 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Blue-V-Pulp-Alley" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Blue-V-Pulp-Alley" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="Blue-V-Pulp-Alley - This one" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -225,31 +254,14 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="FullScreen" value="false" />
   </component>
-  <component name="RunManager" selected="Python tests.Doctest Console.do_replace_ability">
-    <configuration default="false" name="controller" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Blue-V-Pulp-Alley" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/controller.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.controller">
     <configuration default="false" name="Doctest Console.do_replace_ability" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Blue-V-Pulp-Alley" />
@@ -260,6 +272,23 @@
       <option name="TEST_TYPE" value="TEST_METHOD" />
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="controller" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Blue-V-Pulp-Alley" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/controller.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -385,17 +414,20 @@
       <method />
     </configuration>
     <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Python.controller" />
-      <item index="1" class="java.lang.String" itemvalue="Python tests.Doctest Console.do_replace_ability" />
+      <item index="0" class="java.lang.String" itemvalue="Python tests.Doctest Console.do_replace_ability" />
+      <item index="1" class="java.lang.String" itemvalue="Python.controller" />
     </list>
     <recent_temporary>
       <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Doctest Console.do_replace_ability" />
-        <item index="1" class="java.lang.String" itemvalue="Python.controller" />
+        <item index="0" class="java.lang.String" itemvalue="Python.controller" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Doctest Console.do_replace_ability" />
       </list>
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -409,17 +441,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="716" extended-state="6" />
-    <editor active="false" />
+    <frame x="2" y="23" width="1280" height="716" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19221604" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19221604" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.03826955" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32833335" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32441473" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32441473" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -454,6 +486,7 @@
           <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
           <folding>
             <element signature="e#21#52#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="152:1349" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -464,6 +497,7 @@
           <caret line="14" column="113" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="113" />
           <folding>
             <element signature="e#21#52#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="152:1349" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -479,9 +513,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#24#49#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -491,6 +522,7 @@
           <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="135:1338" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -499,7 +531,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="235" column="45" selection-start-line="235" selection-start-column="45" selection-end-line="235" selection-end-column="45" />
-          <folding />
+          <folding>
+            <marker date="1440398632000" expanded="true" signature="13694:13714" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -527,6 +561,7 @@
           <caret line="59" column="18" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="18" />
           <folding>
             <element signature="e#23#46#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="158:1353" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -544,6 +579,7 @@
           <caret line="43" column="43" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="133:1345" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -554,6 +590,7 @@
           <caret line="14" column="113" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="113" />
           <folding>
             <element signature="e#21#52#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="152:1349" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -569,9 +606,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#24#49#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -581,6 +615,7 @@
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="135:1338" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -589,7 +624,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="235" column="45" selection-start-line="235" selection-start-column="45" selection-end-line="235" selection-end-column="45" />
-          <folding />
+          <folding>
+            <marker date="1440398632000" expanded="true" signature="13694:13714" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -617,6 +654,7 @@
           <caret line="59" column="18" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="18" />
           <folding>
             <element signature="e#23#46#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="158:1353" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -634,6 +672,7 @@
           <caret line="43" column="43" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="133:1345" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -644,6 +683,7 @@
           <caret line="14" column="113" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="113" />
           <folding>
             <element signature="e#21#52#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="152:1349" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -659,9 +699,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#24#49#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -671,6 +708,7 @@
           <caret line="107" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="135:1338" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -679,7 +717,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="235" column="45" selection-start-line="235" selection-start-column="45" selection-end-line="235" selection-end-column="45" />
-          <folding />
+          <folding>
+            <marker date="1440398632000" expanded="true" signature="13694:13714" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -707,6 +747,7 @@
           <caret line="59" column="18" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="18" />
           <folding>
             <element signature="e#23#46#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="158:1353" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -724,6 +765,7 @@
           <caret line="43" column="43" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="133:1345" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -734,6 +776,7 @@
           <caret line="14" column="113" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="113" />
           <folding>
             <element signature="e#21#52#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="152:1349" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -749,9 +792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#24#49#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -761,6 +801,7 @@
           <caret line="68" column="18" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="135:1338" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -769,7 +810,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="235" column="45" selection-start-line="235" selection-start-column="45" selection-end-line="235" selection-end-column="45" />
-          <folding />
+          <folding>
+            <marker date="1440398632000" expanded="true" signature="13694:13714" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -813,9 +856,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="e#24#49#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -829,9 +869,10 @@
     <entry file="file://$PROJECT_DIR$/leader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="30" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="133:1345" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -839,9 +880,10 @@
     <entry file="file://$PROJECT_DIR$/ally.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
+          <caret line="38" column="68" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="68" />
           <folding>
             <element signature="e#21#52#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="152:1349" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -849,9 +891,10 @@
     <entry file="file://$PROJECT_DIR$/follower.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="30" selection-start-line="63" selection-start-column="4" selection-end-line="65" selection-end-column="30" />
+          <caret line="38" column="30" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
           <folding>
             <element signature="e#23#46#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="158:1353" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -859,25 +902,28 @@
     <entry file="file://$PROJECT_DIR$/side_kick.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
+          <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+            <marker date="1440398632000" expanded="true" signature="135:1338" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/league.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.814816">
-          <caret line="871" column="29" selection-start-line="871" selection-start-column="29" selection-end-line="871" selection-end-column="29" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="288" column="28" selection-start-line="288" selection-start-column="28" selection-end-line="288" selection-end-column="28" />
+          <folding>
+            <marker date="1440398632000" expanded="true" signature="13694:13714" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/character.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="397" column="21" selection-start-line="397" selection-start-column="21" selection-end-line="397" selection-end-column="21" />
+          <caret line="521" column="21" selection-start-line="521" selection-start-column="21" selection-end-line="521" selection-end-column="21" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -887,15 +933,15 @@
     <entry file="file://$PROJECT_DIR$/controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Command.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.0212765">
-          <caret line="181" column="48" selection-start-line="181" selection-start-column="48" selection-end-line="181" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.039893616">
+          <caret line="210" column="11" selection-start-line="210" selection-start-column="11" selection-end-line="210" selection-end-column="11" />
           <folding />
         </state>
       </provider>
