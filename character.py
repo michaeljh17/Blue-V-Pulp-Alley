@@ -426,7 +426,7 @@ class Character(metaclass=ABCMeta):
         """
         class_name = character_obj.__class__.__name__
         result = 0
-        # Probably don't need to include error handling here ...?
+
         for subChar in Character.__subclasses__():
             if class_name == subChar.__name__:
                 return subChar.get_size(self)
@@ -440,7 +440,7 @@ class Character(metaclass=ABCMeta):
         """
         class_name = character_obj.__class__.__name__
         result = 0
-        # Probably don't need to include error handling here ...?
+
         for subChar in Character.__subclasses__():
             if class_name == subChar.__name__:
                 return subChar.get_level(self)
