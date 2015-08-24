@@ -280,10 +280,44 @@ class League(object):
 
         for character in self._all_my_characters:
             output.append(character.export_character())
-        #print(output)
+        # print(output)
         return output
+
+    def export_character(self, character_name):
+        # -MS-
+        # find the character object using the name as a given reference
+        character = self.find_character(character_name)
+        character_data = character.export_character()
+        # create a 3D array
+        result = []
+        first_row = []
+        second_row = []
+        third_row = []
+        fourth_row = []
+        # First row array is to contain - Name
+        first_row.append(["Name", character_data[1]])
+        result.append(first_row)
+        # Second row array is to contain - Type
+        second_row.append(["Type", character_data[0]])
+        result.append(second_row)
+        # Third row array is to contain - Skills
+        third_row.append(["Skills"])
+        third_row.append(
+            ["Health", "Brawl", "Shoot", "Dodge", "Might", "Finesse", "Cunning"])
+        third_row.append([character_data[2], character_data[3], character_data[4],
+                          character_data[5], character_data[
+                              6], character_data[7],
+                          character_data[8]])
+        result.append(third_row)
+        # Fourth row array is to contain - abilities
+        fourth_row.append(["Abilities"])
+        fourth_row.append([character_data[9]])
+        result.append(fourth_row)
+
+        # return an array of the character's attributes
+        return result
+
 
 # if __name__ == "__main__":
 #   import doctest
 #   doctest.testmod()
-

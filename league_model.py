@@ -6,6 +6,7 @@ import string
 
 class LeagueModel(object):
     """Top model class"""
+
     def __init__(self, all_my_abilities=[], my_league=""):
         self._all_my_abilities = all_my_abilities
         self._my_league = my_league
@@ -18,7 +19,7 @@ class LeagueModel(object):
             for attr in sub_list:
                 temp.append(attr)
                 # print(attr)
-            new_ability = Ability(temp[0],temp[1],temp[2],temp[3])
+            new_ability = Ability(temp[0], temp[1], temp[2], temp[3])
             # print(new_ability)
             self._all_my_abilities.append(new_ability)
             temp = []
@@ -38,3 +39,7 @@ class LeagueModel(object):
 
     def export_league(self):
         return self._my_league.export_league()
+
+    def export_character(self, character_name):
+        #  -MS-
+        return self._my_league.export_character(character_name)
