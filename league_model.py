@@ -35,6 +35,9 @@ class LeagueModel(object):
     def get_current_league(self):
         return self._my_league
 
+    def delete_league(self):
+        del self._my_league
+
     # League Export functions
 
     def export_league(self):
