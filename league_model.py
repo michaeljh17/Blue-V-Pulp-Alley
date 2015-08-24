@@ -13,7 +13,7 @@ class LeagueModel(object):
 
     def set_abilities_file(self, input):
         temp = []
-        global ability_list
+        # global ability_list
         ability_list = []
         for sub_list in input:
             for attr in sub_list:

@@ -29,6 +29,11 @@ class FilerModule(object):
     # File handling and reading functions:
 
     def read_file(self, filename):
+        """
+        This method will read data from a file
+        :param filename: filepath of the file to be read
+        :return: The data obtained from the file
+        """
         data = []
         file_content = open(filename, "r")
         for line in file_content:
@@ -39,10 +44,16 @@ class FilerModule(object):
 
     @staticmethod
     def get_line_data(line, data):
-        # line = line.replace('/', ' ')
-        ability_details = []
+        """
+        This method will obtain comma-separated values from a string.
+        :param line: a string
+        :param data: a list
+        :return: Although there are no values which are returned, the method
+        will append the strings obtained from each line to the list which is
+        passed into this method.
+        """
+        csv_strings = []
         for attr in line.split(','):
-            # attr = attr.lower() ?
             attr = attr.strip(string.punctuation + string.whitespace)
-            ability_details.append(attr)
-        data.append(ability_details)
+            csv_strings.append(attr)
+        data.append(csv_strings)
