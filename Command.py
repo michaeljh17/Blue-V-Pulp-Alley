@@ -215,8 +215,6 @@ class Console(cmd.Cmd):
                                              cunning=result[8], arg1=result[9])
                     except InputException as e:
                         print(e.value)
-                    except CharacterException as e:
-                        print(e.value)
 
                 elif len(result) == 11:
                     try:
@@ -235,8 +233,6 @@ class Console(cmd.Cmd):
                                              cunning=result[8], arg1=result[9],
                                              arg2=result[10])
                     except InputException as e:
-                        print(e.value)
-                    except CharacterException as e:
                         print(e.value)
 
                 elif len(result) == 12:
@@ -258,8 +254,6 @@ class Console(cmd.Cmd):
                                              cunning=result[8], arg1=result[9],
                                              arg2=result[10], arg3=result[11])
                     except InputException as e:
-                        print(e.value)
-                    except CharacterException as e:
                         print(e.value)
                 else:
                     print("You have entered too many arguments. Please try "

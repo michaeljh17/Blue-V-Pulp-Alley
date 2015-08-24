@@ -54,7 +54,11 @@ class League(object):
         # then unless the new character is the leader, then the user should
         # not be able to add the character to the league:
 
-        if not self.check_leader(char_type):
+        try:
+            if not self.check_leader(char_type):
+                return
+        except CharacterException as e:
+            print(e)
             return
 
         # Need to check that the user has not created a character with
@@ -140,7 +144,7 @@ class League(object):
                 print("The name, " + name + ", is already the name of an "
                                             "existing character. Please try "
                                             "again.")
-                return
+                return False
         return True
 
     def check_duplicate_type(self, char_type):

@@ -65,25 +65,30 @@ class FilerModule(object):
             with open(filename, 'r') as file_content:
                 for line in file_content:
                     if line != "\n":
-                        self.get_line_data(line, data, ',')
+                        self.get_line_data(line, data, ',', False)
             return data
         except FileNotFoundError as e:
             print("Error loading a file: " + filename)
             return None
 
     @staticmethod
-    def get_line_data(line, data, separator):
+    def get_line_data(line, data, separator, get_punct_ws_bool):
         """
         Written by MH
         This method will obtain delimiter-separated values from a string.
         :param line: a string
         :param data: a list
+        :param separator: the delimiter to use when obtaining strings from
+        the line
+        :param get_punct_ws_bool: A boolean value which will indicate whether
+        to include punctuation and whitespace in the strings which are obtained
         :return: Although there are no values which are returned, the method
         will append the strings obtained from each line to the list which is
         passed into this method.
         """
         strings_obtained = []
         for attr in line.split(separator):
-            attr = attr.strip(string.punctuation + string.whitespace)
+            if not get_punct_ws_bool:
+                attr = attr.strip(string.punctuation + string.whitespace)
             strings_obtained.append(attr)
         data.append(strings_obtained)
