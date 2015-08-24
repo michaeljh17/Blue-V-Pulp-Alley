@@ -42,7 +42,6 @@ class InputView(object):
 
         if len(dice_str_data[0]) > 0:
             pass
-            # print("Match group 1: " + number_dice)
         else:
             raise InputException("You have not entered the number of dice for a"
                                  " skill. Please try again")
@@ -51,7 +50,6 @@ class InputView(object):
 
         if len(dice_str_data[1]) > 0:
             pass
-            # print("Match group 1: " + type_dice)
         else:
             raise InputException("You have not entered a valid dice type for a "
                                  "skill. Please try again")

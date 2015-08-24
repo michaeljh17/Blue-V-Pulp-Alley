@@ -1,13 +1,15 @@
-﻿__author__ = 'sef0097'
+#?__author__ = 'sef0097'
 from FilerModule.FilerExeption import FilerException
 #from league_model import LeagueModel
 import pickle
 import string
 import os
 
+
 class FilerModule(object):
 
-    def export_league_binary_to_fs(self, input_object, directory='', file_name='data.pickles'):
+    def export_league_binary_to_fs(self, input_object, directory='',
+                                   file_name='data.pickles'):
         '''
         #Function to make a deep copy of an object then pickle it
         #Written by Sean
@@ -57,25 +59,30 @@ class FilerModule(object):
         
         
 
-    # File handling and reading functions:
+    # File reading functions:
 
     def read_file(self, filename):
         """
+        MH
         This method will read data from a file
         :param filename: filepath of the file to be read
         :return: The data obtained from the file
         """
         data = []
-        file_content = open(filename, "r")
-        for line in file_content:
-            if line != "\n":
-                self.get_line_data(line, data)
-        file_content.close()
-        return data
+        try:
+            with open(filename, 'r') as file_content:
+                for line in file_content:
+                    if line != "\n":
+                        self.get_line_data(line, data)
+            return data
+        except FileNotFoundError as e:
+            print("Error loading a file: " + filename)
+            return None
 
     @staticmethod
     def get_line_data(line, data):
         """
+        MH
         This method will obtain comma-separated values from a string.
         :param line: a string
         :param data: a list

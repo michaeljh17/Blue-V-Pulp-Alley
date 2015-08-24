@@ -37,18 +37,6 @@ class Character(metaclass=ABCMeta):
         # __abilities is a list of Ability objects
         self.__all_my_abilities = self.set_abilities(**abilities)
 
-        # print("Checking: " + self.__brawl.get_skill_name() + " " +
-        #      self.__brawl.get_dice_type().name)
-
-        """self.__ability_1 = self.__abilities[0]
-        # Could use exception handling instead of the if statement when setting
-        # ability 2 or 3
-        # (in case self.__abilities has only one item in it
-        if len(self.__abilities) == 2:
-            self.__ability_2 = self.__abilities[1]
-        elif len(self.__abilities) == 3:
-            self.__ability_3 = self.__abilities[2]"""
-
     def __str__(self):
         return self.__name
 
@@ -232,26 +220,27 @@ class Character(metaclass=ABCMeta):
 
         if len(new_abilities) > number_allowed:
             # Raise an exception
-            raise CharacterException(name + " the " + char_class
-                                     + " cannot have more than " +
-                                     str(self._number_abilities) + " "
-                                                                    "abilities."
-                                     + " Please try again.")
+            raise CharacterException(name + " the " + char_class + " cannot "
+                                                                   "have more "
+                                                                   "than " +
+                                     str(self._number_abilities) + " " +
+                                     " abilities. Please try again.")
 
         if len(new_abilities) != number_allowed:
             # Raise an exception
             raise CharacterException(name + " the " + char_class +
                                      " does not have the correct number of " +
-                                     "abilities: " + str(self._number_abilities)
-                                     + ". Please try again.")
+                                     "abilities: " +
+                                     str(self._number_abilities) +
+                                     ". Please try again.")
 
         # Check the level of the abilities which the user has entered
         for abili in new_abilities:
             if int(abili.get_level()) > ability_level:
                 # raise an exception
                 raise CharacterException("The " + char_class + " cannot have "
-                                         + "an ability with a level higher "
-                                           "than " + str(self._level))
+                                         "an ability with a level higher "
+                                         "than " + str(self._level))
 
         return result
 
@@ -348,7 +337,6 @@ class Character(metaclass=ABCMeta):
         output = []
         output_key_pair = dict()
 
-
         output_key_pair["brawl"] = str(self.get_brawl().get_number_dice() +
                                        self.get_brawl().get_dice_type().name)
         output_key_pair["shoot"] = str(self.get_shoot().get_number_dice() +
@@ -358,25 +346,28 @@ class Character(metaclass=ABCMeta):
         output_key_pair["might"] = str(self.get_might().get_number_dice() +
                                        self.get_might().get_dice_type().name)
         output_key_pair["finesse"] = str(self.get_finesse().get_number_dice() +
-                                         self.get_finesse().get_dice_type().name)
+                                         self.get_finesse().
+                                         get_dice_type().name)
         output_key_pair["cunning"] = str(self.get_cunning().get_number_dice() +
-                                         self.get_cunning().get_dice_type().name)
+                                         self.get_cunning().
+                                         get_dice_type().name)
 
         for ability in self.__all_my_abilities:
             if ability.get_modifier() != 0:
-                #find dict value die count
-                base_die_count = int(output_key_pair[ability.get_effected_skill()][0])
+                # find dict value die count
+                base_die_count = int(output_key_pair[ability.
+                                     get_effected_skill()][0])
                 base_die_count += ability.get_modifier()
-                #output_key_pair[ability.get_effected_skill()][0] = str(base_die_count)
-                output_key_pair[ability.get_effected_skill()] = str(base_die_count) + output_key_pair[ability.get_effected_skill()][1:]
+                # output_key_pair[ability.get_effected_skill()][0]
+                # = str(base_die_count)
+                slice_bit = output_key_pair[ability.get_effected_skill()][1:]
+                output_key_pair[ability.get_effected_skill()] \
+                    = str(base_die_count) + slice_bit
                 output_key_pair[ability.get_effected_skill()] += "*"
-
-
 
         output.append(str(type(self).__name__))
         output.append(str(self.get_name()))
         output.append(str(self.get_health().get_dice_type().name))
-
 
         output.append(output_key_pair["brawl"])
         output.append(output_key_pair["shoot"])
@@ -387,19 +378,23 @@ class Character(metaclass=ABCMeta):
 
         '''
         #Old Way
-        output.append(str(self.get_brawl().get_number_dice()) + str(self.get_brawl().get_dice_type().name))
-        output.append(str(self.get_shoot().get_number_dice()) + str(self.get_shoot().get_dice_type().name))
-        output.append(str(self.get_dodge().get_number_dice()) + str(self.get_dodge().get_dice_type().name))
-        output.append(str(self.get_might().get_number_dice()) + str(self.get_might().get_dice_type().name))
-        output.append(str(self.get_finesse().get_number_dice()) + str(self.get_finesse().get_dice_type().name))
-        output.append(str(self.get_cunning().get_number_dice()) + str(self.get_cunning().get_dice_type().name))
+        output.append(str(self.get_brawl().get_number_dice()) +
+         str(self.get_brawl().get_dice_type().name))
+        output.append(str(self.get_shoot().get_number_dice()) +
+         str(self.get_shoot().get_dice_type().name))
+        output.append(str(self.get_dodge().get_number_dice()) +
+         str(self.get_dodge().get_dice_type().name))
+        output.append(str(self.get_might().get_number_dice()) +
+         str(self.get_might().get_dice_type().name))
+        output.append(str(self.get_finesse().get_number_dice()) +
+         str(self.get_finesse().get_dice_type().name))
+        output.append(str(self.get_cunning().get_number_dice()) +
+         str(self.get_cunning().get_dice_type().name))
         '''
-
-
 
         skill_string = ""
         for ability in self.__all_my_abilities:
-            #output.append(str(ability.get_name()))
+            # output.append(str(ability.get_name()))
             skill_string += str(ability.get_name()) + ", "
         # remove the trailing comma
         skill_string = skill_string[:(len(skill_string) - 2)]
@@ -475,10 +470,9 @@ class Character(metaclass=ABCMeta):
         # First we really need to check that both the old ability and the new
         # ability are valid abilities
         old_abili = charac.find_ability(charac, old_ability_name,
-                                           self.__all_my_abilities)
-        new_abili = charac.find_ability(charac, new_ability_name,
-                                      self.__my_league.get_my_league_model()
-                                              .get_all_abilities())
+                                        self.__all_my_abilities)
+        abilities = self.__my_league.get_my_league_model().get_all_abilities()
+        new_abili = charac.find_ability(charac, new_ability_name, abilities)
 
         max_level = self.get_subclass_level(charac)
         # print("Max level of " + charac.get_name() + ": " + str(max_level))
@@ -496,13 +490,13 @@ class Character(metaclass=ABCMeta):
                                              "character now has a new "
                           "ability: " + new_ability_name)
                 else:
-                    print(charac.get_name() + " cannot have the ability, "
-                          + new_ability_name + ", because its level is too "
-                                               "high. The attempt to replace "
-                                               "abilities has failed.")
+                    print(charac.get_name() + " cannot have the ability, " +
+                          new_ability_name + ", because its level is too "
+                                             "high. The attempt to replace "
+                                             "abilities has failed.")
             else:
-                print(new_ability_name + " is not a valid ability. The attempt "
-                                         "to replace abilities has failed.")
+                print(new_ability_name + " is not a valid ability. The attempt"
+                                         " to replace abilities has failed.")
         else:
             print(charac.get_name() + " does not the ability, " +
                   old_ability_name + ". The attempt to replace abilities has "
@@ -535,9 +529,9 @@ class Character(metaclass=ABCMeta):
         if count_1 != dice_number_1[1]:
             # raise an exception
             raise CharacterException("Incorrect dice numbers have been set for"
-                                     + " " + char_instance.get_name() + " the "
-                                     + self.__class__.__name__ + ". Please try "
-                                                                 "again")
+                                     " " + char_instance.get_name() + " the " +
+                                     self.__class__.__name__ + ". Please try "
+                                                               "again")
 
         # Check the second set of dice numbers (if applicable)
         if dice_number_2 is not None:
@@ -547,10 +541,10 @@ class Character(metaclass=ABCMeta):
             # print(count_2)
             if count_2 != dice_number_2[1]:
                 # raise an exception
-                raise CharacterException("Incorrect dice numbers have been set for"
-                                         + " " + char_instance.get_name() + " the "
-                                         + self.__class__.__name__ + ". Please try "
-                                                                     "again")
+                raise CharacterException("Incorrect dice numbers have been set"
+                                         " for " + char_instance.get_name() +
+                                         " the " + self.__class__.__name__ +
+                                         ". Please try again")
 
     def check_type_dice(self, char_instance, dice_type_list):
         """
@@ -564,7 +558,7 @@ class Character(metaclass=ABCMeta):
         dice_type_2 = char_instance.__class__._dice_type_2
         # print("dice_type_1[0]: " + str(dice_type_1[0]))
         # if dice_type_2 is not None:
-            # print("dice_type_2[0]: " + str(dice_type_2[0]))
+        # print("dice_type_2[0]: " + str(dice_type_2[0]))
 
         count_1 = 0
         count_2 = 0
@@ -576,8 +570,8 @@ class Character(metaclass=ABCMeta):
         # print(count_1)
         if count_1 != dice_type_1[1]:
             # raise an exception
-            raise CharacterException("Incorrect dice type have been set for"
-                                     + char_instance.get_name() + " the " +
+            raise CharacterException("Incorrect dice type have been set for" +
+                                     char_instance.get_name() + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
 
@@ -589,17 +583,13 @@ class Character(metaclass=ABCMeta):
             # print(count_1)
             if count_2 != dice_type_1[1]:
                 # raise an exception
-                raise CharacterException("Incorrect dice type have been set for"
-                                         + char_instance.get_name() + " the " +
-                                         self.__class__.__name__ + ". Please "
-                                                                   "try again")
+                raise CharacterException("Incorrect dice type have been set "
+                                         "for" + char_instance.get_name() +
+                                         " the " + self.__class__.__name__ +
+                                         ". Please try again")
 
     def check_health(self, health, base_health):
         # Check the health type
         if health != base_health:
             # raise an exception
             raise CharacterException("Incorrect health input")
-
-# if __name__ == "__main__":
-#    import doctest
-#    doctest.testmod()

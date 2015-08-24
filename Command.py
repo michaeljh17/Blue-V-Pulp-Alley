@@ -11,7 +11,6 @@ from FilerModule.FilerModule import FilerModule
 from skill import Skill
 from eskill import ESkill
 from character import Character
-from msvcrt import getch
 
 
 class Console(cmd.Cmd):
@@ -19,7 +18,7 @@ class Console(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "=>>"
-        self.intro = "Welcome to Burger King, Please place your order"
+        self.intro = "Welcome to Python Alley (to view help type 'help')"
         self._lm = LeagueModel()
         self._vm = ViewModel()
         self._fm = FilerModule()
@@ -34,13 +33,16 @@ class Console(cmd.Cmd):
         '''createLeague [LeagueName]
         This command creates a league with the given name.
         '''
-        self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
-        # change to handle file systems
-        if args != "":
-            self._lm.add_league(args)
-            print(args + " created")
-        else:
-            print("The new league must have a name!")
+        try:
+            self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
+            # change to handle file systems
+            if args != "":
+                self._lm.add_league(args)
+                print(args + " created")
+            else:
+                print("The new league must have a name!")
+        except TypeError as e:
+            print("Please check your filesystem has all the necessary files.")
 
     def do_renameLeague(self, args):
         """
@@ -294,9 +296,9 @@ class Console(cmd.Cmd):
         if character is not None:
             league.remove_character(character)
         else:
-            self._vm.display("'" + args + "' is not recorded as being in "
-                                         "the league. No character has "
-                                         "been deleted.")
+            self._vm.display("'" + args + "' is not recorded as being in the "
+                                          "league. No character has been "
+                                          "deleted.")
 
     def do_replace_ability(self, args):
         '''
@@ -652,6 +654,10 @@ class Console(cmd.Cmd):
         Saves a file for the game, prepares it for import in future. If no arguments present, default file is used
         written by Sean
         '''
+        if self._lm.get_current_league() == "":
+            print("No league to save. Please load or create a league first.")
+            return
+
         result = args.split(" ")
         if args == "":
             print("no args")
