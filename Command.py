@@ -22,15 +22,21 @@ class Console(cmd.Cmd):
         return -1
 
     def do_createLeague(self,args):
-        '''createLeague [LeagueName]
+        """
+        createLeague [LeagueName]
         This command creates a league with the given name.
-        '''
+
+        >>> Console.do_createLeague(Console,"Test")
+        Test created
+        """
         self.lm.set_abilities_file(self.lm.read_file("abilities.txt")) #change to handle file systems
         self.lm.add_league(args)
         print(args + " created")
 
     def do_deleteLeague(self,args):
         '''
+        ##Test to be completed
+
         deleteLeague [LeagueName]
         This command will delete you specify with a league name
         '''
@@ -38,6 +44,7 @@ class Console(cmd.Cmd):
 
     def do_displayLeague(self,args):
         '''
+        Test to be completed
         displayLeague
         This command will display ???
         '''
@@ -45,13 +52,19 @@ class Console(cmd.Cmd):
 
     def do_displayAbilities(self,args):
         '''
+        test to be completed
         displayAbilities
         This command will display all the abilities of the current league
         '''
-        ##Output for displaying abilities here
+        #Output for displaying abilities here
 
     def do_addCharacter(self,args):
-        '''
+        """
+        >>> Console.do_createLeague(Console,"Test")
+        Test created
+        >>> Console.do_addCharacter(Console, "Tester Leader d10 3d10 3d10 3d10 3d10 2d8 2d8 Animal Brash Deadeye")
+        Character creation of Tester the Leader has been successful!
+
         addCharacter [CharacterName] [CharacterType] [Health] [Brawl] [Shoot] [Dodge] [Might] [Finesse] [Cunning]
         [Ability 1] [Ability 2] [Ability 3]
         --------------------------------------------------------------------------------------------------------
@@ -98,7 +111,7 @@ class Console(cmd.Cmd):
 
         Example
             addCharacter Testing Leader d10 3d8 3d10 3d10 2d8 3d10 2d10 Mighty Brash Crafty
-        '''
+        """
         league = self.lm.get_current_league()
         result = args.split(" ")
         if len(result) == 10:
@@ -112,6 +125,13 @@ class Console(cmd.Cmd):
 
     def do_rename_character(self,args):
         '''
+        >>> Console.do_createLeague(Console,"Test")
+        Test created
+        >>> Console.do_addCharacter(Console, "Test_rename Leader d10 3d10 3d10 3d10 3d10 2d8 2d8 Animal Brash Deadeye")
+        Character creation of Test_rename the Leader has been successful!
+        >>> Console.do_rename_character(Console,"Test_rename Testing")
+        Test_rename renamed to Testing
+
         rename_character [oldName] [newName]
         Renames the character with a new name provided
         Names must be one word with no spaces
@@ -123,29 +143,31 @@ class Console(cmd.Cmd):
         print(result[0] + " renamed to " + character.get_name())
 
     def do_delete_character(self,args):
-        '''
+        """
+        >>> Console.do_createLeague(Console,"Test")
+        Test created
+        >>> Console.do_addCharacter(Console, "Test_delete Leader d10 3d10 3d10 3d10 3d10 2d8 2d8 Animal Brash Deadeye")
+        Character creation of Test_delete the Leader has been successful!
+        >>> Console.do_delete_character(Console, "Test_delete")
+        Leader object has been removed.
+
         delete_character [Character Name]
 
         This command will delete the character
-        '''
+        """
         league = self.lm.get_current_league()
         character = league.find_character(args)
         league.remove_character(character)
 
-    def do_replace_ability(self,args):
-        '''
-        replace_ability [Character Name] [Old Ability] [New Ability]
-
-        Replaces an ability on a character
-        '''
-        result = args.split(" ")
-        league = self.lm.get_current_league()
-        character = league.find_character(result[0])
-        character.replace_ability(result[0],result[1],result[2])
-        print(result[0] + " has had the ability " + result[1] + " with " + result[2])
-
     def do_replace_all_abilities(self,args):
         '''
+        >>> Console.do_createLeague(Console,"Test")
+        Test created
+        >>> Console.do_addCharacter(Console, "Test_replace_all Leader d10 3d10 3d10 3d10 3d10 2d8 2d8 Animal Brash Deadeye")
+        Character creation of Test_replace_all the Leader has been successful!
+        >>> Console.do_replace_all_abilities(Console, "Test_replace_all Speedy Savvy Clever")
+        New abilities added Speedy Savvy Clever
+
         replace_all_abilities [Character Name] [new ability1] [new ability 2] [new ability 3]
 
         Replaces all abilities on a character
@@ -155,12 +177,16 @@ class Console(cmd.Cmd):
         character = league.find_character(result[0])
         if len(result) == 0:
             print("You have not set any abilities")
-        if len(result) == 1:
-            character.set_abilities(arg1 = result[1])
         if len(result) == 2:
-            character.set_abilities(arg1 = result[1], arg2 = result[2])
+            character.set_abilities(arg1 = result[1])
+            print("New abilities added " + result[1])
         if len(result) == 3:
+            character.set_abilities(arg1 = result[1], arg2 = result[2])
+            print("New abilities added " + result[1] + " " + result[2])
+        if len(result) == 4:
             character.set_abilities(arg1 = result[1], arg2 = result[2], arg3 = result[3])
+            print("New abilities added " + result[1] + " " + result[2] + " "
+                  + result[3])
 
     def do_edit_skills(self,args):
         '''
@@ -200,5 +226,7 @@ class Console(cmd.Cmd):
             print (e.__class__, ":", e)
 
 if __name__ == '__main__':
+        import doctest
+        doctest.testmod(verbose=True)
         console = Console()
         console.cmdloop()

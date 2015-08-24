@@ -256,6 +256,9 @@ class Character(metaclass=ABCMeta):
     def add_ability(self, ability):
         self.__abilities.append(ability)
 
+    def set_name(self,newName):
+        self.__name = newName
+
     def set_ability_1(self, ab_1):
         self.__ability_1 = ab_1
 
@@ -265,9 +268,6 @@ class Character(metaclass=ABCMeta):
     def set_ability_3(self, ab_3):
         self.__ability_3 = ab_3
     
-    def get_name(self):
-        return self.__name
-
     def get_name(self):
         return self.__name
 

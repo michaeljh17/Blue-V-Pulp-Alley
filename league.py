@@ -846,7 +846,7 @@ class League(object):
     def remove_character(self,char):
         for character in self._all_my_characters:
             if character.get_name() == char.get_name():
-                print(character.get_name() + " Deleted // Change my output to view class. ")
+                #print(character.get_name() + " Deleted")
                 self._all_my_characters.remove(character)
 
     @staticmethod
