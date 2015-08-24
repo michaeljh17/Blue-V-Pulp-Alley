@@ -27,6 +27,9 @@ class League(object):
     def get_all_my_characters(self):
         return self._all_my_characters
 
+    def set_name(self, newName):
+        self._name = newName
+
     def get_name(self):
         return self._name
 
