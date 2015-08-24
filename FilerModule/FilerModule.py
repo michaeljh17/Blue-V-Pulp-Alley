@@ -1,30 +1,61 @@
-__author__ = 'sef0097'
+﻿__author__ = 'sef0097'
 from FilerModule.FilerExeption import FilerException
+#from league_model import LeagueModel
 import pickle
 import string
+import os
 
 class FilerModule(object):
 
-    def export_league_binary_to_fs(self, input_object, file_path="data.pickles"):
+    def export_league_binary_to_fs(self, input_object, directory='', file_name='data.pickles'):
         '''
-        Function to make a deep copy of an object then pickle it
-        Written by Sean
-        :param input_object:
-
-        :param file_path:
-
-        :return:
+        #Function to make a deep copy of an object then pickle it
+        #Written by Sean
+        #:param input_object:
+        object to be pickled, should be a league object
+        #:param file_path:
+        #path to file including filename
+        #:return:
+        #void
         '''
+        if not os.path.exists(directory) and directory != '':
+            os.makedirs(directory)
+            file_path = directory + "/" + file_name
+        else:
+            file_path = file_name
+
+        print(input_object)
+        print(input_object._my_league)
+        print(dir(input_object))
+        print(input_object.__dict__)
         with open(file_path, 'wb') as f:
-            pickle.dump(lm, f)
+            pickle.dump(input_object, f)
 
-    def export_league_text_file(self, input_2d_array):
+    def import_binary_league(self, directory='', file_name='data.pickles'):
         '''
+        #Function to bring back a league from a binary pickle file
+        #written by Sean
+        '''
+        
+        if directory != '':
+            file_path = directory + "/" + file_name
+        else:
+            file_path = file_name
 
-        :param input_2d_array:
-        :return:
-        '''
-        print("Hello!")
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as f:
+                output = pickle.load(f)
+            return output
+        
+        
+        return None
+        
+         
+        
+
+        
+        
+        
 
     # File handling and reading functions:
 
