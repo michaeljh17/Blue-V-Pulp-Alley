@@ -48,6 +48,7 @@ class Console(cmd.Cmd):
         This command allows you to change the name of the current league.
 
         """
+        # -MS-
         if args == "":
             self.vm.display("You must type a new name to replace the old")
         else:
