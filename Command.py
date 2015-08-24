@@ -18,7 +18,8 @@ class Console(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "=>>"
-        self.intro = "Welcome to Burger King, Please place your order"
+        self.intro = "Welcome to the Pulp Ally league maker. \n"
+        self.intro += "Type help for a list of commands"
         self._lm = LeagueModel()
         self._vm = ViewModel()
         self._fm = FilerModule()
@@ -26,12 +27,16 @@ class Console(cmd.Cmd):
     # Commands are below
 
     def do_exit(self, args):
-        'Exits the program'
+        """
+        exit
+        This command closes the program
+        """
         return -1
 
     def do_createLeague(self, args):
         '''createLeague [LeagueName]
-        This command creates a league with the given name.
+        This command creates a league with the given name. You must create
+        a league before you are able to add characters to it.
         '''
         self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
         # change to handle file systems
@@ -56,13 +61,13 @@ class Console(cmd.Cmd):
                 self._lm.get_current_league().set_name(args)
             except AttributeError:
                 self._vm.display("There is no league to rename. I suggest "
-                                + "you create one")
+                                 + "you create one")
                 return
             except Exception as e:
                 self._vm.display("You may not rename the league. " + str(e))
                 return
         self._vm.display("The league is now named: " +
-                        self._lm.get_current_league().get_name())
+                         self._lm.get_current_league().get_name())
 
     def do_deleteLeague(self, args):
         '''
@@ -253,7 +258,7 @@ class Console(cmd.Cmd):
             print("You have not entered enough arguments to create a character"
                   ". Please try again.")
 
-    def do_rename_character(self, args):
+    def do_renameCharacter(self, args):
         '''
         rename_character [oldName] [newName]
 
@@ -276,9 +281,9 @@ class Console(cmd.Cmd):
         character.set_name(result[1])
         # except
         self._vm.display(result[0] + " has been renamed to " +
-                        character.get_name())
+                         character.get_name())
 
-    def do_delete_character(self, args):
+    def do_deleteCharacter(self, args):
         '''
         delete_character [Character Name]
 
@@ -295,8 +300,8 @@ class Console(cmd.Cmd):
             league.remove_character(character)
         else:
             self._vm.display("'" + args + "' is not recorded as being in "
-                                         "the league. No character has "
-                                         "been deleted.")
+                             "the league. No character has "
+                             "been deleted.")
 
     def do_replace_ability(self, args):
         '''
@@ -333,11 +338,11 @@ class Console(cmd.Cmd):
         else:
             print(result[0] + " is not in the " +
                   self._lm.get_current_league().get_name() + " league Please "
-                                                            "try again.")
+                  "try again.")
 
     # Two methods for replacing all of a character's abilities:
 
-    def do_replace_all_abilities(self, args):
+    def do_replaceAllAbilities(self, args):
         '''
         replace_all_abilities [Character Name] [new ability1] [new ability 2]
         [new ability 3]
@@ -456,7 +461,7 @@ class Console(cmd.Cmd):
 
     # Three methods involved in editing a character's skills:
 
-    def do_edit_skills(self, args):
+    def do_editSkills(self, args):
         """
         edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse]
         [Cunning]
@@ -587,7 +592,7 @@ class Console(cmd.Cmd):
         except InputException as e:
             print(e.value)
 
-    def do_display_character(self, args):
+    def do_displayCharacter(self, args):
         '''
         display_character [Character Name]
 
