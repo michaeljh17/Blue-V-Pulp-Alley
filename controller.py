@@ -4,24 +4,27 @@ from league_model import LeagueModel
 # from ViewModel.TableBuilder import TableBuilder
 from ViewModel.ViewModel import ViewModel
 import pickle
+from FilerModule.FilerModule import FilerModule
 
 vm = ViewModel()
-
+fm = FilerModule()
+'''
 print("loading pickles")
-with open('data.pickle', 'rb') as f:
+with open('data.pickles', 'rb') as f:
     imported_pickles_from_tina = pickle.load(f)
+'''
 
-
+imported_pickles_from_tina = fm.import_binary_league()
+print(imported_pickles_from_tina)
 print(imported_pickles_from_tina.export_league())
 print(imported_pickles_from_tina._my_league)
 print(dir(imported_pickles_from_tina))
 print(imported_pickles_from_tina.__dict__)
 vm.display(vm.build_table(imported_pickles_from_tina.export_league()))
-
 print("\r\r")
 
 lm = LeagueModel()
-lm.set_abilities_file(lm.read_file("Abilities.txt"))
+lm.set_abilities_file(fm.read_file("Abilities.txt"))
 
 # Debugging:
 for a in lm.get_all_abilities():
@@ -75,7 +78,7 @@ lm.get_current_league().add_character("D", char_type="Ally", health="d6",
                                       brawl="2d6", shoot="2d6", dodge="1d6",
                                       might="1d6", finesse="1d6", cunning="1d6",
                                       arg1="Mighty", arg2="",
-                                      arg3="")
+                                     arg3="")
 print("\r")
 '''
 
@@ -165,12 +168,15 @@ print("\r")
 
 print("Saving Pickles")
 
+fm.export_league_binary_to_fs(lm,'data.pickles')
 
-with open('data.pickle', 'wb') as f:
+'''
+with open('data.pickles', 'wb') as f:
     pickle.dump(lm, f)
 
 del lm
 
+'''
 '''
 with open('data.pickle', 'rb') as f:
     imported_pickles_from_tina = pickle.load(f)

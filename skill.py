@@ -20,7 +20,8 @@ class Skill(object):
     #   return result
 
     def __str__(self):
-        return self._skill_name.name + ' skill. Dice: ' + str(self._number_dice) + ' ' + self._dice_type
+        return self._skill_name.name + ' skill. Dice: ' +\
+               str(self._number_dice) + ' ' + self._dice_type
 
     def set_number_dice(self, number_dice):
         self._number_dice = number_dice
@@ -33,11 +34,14 @@ class Skill(object):
         input needs to be validated as being an enum
         Am using an assert to do this:
         """
-        # assert isinstance(dice_type, EDice), print("%r is not an EDice type" % dice_type)
-        # assert type(dice_type) is EDice, print("%r is not an EDice type" % dice_type)
+        # assert isinstance(dice_type, EDice), print("%r is not an EDice type"
+        #  % dice_type)
+        # assert type(dice_type) is EDice, print("%r is not an EDice type"
+        # % dice_type)
         try:
             if not isinstance(dice_type, EDice):
-                raise InputException("Incorrect user input: The dice type for a skill is not an EDice type")
+                raise InputException("Incorrect user input: The dice type for"
+                                     " a skill is not an EDice type")
             else:
                 self._dice_type = dice_type
         except InputException as e:

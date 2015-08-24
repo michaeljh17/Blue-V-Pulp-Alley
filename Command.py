@@ -1,6 +1,7 @@
-# __author__ = 'gazza'
+﻿# __author__ = 'gazza'
 import os
 import cmd
+import pickle
 from league_model import LeagueModel
 from input_view import InputView
 from input_exception import InputException
@@ -10,7 +11,6 @@ from FilerModule.FilerModule import FilerModule
 from skill import Skill
 from eskill import ESkill
 from character import Character
-from msvcrt import getch
 
 
 class Console(cmd.Cmd):
@@ -18,8 +18,7 @@ class Console(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "=>>"
-        self.intro = "Welcome to the Pulp Ally league maker. \n"
-        self.intro += "Type help for a list of commands"
+        self.intro = "Welcome to Python Alley (to view help type 'help')"
         self._lm = LeagueModel()
         self._vm = ViewModel()
         self._fm = FilerModule()
@@ -39,13 +38,16 @@ class Console(cmd.Cmd):
         This command creates a league with the given name. You must create
         a league before you are able to add characters to it.
         '''
-        self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
-        # change to handle file systems
-        if args != "":
-            self._lm.add_league(args)
-            print(args + " created")
-        else:
-            print("The new league must have a name!")
+        try:
+            self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
+            # change to handle file systems
+            if args != "":
+                self._lm.add_league(args)
+                print(args + " created")
+            else:
+                print("The new league must have a name!")
+        except TypeError as e:
+            print("Please check your filesystem has all the necessary files.")
 
     def do_renameLeague(self, args):
         """
@@ -75,6 +77,10 @@ class Console(cmd.Cmd):
         deleteLeague
         This command will delete the current league.
         '''
+        if self._lm.get_current_league() == "":
+            print("There is no league to be deleted.")
+            return
+
         try:
             current_league_name = str(self._lm.get_current_league())
         except AttributeError:
@@ -342,7 +348,6 @@ class Console(cmd.Cmd):
             print(result[0] + " is not in the " +
                   self._lm.get_current_league().get_name() + " league Please "
                   "try again.")
-
     # Two methods for replacing all of a character's abilities:
 
     def do_replaceAllAbilities(self, args):
@@ -371,6 +376,7 @@ class Console(cmd.Cmd):
 
     def replace_all_abilities(self, result, character):
         """
+        Written by MH
         This method will check whether the character's abilities can be
         replaced with new ones
         :param result: a list con
@@ -383,7 +389,7 @@ class Console(cmd.Cmd):
             print("You have not set any abilities")
         elif len(result) == 2:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 character.check_abilities(character.get_name(),
@@ -406,7 +412,7 @@ class Console(cmd.Cmd):
 
         elif len(result) == 3:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
@@ -432,7 +438,7 @@ class Console(cmd.Cmd):
 
         elif len(result) == 4:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
@@ -489,6 +495,7 @@ class Console(cmd.Cmd):
 
     def edit_skills_middle(self, result, character):
         """
+        Written by MH
         This function will continue the process of checking whether a
         character's skills can be modified
         :param result: a list containing the user's input
@@ -503,6 +510,7 @@ class Console(cmd.Cmd):
 
     def edit_skills_last(self, result, character):
         """
+        Written by MH
         This function is the final method which checks whether a
         character's skills can be modified
         :param result: a list containing the user's input
@@ -623,17 +631,53 @@ class Console(cmd.Cmd):
 
     def do_import(self, args):
         '''
+        import
         import [file location] [file name]
 
-        Imports a file from a specified location and loads it
+        Imports a file from a specified location and loads it, when no arguments are supplied is uses a default file
+        written by Sean
         '''
+
+        result = args.split(" ")
+        looks_good = False
+
+        if args == "":
+            looks_good = True
+            self._lm = self._fm.import_binary_league()
+        if len(result) == 2:
+            looks_good = True
+            self._lm = self._fm.import_binary_league(result[0], result[1])
+
+        if looks_good:
+            if self._lm is not None:
+                self.do_displayLeague(None)
+            else:
+                self._lm = LeagueModel()
+                self._vm.display("Filepath incorrect, please try again")
+        else:
+            self._vm.display(
+                "Incorrect syntax:" +
+                "\r" +
+                "import [file location] [file name]")
 
     def do_save(self, args):
         '''
         save [file location] [file name]
 
-        Saves a file for the game, prepares it for import in the future
+        Saves a file for the game, prepares it for import in the future.
+        If no arguments present, default file is used
+        written by Sean
         '''
+        if self._lm.get_current_league() == "":
+            print("No league to save. Please load or create a league first.")
+            return
+
+        result = args.split(" ")
+        if args == "":
+            print("no args")
+            self._fm.export_league_binary_to_fs(self._lm)
+        if len(result) == 2:
+            self._fm.export_league_binary_to_fs(self._lm, result[0], result[1])
 
     def default(self, line):
         """

@@ -20,6 +20,7 @@ class League(object):
         self._all_my_characters = all_my_chars
         self._max_points = max_points
         self._my_league_model = league_model
+        self._leader_in_league = False
 
     def __str__(self):
         return self._name
@@ -49,62 +50,24 @@ class League(object):
         Adds a new character to the league
         """
 
-        # First need to check that the user has not created a character with
+        # Need to check whether a leader has been added to the league. If not
+        # then unless the new character is the leader, then the user should
+        # not be able to add the character to the league:
+
+        try:
+            if not self.check_leader(char_type):
+                return
+        except CharacterException as e:
+            print(e)
+            return
+
+        # Need to check that the user has not created a character with
         # the same name as an existing character: These 'if not' statements
         # are saying if the result is False then ...
 
         if not self.check_duplicate_name(name):
             # This is the same as returning None
             return
-
-        # Check none of the arguments passed to the function are empty or
-        #  missed out
-        """ Handle empty arguments - MS """
-        """if (name == NULL):
-            try:
-                raise InputException("Invalid name input")
-            except InputException:
-                print(name" is not a valid entry for the character name.")"""
-        # Could call an exception to check this - would have to be called in
-        # the controller - ?
-        # check_empty_arg() could be called for each argument. This would
-        # enable the system to identify which attributes
-        # are missing, if any are missing
-        """if not self.check_empty_arg(name, health, brawl, shoot, dodge, might,
-                                    finesse, cunning, **abilities):
-            return"""
-
-        # Checking the abilities which the user may have attempted to add to
-        # the character actually are abilities which
-        # are recognised by the system
-        # This functionality could be replaced by an exception ...
-        # if not self.check_abilities(abilities):
-        #    print("Character creation of " + name + " has been unsuccessful, "
-        #                                            "please try again.")
-        #    return None
-
-        # Check that the character class string the user has entered matches a
-        # valid character class
-        # if not self.check_valid_character(char_type):
-        #    return
-
-        # There needs to be a check that only one Leader and one Side-Kick can
-        # be in the league
-
-        # Check that the user has entered valid values for the new character's
-        # health
-        # if not self.check_health_input(char_type, health):
-        #    return
-
-        # Check that the details for the skills which the user has inputted are
-        # valid
-        # if not self.check_skills_input(char_type, brawl, shoot, dodge, might,
-        #                               finesse, cunning):
-        #    return
-
-        # There could be a check here that the character is being given a
-        # ability with a permitted level, instead of
-        # being done after the character creation block
 
         # Check that the user has not attempted to add a character that breaks
         # the character member rules - MS
@@ -116,7 +79,8 @@ class League(object):
         except CharacterException as e:
             print(e)
             return
-        #***Check that adding the character does not exceed the number of slots remaining for the league - MS
+        # ***Check that adding the character does not exceed the number of
+        # slots remaining for the league - MS
 
         # If no errors have been found then the characters can be created
 
@@ -130,15 +94,13 @@ class League(object):
                 new_character = Ally(self, name, health, brawl, shoot, dodge,
                                      might, finesse, cunning, **abilities)
             elif char_type == SideKick.__name__:
-                new_character = SideKick(self, name, health, brawl, shoot, dodge,
-                                         might, finesse, cunning, **abilities)
+                new_character = SideKick(self, name, health, brawl, shoot,
+                                         dodge, might, finesse, cunning,
+                                         **abilities)
             elif char_type == Follower.__name__:
-                new_character = Follower(self, name, health, brawl, shoot, dodge,
-                                         might, finesse, cunning, **abilities)
-
-            # Deduct points from the max total:
-            # self._max_points -= new_character.get_subclass_size(
-            # new_character) Or:
+                new_character = Follower(self, name, health, brawl, shoot,
+                                         dodge, might, finesse, cunning,
+                                         **abilities)
 
             if self._max_points < new_character.get_size():
                 raise CharacterException("There are not enough league points "
@@ -148,69 +110,16 @@ class League(object):
                                          " to the league.")
             else:
                 self._max_points -= new_character.get_size()
-            '''
-            print("Character creation of " + name + " the " + char_type +
-                  " has been successful!")'''
-            self._all_my_characters.append(new_character)
-            '''
-            print("League points remaining: " + str(self._max_points))'''
-            return new_character
+
+                print("Character creation of " + name + " the " + char_type +
+                      " has been successful")
+                self._all_my_characters.append(new_character)
+                print("League points remaining: " + str(self._max_points))
+                return new_character
 
         except CharacterException as e:
             print(e.value)
             del new_character
-
-        # These commented out checks are now performed before the character
-        # creation:
-        # if not self.check_number_skill_dice(new_character):
-        #    return print("Character creation of " + name + " the " + char_type
-        #  + " has been unsuccessful, please try
-        # again.")
-
-        # if not self.check_type_skill_dice(new_character):
-        #    return print("Character creation of " + name + " the " + char_type
-        #  + " has been unsuccessful, please try
-        # again.")
-
-        """if not self.check_number_abilities(new_character):
-            print("Character creation of " + name + " the " + char_type +
-                  " has been unsuccessful, please try again.")
-            return
-
-        errors_level = False
-        errors_dupl = False
-
-        for ability in new_character.get_abilities():
-            print("Ability to be added: " + ability.get_name())
-            print("Ability level: " + ability.get_level())
-
-            # The level value of each ability object needs to be converted into
-            #  a int - because the
-            # instances of Ability have been obtained from file Strings
-            if not self.check_level_abili(new_character,
-                                          int(ability.get_level())):
-                errors_level = True
-
-            # If none of the character's abilities are duplicates then the
-            # character is okay
-            if self.check_duplicate_values(new_character.get_abilities()):
-                errors_dupl = True
-
-        if errors_level:
-            print("Character creation of " + name + " the " + char_type +
-                  " has been unsuccessful, please try again.")
-            return
-
-        if errors_dupl:
-            print("User has tried to give the character a duplicate ability")
-            print("Character creation has been unsuccessful, please try "
-                  "again.")
-            return
-
-        print("Character creation of " + name + " the " + char_type +
-              " has been successful!")
-        self._all_my_characters.append(new_character)
-        return new_character"""
 
     def delete_character_by_name(self, character_name):
         count = 0
@@ -235,7 +144,7 @@ class League(object):
                 print("The name, " + name + ", is already the name of an "
                                             "existing character. Please try "
                                             "again.")
-                return
+                return False
         return True
 
     def check_duplicate_type(self, char_type):
@@ -252,15 +161,15 @@ class League(object):
             # If there is not a match, continue with the process of
             # adding a new character.
 
-    def remove_character(self, char):
+    def remove_character(self, charac):
         for character in self._all_my_characters:
-            if char.__class__.__name__ is not Leader.__name__:
-                if character.get_name() == char.get_name():
+            if charac.__class__.__name__ is not Leader.__name__:
+                if character.get_name() == charac.get_name():
                     print(
                         character.get_name() +
-                        " Deleted // Change my output to view class. ")
+                        " Deleted")
                     self._all_my_characters.remove(character)
-                    self._max_points += char.get_size()
+                    self._max_points += charac.get_size()
                     print("League points: " + str(self._max_points))
             else:
                 print("You are not allowed to delete the leader of a league.")
@@ -306,8 +215,10 @@ class League(object):
         # Third row array is to contain - Skills
         third_row.append(["Skills"])
         third_row.append(
-            ["Health", "Brawl", "Shoot", "Dodge", "Might", "Finesse", "Cunning"])
-        third_row.append([character_data[2], character_data[3], character_data[4],
+            ["Health", "Brawl", "Shoot", "Dodge", "Might", "Finesse",
+             "Cunning"])
+        third_row.append([character_data[2], character_data[3],
+                          character_data[4],
                           character_data[5], character_data[
                               6], character_data[7],
                           character_data[8]])
@@ -320,7 +231,21 @@ class League(object):
         # return an array of the character's attributes
         return result
 
-
-# if __name__ == "__main__":
-#   import doctest
-#   doctest.testmod()
+    def check_leader(self, char_type):
+        """
+        This function will raise an exception if the user attempts to add a
+        character which is not a leader to a league and the league does not
+        yet have a leader
+        :param char_type: class of character
+        :return: True, unless the exception is raised.
+        """
+        if self._leader_in_league:
+            return True
+        else:
+            if char_type == "Leader":
+                self._leader_in_league = True
+                return True
+            else:
+                raise CharacterException("You must first add a leader to a "
+                                         "league before adding any other type "
+                                         "of character.")
