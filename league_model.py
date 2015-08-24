@@ -1,4 +1,4 @@
-﻿#?# __author__ = 'User'
+# __author__ = 'User'
 from league import League
 from ability import Ability
 import string
@@ -13,7 +13,7 @@ class LeagueModel(object):
 
     def set_abilities_file(self, input):
         temp = []
-        global ability_list
+        # global ability_list
         ability_list = []
         for sub_list in input:
             for attr in sub_list:
@@ -39,7 +39,7 @@ class LeagueModel(object):
         return self._my_league
 
     def delete_league(self):
-        del self._my_league
+        self._my_league = ""
 
     # League Export functions
 

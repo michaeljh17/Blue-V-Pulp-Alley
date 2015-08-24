@@ -1,4 +1,4 @@
-﻿# __author__ = 'User'
+# __author__ = 'User'
 
 from league_model import LeagueModel
 # from ViewModel.TableBuilder import TableBuilder
@@ -78,7 +78,7 @@ lm.get_current_league().add_character("D", char_type="Ally", health="d6",
                                       brawl="2d6", shoot="2d6", dodge="1d6",
                                       might="1d6", finesse="1d6", cunning="1d6",
                                       arg1="Mighty", arg2="",
-                                      arg3="")
+                                     arg3="")
 print("\r")
 '''
 

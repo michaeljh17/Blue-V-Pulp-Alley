@@ -11,7 +11,6 @@ from FilerModule.FilerModule import FilerModule
 from skill import Skill
 from eskill import ESkill
 from character import Character
-from msvcrt import getch
 
 
 class Console(cmd.Cmd):
@@ -19,7 +18,7 @@ class Console(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "=>>"
-        self.intro = "Welcome to Burger King, Please place your order"
+        self.intro = "Welcome to Python Alley (to view help type 'help')"
         self._lm = LeagueModel()
         self._vm = ViewModel()
         self._fm = FilerModule()
@@ -34,13 +33,16 @@ class Console(cmd.Cmd):
         '''createLeague [LeagueName]
         This command creates a league with the given name.
         '''
-        self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
-        # change to handle file systems
-        if args != "":
-            self._lm.add_league(args)
-            print(args + " created")
-        else:
-            print("The new league must have a name!")
+        try:
+            self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
+            # change to handle file systems
+            if args != "":
+                self._lm.add_league(args)
+                print(args + " created")
+            else:
+                print("The new league must have a name!")
+        except TypeError as e:
+            print("Please check your filesystem has all the necessary files.")
 
     def do_renameLeague(self, args):
         """
@@ -49,14 +51,19 @@ class Console(cmd.Cmd):
         This command allows you to change the name of the current league.
 
         """
+        if self._lm.get_current_league() == "":
+            print("You need to create a league first before trying to rename "
+                  "a league.")
+            return
+
         if args == "":
             self._vm.display("You must type a new name to replace the old")
         else:
             try:
                 self._lm.get_current_league().set_name(args)
             except AttributeError:
-                self._vm.display("There is no league to rename. I suggest "
-                                + "you create one")
+                self._vm.display("There is no league to rename. I suggest " +
+                                "you create one")
                 return
             except Exception as e:
                 self._vm.display("You may not rename the league. " + str(e))
@@ -69,6 +76,10 @@ class Console(cmd.Cmd):
         deleteLeague
         This command will delete the league.
         '''
+        if self._lm.get_current_league() == "":
+            print("There is no league to be deleted.")
+            return
+
         try:
             current_league_name = str(self._lm.get_current_league())
         except AttributeError:
@@ -294,9 +305,9 @@ class Console(cmd.Cmd):
         if character is not None:
             league.remove_character(character)
         else:
-            self._vm.display("'" + args + "' is not recorded as being in "
-                                         "the league. No character has "
-                                         "been deleted.")
+            self._vm.display("'" + args + "' is not recorded as being in the "
+                                          "league. No character has been "
+                                          "deleted.")
 
     def do_replace_ability(self, args):
         '''
@@ -333,7 +344,7 @@ class Console(cmd.Cmd):
         else:
             print(result[0] + " is not in the " +
                   self._lm.get_current_league().get_name() + " league Please "
-                                                            "try again.")
+                                                             "try again.")
 
     # Two methods for replacing all of a character's abilities:
 
@@ -374,7 +385,7 @@ class Console(cmd.Cmd):
             print("You have not set any abilities")
         elif len(result) == 2:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 character.check_abilities(character.get_name(),
@@ -397,7 +408,7 @@ class Console(cmd.Cmd):
 
         elif len(result) == 3:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
@@ -423,7 +434,7 @@ class Console(cmd.Cmd):
 
         elif len(result) == 4:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
@@ -652,6 +663,10 @@ class Console(cmd.Cmd):
         Saves a file for the game, prepares it for import in future. If no arguments present, default file is used
         written by Sean
         '''
+        if self._lm.get_current_league() == "":
+            print("No league to save. Please load or create a league first.")
+            return
+
         result = args.split(" ")
         if args == "":
             print("no args")

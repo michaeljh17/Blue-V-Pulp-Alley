@@ -34,4 +34,4 @@ class Leader(Character):
                                 self._number_abilities, **abilities)
 
     def __del__(self):
-        print(self.__class__.__name__ + " object has been removed.")
+        print(self.__class__.__name__ + " has been removed.")
