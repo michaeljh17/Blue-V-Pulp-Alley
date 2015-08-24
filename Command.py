@@ -571,7 +571,6 @@ class Console(cmd.Cmd):
 
         Displays all information for a given character
         '''
-<<<<<<< HEAD
         if args == "" or args is None:
             print("You must type the name of the character you wish to " +
                   "display")
@@ -584,15 +583,6 @@ class Console(cmd.Cmd):
             except:
                 print("Unable to find that character, Are you sure they " +
                       "exist?")
-=======
-        if self.lm.get_current_league() == "":
-            print("You need to create a league first before trying to "
-                  "view a character in a league.")
-            return
-
-        result = self.vm.build_character_table(self.lm.export_character(args))
-        self.vm.display(result)
->>>>>>> master
 
     def do_import(self, args):
         '''
