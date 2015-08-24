@@ -32,8 +32,6 @@ class Console(cmd.Cmd):
     def do_createLeague(self, args):
         '''createLeague [LeagueName]
         This command creates a league with the given name.
-        > Error handling: need to make sure that the new league is not given
-        an empty string as a name
         '''
         self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
         # change to handle file systems
@@ -42,6 +40,28 @@ class Console(cmd.Cmd):
             print(args + " created")
         else:
             print("The new league must have a name!")
+
+    def do_renameLeague(self, args):
+        """
+        renameLeague [new league name]
+
+        This command allows you to change the name of the current league.
+
+        """
+        if args == "":
+            self.vm.display("You must type a new name to replace the old")
+        else:
+            try:
+                self.lm.get_current_league().set_name(args)
+            except AttributeError:
+                self.vm.display("There is no league to rename. I suggest "
+                                + "you create one")
+                return
+            except Exception as e:
+                self.vm.display("You may not rename the league. " + str(e))
+                return
+        self.vm.display("The league is now named: " +
+                        self.lm.get_current_league().get_name())
 
     def do_deleteLeague(self, args):
         '''
