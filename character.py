@@ -35,7 +35,7 @@ class Character(metaclass=ABCMeta):
         self.__finesse = self.set_skill(ESkill.finesse, finesse)
         self.__cunning = self.set_skill(ESkill.cunning, cunning)
         # __abilities is a list of Ability objects
-        self.__abilities = self.set_abilities(**abilities)
+        self.__all_my_abilities = self.set_abilities(**abilities)
 
         # print("Checking: " + self.__brawl.get_skill_name() + " " +
         #      self.__brawl.get_dice_type().name)
@@ -204,7 +204,7 @@ class Character(metaclass=ABCMeta):
                     new_abilities.append(existing_ab)
                     break
 
-        self.__abilities = new_abilities
+        self.__all_my_abilities = new_abilities
         return new_abilities
 
     def check_abilities(self, name, char_class, ability_level, number_allowed,
@@ -264,16 +264,16 @@ class Character(metaclass=ABCMeta):
         :return: A boolean value to indicate whether the removal has been
         successful or not
         """
-        for ability in self.__abilities:
+        for ability in self.__all_my_abilities:
             if ability.get_name() == ability_name:
-                self.__abilities.remove(ability)
+                self.__all_my_abilities.remove(ability)
                 return True
         return False
 
     # def
 
     def add_ability(self, ability):
-        self.__abilities.append(ability)
+        self.__all_my_abilities.append(ability)
 
     def get_name(self):
         return self.__name
@@ -320,14 +320,11 @@ class Character(metaclass=ABCMeta):
     def set_cunning(self, input):
         self.__cunning = input
 
-    def get_name(self):
-        return self.__name
-
     def get_my_league(self):
         return self.__my_league
 
     def get_abilities(self):
-        return self.__abilities
+        return self.__all_my_abilities
 
     def get_level(self):
         return self._level
@@ -365,7 +362,7 @@ class Character(metaclass=ABCMeta):
         output_key_pair["cunning"] = str(self.get_cunning().get_number_dice() +
                                          self.get_cunning().get_dice_type().name)
 
-        for ability in self.__abilities:
+        for ability in self.__all_my_abilities:
             if ability.get_modifier() != 0:
                 #find dict value die count
                 base_die_count = int(output_key_pair[ability.get_effected_skill()][0])
@@ -401,7 +398,7 @@ class Character(metaclass=ABCMeta):
 
 
         skill_string = ""
-        for ability in self.__abilities:
+        for ability in self.__all_my_abilities:
             #output.append(str(ability.get_name()))
             skill_string += str(ability.get_name()) + ", "
         # remove the trailing comma
@@ -478,7 +475,7 @@ class Character(metaclass=ABCMeta):
         # First we really need to check that both the old ability and the new
         # ability are valid abilities
         old_abili = charac.find_ability(charac, old_ability_name,
-                                           self.__abilities)
+                                           self.__all_my_abilities)
         new_abili = charac.find_ability(charac, new_ability_name,
                                       self.__my_league.get_my_league_model()
                                               .get_all_abilities())
@@ -491,9 +488,9 @@ class Character(metaclass=ABCMeta):
                 # check the level of the new ability
                 if int(new_abili.get_level()) <= max_level:
                     # Remove the unwanted ability from the character
-                    self.__abilities.remove(old_abili)
+                    self.__all_my_abilities.remove(old_abili)
                     # Add the new ability to the character
-                    self.__abilities.append(new_abili)
+                    self.__all_my_abilities.append(new_abili)
                     print(charac.get_name() + "'s ability, " +
                           old_ability_name + ", has been removed and the "
                                              "character now has a new "
@@ -512,7 +509,7 @@ class Character(metaclass=ABCMeta):
                                      "failed.")
 
     def clear_abilities(self):
-        self.__abilities = []
+        self.__all_my_abilities = []
 
     def check_number_dice(self, char_instance, num_dice_list):
         """
