@@ -673,11 +673,12 @@ class Console(cmd.Cmd):
             return
 
         result = args.split(" ")
-        if args == "":
-            print("no args")
+        if args == "":            
             self._fm.export_league_binary_to_fs(self._lm)
-        if len(result) == 2:
-            self._fm.export_league_binary_to_fs(self._lm, result[0], result[1])
+            self._vm.display("Exported leage to data.pickles")
+        if len(result) == 2:                    
+            self._fm.export_league_binary_to_fs(self._lm,result[0],result[1])
+            self._vm.display("Exported leage to " + result[0] + "\\" + result[1])
 
     def default(self, line):
         """
