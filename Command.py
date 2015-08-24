@@ -18,7 +18,8 @@ class Console(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "=>>"
-        self.intro = "Welcome to Python Alley (to view help type 'help')"
+        self.intro = "Welcome to Python Alley League Builder (to view help, " \
+                     "type 'help'):"
         self._lm = LeagueModel()
         self._vm = ViewModel()
         self._fm = FilerModule()
