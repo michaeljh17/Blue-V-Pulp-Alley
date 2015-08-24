@@ -34,7 +34,8 @@ class Console(cmd.Cmd):
         return -1
 
     def do_createLeague(self, args):
-        '''createLeague [LeagueName]
+        '''
+        createLeague [LeagueName]
         This command creates a league with the given name. You must create
         a league before you are able to add characters to it.
         '''
@@ -72,7 +73,7 @@ class Console(cmd.Cmd):
     def do_deleteLeague(self, args):
         '''
         deleteLeague
-        This command will delete the league.
+        This command will delete the current league.
         '''
         try:
             current_league_name = str(self._lm.get_current_league())
@@ -117,6 +118,11 @@ class Console(cmd.Cmd):
         addCharacter [CharacterName] [CharacterType] [Health] [Brawl] [Shoot]
         [Dodge] [Might] [Finesse] [Cunning]
         [Ability 1] [Ability 2] [Ability 3]
+
+        Example
+            addCharacter Testing Leader d10 3d8 3d10 3d10 2d8 3d10 2d10 Mighty
+            Brash Crafty
+
         -----------------------------------------------------------------------
         This command adds a character to the current league.
         Your league starts with 10 roster slots.
@@ -167,10 +173,6 @@ class Console(cmd.Cmd):
             ALL skills must be 1d6
             Can choose 1 ability at level 1
             Uses one roster slot
-
-        Example
-            addCharacter Testing Leader d10 3d8 3d10 3d10 2d8 3d10 2d10 Mighty
-            Brash Crafty
         '''
         league = self._lm.get_current_league()
         if league == "":
@@ -260,7 +262,7 @@ class Console(cmd.Cmd):
 
     def do_renameCharacter(self, args):
         '''
-        rename_character [oldName] [newName]
+        renameCharacter [oldName] [newName]
 
         Renames the character with a new name provided
         Names must be one word with no spaces
@@ -285,7 +287,7 @@ class Console(cmd.Cmd):
 
     def do_deleteCharacter(self, args):
         '''
-        delete_character [Character Name]
+        deleteCharacter [Character Name]
 
         This command will delete the character
         '''
@@ -303,11 +305,12 @@ class Console(cmd.Cmd):
                              "the league. No character has "
                              "been deleted.")
 
-    def do_replace_ability(self, args):
+    def do_replaceAbility(self, args):
         '''
-        replace_ability [Character Name] [Old Ability] [New Ability]
+        replaceAbility [Character Name] [Old Ability] [New Ability]
 
-        Replaces an ability on a character
+        This command replaces an ability on a character that has already
+        been created.
         '''
         league = self._lm.get_current_league()
         if league == "":
@@ -344,10 +347,11 @@ class Console(cmd.Cmd):
 
     def do_replaceAllAbilities(self, args):
         '''
-        replace_all_abilities [Character Name] [new ability1] [new ability 2]
+        replaceAllAbilities [Character Name] [new ability1] [new ability 2]
         [new ability 3]
 
-        Replaces all abilities on a character
+        This command replaces all abilities on a character. You must have
+        created a character first.
         '''
         result = args.split(" ")
         league = self._lm.get_current_league()
@@ -466,7 +470,8 @@ class Console(cmd.Cmd):
         edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse]
         [Cunning]
 
-        Edits the value for the skills for a character
+        Edits the value for the skills of a character. You must already have
+        created the character. The value for every skill is required.
         """
         result = args.split(" ")
         league = self._lm.get_current_league()
@@ -594,10 +599,7 @@ class Console(cmd.Cmd):
 
     def do_displayCharacter(self, args):
         '''
-        display_character [Character Name]
-
-        Example:
-        display_character Fred
+        displayCharacter [Character Name]
 
         Displays all information for a given character
         '''
@@ -630,11 +632,12 @@ class Console(cmd.Cmd):
         '''
         save [file location] [file name]
 
-        Saves a file for the game, prepares it for import in future
+        Saves a file for the game, prepares it for import in the future
         '''
 
     def default(self, line):
-        """Called on an input line when the command prefix is not recognized.
+        """
+        Called on an input line when the command prefix is not recognized.
         In that case we execute the line as Python code.
         """
         try:
