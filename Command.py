@@ -51,14 +51,19 @@ class Console(cmd.Cmd):
         This command allows you to change the name of the current league.
 
         """
+        if self._lm.get_current_league() == "":
+            print("You need to create a league first before trying to rename "
+                  "a league.")
+            return
+
         if args == "":
             self._vm.display("You must type a new name to replace the old")
         else:
             try:
                 self._lm.get_current_league().set_name(args)
             except AttributeError:
-                self._vm.display("There is no league to rename. I suggest "
-                                + "you create one")
+                self._vm.display("There is no league to rename. I suggest " +
+                                "you create one")
                 return
             except Exception as e:
                 self._vm.display("You may not rename the league. " + str(e))
@@ -71,6 +76,10 @@ class Console(cmd.Cmd):
         deleteLeague
         This command will delete the league.
         '''
+        if self._lm.get_current_league() == "":
+            print("There is no league to be deleted.")
+            return
+
         try:
             current_league_name = str(self._lm.get_current_league())
         except AttributeError:

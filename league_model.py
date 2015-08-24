@@ -39,7 +39,7 @@ class LeagueModel(object):
         return self._my_league
 
     def delete_league(self):
-        del self._my_league
+        self._my_league = ""
 
     # League Export functions
 
