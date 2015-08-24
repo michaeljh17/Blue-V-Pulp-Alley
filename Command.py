@@ -49,7 +49,7 @@ class Console(cmd.Cmd):
         This command will delete the league.
         '''
         try:
-            current_league_name = str(self.lm.get_current_league())
+            current_league_name = str(self._lm.get_current_league())
         except AttributeError:
             print("You do not have a league to delete")
             return
@@ -69,8 +69,8 @@ class Console(cmd.Cmd):
                 self.vm.display("Your league has not been deleted")
                 break
         """
-        self.lm.delete_league()
-        self.vm.display(current_league_name + " deleted!")
+        self._lm.delete_league()
+        self._vm.display(current_league_name + " deleted!")
 
     def do_displayLeague(self, args):
         '''
