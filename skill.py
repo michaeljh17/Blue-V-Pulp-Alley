@@ -1,7 +1,6 @@
 __author__ = 'User'
 
 from edice import EDice
-from reveal_access import RevealAccess
 
 from edice import EDice
 from input_exception import InputException

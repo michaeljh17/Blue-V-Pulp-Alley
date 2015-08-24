@@ -212,9 +212,9 @@ class League(object):
         self._all_my_characters.append(new_character)
         return new_character"""
 
-    def delete_character_by_name(self, characterName):
+    def delete_character_by_name(self, character_name):
         count = 0
-        the_character = self.find_character(characterName)
+        the_character = self.find_character(character_name)
         for each_character in self._all_my_characters:
             if (the_character == each_character):
                 del self._all_my_characters[count]
