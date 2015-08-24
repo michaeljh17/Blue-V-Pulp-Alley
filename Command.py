@@ -344,7 +344,7 @@ class Console(cmd.Cmd):
         else:
             print(result[0] + " is not in the " +
                   self._lm.get_current_league().get_name() + " league Please "
-                                                            "try again.")
+                                                             "try again.")
 
     # Two methods for replacing all of a character's abilities:
 
@@ -385,7 +385,7 @@ class Console(cmd.Cmd):
             print("You have not set any abilities")
         elif len(result) == 2:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 character.check_abilities(character.get_name(),
@@ -408,7 +408,7 @@ class Console(cmd.Cmd):
 
         elif len(result) == 3:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
@@ -434,7 +434,7 @@ class Console(cmd.Cmd):
 
         elif len(result) == 4:
             try:
-                # Valdiate the input:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],

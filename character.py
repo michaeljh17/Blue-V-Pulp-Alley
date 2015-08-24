@@ -132,19 +132,12 @@ class Character(metaclass=ABCMeta):
         """
         number_dice_str = ""
         type_dice_str = ""
-        i = 0
 
         if skill_input[0].isdigit():
             number_dice_str = skill_input[0]
-        else:
-            # raise an exception
-            pass
 
         if skill_input[1].isalpha():
             type_dice_str = skill_input[1:]
-        else:
-            # raise an exception
-            pass
 
         results = [number_dice_str, type_dice_str]
         return results
