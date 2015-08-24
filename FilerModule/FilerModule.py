@@ -48,22 +48,14 @@ class FilerModule(object):
             with open(file_path, 'rb') as f:
                 output = pickle.load(f)
             return output
-        
-        
-        return None
-        
-         
-        
 
-        
-        
-        
+        return None
 
     # File reading functions:
 
     def read_file(self, filename):
         """
-        MH
+        Written by MH
         This method will read data from a file
         :param filename: filepath of the file to be read
         :return: The data obtained from the file
@@ -73,25 +65,25 @@ class FilerModule(object):
             with open(filename, 'r') as file_content:
                 for line in file_content:
                     if line != "\n":
-                        self.get_line_data(line, data)
+                        self.get_line_data(line, data, ',')
             return data
         except FileNotFoundError as e:
             print("Error loading a file: " + filename)
             return None
 
     @staticmethod
-    def get_line_data(line, data):
+    def get_line_data(line, data, separator):
         """
-        MH
-        This method will obtain comma-separated values from a string.
+        Written by MH
+        This method will obtain delimiter-separated values from a string.
         :param line: a string
         :param data: a list
         :return: Although there are no values which are returned, the method
         will append the strings obtained from each line to the list which is
         passed into this method.
         """
-        csv_strings = []
-        for attr in line.split(','):
+        strings_obtained = []
+        for attr in line.split(separator):
             attr = attr.strip(string.punctuation + string.whitespace)
-            csv_strings.append(attr)
-        data.append(csv_strings)
+            strings_obtained.append(attr)
+        data.append(strings_obtained)

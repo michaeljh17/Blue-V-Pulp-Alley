@@ -505,20 +505,15 @@ class Character(metaclass=ABCMeta):
         dice numbers
         :return: none
         """
-
-        # I'm just getting these values atm without using get() methods
         dice_number_1 = char_instance.__class__._dice_numbers_1
         dice_number_2 = char_instance.__class__._dice_numbers_2
-
         count_1 = 0
         count_2 = 0
 
         # Check the first set of dice numbers
         for x in num_dice_list:
             if x == str(dice_number_1[0]):
-                # print("dice_number_1[0]: " + str(dice_number_1[0]))
                 count_1 += 1
-        # print("Count: " + str(count_1))
         if count_1 != dice_number_1[1]:
             # raise an exception
             raise CharacterException("Incorrect dice numbers have been set for"
@@ -545,14 +540,8 @@ class Character(metaclass=ABCMeta):
         :param dice_type_list: contains: 1) Edice 2) number of these Edice
         :return: none
         """
-
-        # I'm just getting these values atm without get() methods
         dice_type_1 = char_instance.__class__._dice_type_1
         dice_type_2 = char_instance.__class__._dice_type_2
-        # print("dice_type_1[0]: " + str(dice_type_1[0]))
-        # if dice_type_2 is not None:
-        # print("dice_type_2[0]: " + str(dice_type_2[0]))
-
         count_1 = 0
         count_2 = 0
 

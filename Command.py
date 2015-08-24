@@ -215,6 +215,8 @@ class Console(cmd.Cmd):
                                              cunning=result[8], arg1=result[9])
                     except InputException as e:
                         print(e.value)
+                    except CharacterException as e:
+                        print(e.value)
 
                 elif len(result) == 11:
                     try:
@@ -233,6 +235,8 @@ class Console(cmd.Cmd):
                                              cunning=result[8], arg1=result[9],
                                              arg2=result[10])
                     except InputException as e:
+                        print(e.value)
+                    except CharacterException as e:
                         print(e.value)
 
                 elif len(result) == 12:
@@ -254,6 +258,8 @@ class Console(cmd.Cmd):
                                              cunning=result[8], arg1=result[9],
                                              arg2=result[10], arg3=result[11])
                     except InputException as e:
+                        print(e.value)
+                    except CharacterException as e:
                         print(e.value)
                 else:
                     print("You have entered too many arguments. Please try "
@@ -373,6 +379,7 @@ class Console(cmd.Cmd):
 
     def replace_all_abilities(self, result, character):
         """
+        Written by MH
         This method will check whether the character's abilities can be
         replaced with new ones
         :param result: a list con
@@ -490,6 +497,7 @@ class Console(cmd.Cmd):
 
     def edit_skills_middle(self, result, character):
         """
+        Written by MH
         This function will continue the process of checking whether a
         character's skills can be modified
         :param result: a list containing the user's input
@@ -504,6 +512,7 @@ class Console(cmd.Cmd):
 
     def edit_skills_last(self, result, character):
         """
+        Written by MH
         This function is the final method which checks whether a
         character's skills can be modified
         :param result: a list containing the user's input
