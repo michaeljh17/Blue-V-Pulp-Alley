@@ -1,6 +1,7 @@
-# __author__ = 'gazza'
+﻿# __author__ = 'gazza'
 import os
 import cmd
+import pickle
 from league_model import LeagueModel
 from input_view import InputView
 from input_exception import InputException
@@ -615,17 +616,49 @@ class Console(cmd.Cmd):
 
     def do_import(self, args):
         '''
+        import
         import [file location] [file name]
-
-        Imports a file from a specified location and loads it
+        
+        Imports a file from a specified location and loads it, when no arguments are supplied is uses a default file
+        written by Sean
         '''
+        
+        result = args.split(" ")
+        looks_good = False
+
+        if args == "":
+            looks_good = True
+            self._lm = self._fm.import_binary_league()
+        if len(result) == 2:
+            looks_good = True
+            self._lm = self._fm.import_binary_league(result[0], result[1])
+        
+        
+
+        if looks_good:
+            if self._lm != None:
+                self.do_displayLeague(None)
+            else:
+                self._lm = LeagueModel()                
+                self._vm.display("Filepath incorrect, please try again")
+        else:
+            self._vm.display("Incorrect syntax:" + "\r" + "import [file location] [file name]")
+            
 
     def do_save(self, args):
         '''
         save [file location] [file name]
 
-        Saves a file for the game, prepares it for import in future
+        Saves a file for the game, prepares it for import in future. If no arguments present, default file is used
+        written by Sean
         '''
+        result = args.split(" ")
+        if args == "":
+            print("no args")
+            self._fm.export_league_binary_to_fs(self._lm)
+        if len(result) == 2:                    
+            self._fm.export_league_binary_to_fs(self._lm,result[0],result[1])
+
 
     def default(self, line):
         """Called on an input line when the command prefix is not recognized.
