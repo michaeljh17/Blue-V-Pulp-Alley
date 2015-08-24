@@ -10,6 +10,7 @@ from FilerModule.FilerModule import FilerModule
 from skill import Skill
 from eskill import ESkill
 from character import Character
+from msvcrt import getch
 
 
 class Console(cmd.Cmd):
@@ -44,10 +45,32 @@ class Console(cmd.Cmd):
 
     def do_deleteLeague(self, args):
         '''
-        deleteLeague [LeagueName]
-        This command will delete the league you specify with a league name
+        deleteLeague
+        This command will delete the league.
         '''
-        print("League deleted (Not actually shhhh)")
+        try:
+            current_league_name = str(self.lm.get_current_league())
+        except AttributeError:
+            print("You do not have a league to delete")
+            return
+
+        """
+        self.vm.display("You are about to delete the league, " +
+                        current_league_name + ". Are you sure you wish to "
+                        + "do this? Press Y to delete and N to cancel")
+        print(ord('Y'))
+        while True:
+            key = ord(getch())
+            if key == '121' or key == '89':
+                self.lm.delete_league()
+                self.vm.display(current_league_name + " deleted!")
+                break
+            else:
+                self.vm.display("Your league has not been deleted")
+                break
+        """
+        self.lm.delete_league()
+        self.vm.display(current_league_name + " deleted!")
 
     def do_displayLeague(self, args):
         '''
@@ -504,10 +527,23 @@ class Console(cmd.Cmd):
         '''
         display_character [Character Name]
 
-        Displays all information for a character
+        Example:
+        display_character Fred
+
+        Displays all information for a given character
         '''
-        result = self.vm.build_character_table(self.lm.export_character(args))
-        self.vm.display(result)
+        if args == "" or args is None:
+            print("You must type the name of the character you wish to " +
+                  "display")
+        else:
+            try:
+                result = self.vm.build_character_table(
+                    self.lm.export_character(args))
+                self.vm.display(result)
+
+            except:
+                print("Unable to find that character, Are you sure they " +
+                      "exist?")
 
     def do_import(self, args):
         '''
