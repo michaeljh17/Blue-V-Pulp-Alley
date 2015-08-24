@@ -16,14 +16,14 @@ class Ally(Character):
     # Dice numbers - list contains: 1) dice numbers 2) numbers of these dice
     _dice_numbers_1 = [2, 2]
     _dice_numbers_2 = [1, 4]
-    
+
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
         super().__init__(league, name, health, brawl, shoot, dodge, might,
                          finesse, cunning, **abilities)
 
         results = super().get_skills_input(brawl, shoot, dodge, might,
-                                             finesse, cunning)
+                                           finesse, cunning)
 
         super().check_health(health, self._base_health)
 

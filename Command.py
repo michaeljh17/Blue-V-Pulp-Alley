@@ -27,12 +27,17 @@ class Console(cmd.Cmd):
     # Commands are below
 
     def do_exit(self, args):
-        'Exits the program'
+        """
+        exit
+        This command closes the program
+        """
         return -1
 
     def do_createLeague(self, args):
-        '''createLeague [LeagueName]
-        This command creates a league with the given name.
+        '''
+        createLeague [LeagueName]
+        This command creates a league with the given name. You must create
+        a league before you are able to add characters to it.
         '''
         try:
             self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
@@ -52,30 +57,26 @@ class Console(cmd.Cmd):
         This command allows you to change the name of the current league.
 
         """
-        if self._lm.get_current_league() == "":
-            print("You need to create a league first before trying to rename "
-                  "a league.")
-            return
-
+        # -MS-
         if args == "":
             self._vm.display("You must type a new name to replace the old")
         else:
             try:
                 self._lm.get_current_league().set_name(args)
             except AttributeError:
-                self._vm.display("There is no league to rename. I suggest " +
-                                "you create one")
+                self._vm.display("There is no league to rename. I suggest "
+                                 + "you create one")
                 return
             except Exception as e:
                 self._vm.display("You may not rename the league. " + str(e))
                 return
         self._vm.display("The league is now named: " +
-                        self._lm.get_current_league().get_name())
+                         self._lm.get_current_league().get_name())
 
     def do_deleteLeague(self, args):
         '''
         deleteLeague
-        This command will delete the league.
+        This command will delete the current league.
         '''
         if self._lm.get_current_league() == "":
             print("There is no league to be deleted.")
@@ -124,6 +125,11 @@ class Console(cmd.Cmd):
         addCharacter [CharacterName] [CharacterType] [Health] [Brawl] [Shoot]
         [Dodge] [Might] [Finesse] [Cunning]
         [Ability 1] [Ability 2] [Ability 3]
+
+        Example
+            addCharacter Testing Leader d10 3d8 3d10 3d10 2d8 3d10 2d10 Mighty
+            Brash Crafty
+
         -----------------------------------------------------------------------
         This command adds a character to the current league.
         Your league starts with 10 roster slots.
@@ -174,10 +180,6 @@ class Console(cmd.Cmd):
             ALL skills must be 1d6
             Can choose 1 ability at level 1
             Uses one roster slot
-
-        Example
-            addCharacter Testing Leader d10 3d8 3d10 3d10 2d8 3d10 2d10 Mighty
-            Brash Crafty
         '''
         league = self._lm.get_current_league()
         if league == "":
@@ -265,9 +267,9 @@ class Console(cmd.Cmd):
             print("You have not entered enough arguments to create a character"
                   ". Please try again.")
 
-    def do_rename_character(self, args):
+    def do_renameCharacter(self, args):
         '''
-        rename_character [oldName] [newName]
+        renameCharacter [oldName] [newName]
 
         Renames the character with a new name provided
         Names must be one word with no spaces
@@ -288,11 +290,11 @@ class Console(cmd.Cmd):
         character.set_name(result[1])
         # except
         self._vm.display(result[0] + " has been renamed to " +
-                        character.get_name())
+                         character.get_name())
 
-    def do_delete_character(self, args):
+    def do_deleteCharacter(self, args):
         '''
-        delete_character [Character Name]
+        deleteCharacter [Character Name]
 
         This command will delete the character
         '''
@@ -306,15 +308,16 @@ class Console(cmd.Cmd):
         if character is not None:
             league.remove_character(character)
         else:
-            self._vm.display("'" + args + "' is not recorded as being in the "
-                                          "league. No character has been "
-                                          "deleted.")
+            self._vm.display("'" + args + "' is not recorded as being in "
+                             "the league. No character has "
+                             "been deleted.")
 
-    def do_replace_ability(self, args):
+    def do_replaceAbility(self, args):
         '''
-        replace_ability [Character Name] [Old Ability] [New Ability]
+        replaceAbility [Character Name] [Old Ability] [New Ability]
 
-        Replaces an ability on a character
+        This command replaces an ability on a character that has already
+        been created.
         '''
         league = self._lm.get_current_league()
         if league == "":
@@ -345,16 +348,16 @@ class Console(cmd.Cmd):
         else:
             print(result[0] + " is not in the " +
                   self._lm.get_current_league().get_name() + " league Please "
-                                                             "try again.")
-
+                  "try again.")
     # Two methods for replacing all of a character's abilities:
 
-    def do_replace_all_abilities(self, args):
+    def do_replaceAllAbilities(self, args):
         '''
-        replace_all_abilities [Character Name] [new ability1] [new ability 2]
+        replaceAllAbilities [Character Name] [new ability1] [new ability 2]
         [new ability 3]
 
-        Replaces all abilities on a character
+        This command replaces all abilities on a character. You must have
+        created a character first.
         '''
         result = args.split(" ")
         league = self._lm.get_current_league()
@@ -469,12 +472,13 @@ class Console(cmd.Cmd):
 
     # Three methods involved in editing a character's skills:
 
-    def do_edit_skills(self, args):
+    def do_editSkills(self, args):
         """
         edit_skills [Character Name] [Brawl] [Shoot] [Dodge] [Might] [Finesse]
         [Cunning]
 
-        Edits the value for the skills for a character
+        Edits the value for the skills of a character. You must already have
+        created the character. The value for every skill is required.
         """
         result = args.split(" ")
         league = self._lm.get_current_league()
@@ -602,12 +606,9 @@ class Console(cmd.Cmd):
         except InputException as e:
             print(e.value)
 
-    def do_display_character(self, args):
+    def do_displayCharacter(self, args):
         '''
-        display_character [Character Name]
-
-        Example:
-        display_character Fred
+        displayCharacter [Character Name]
 
         Displays all information for a given character
         '''
@@ -633,11 +634,11 @@ class Console(cmd.Cmd):
         '''
         import
         import [file location] [file name]
-        
+
         Imports a file from a specified location and loads it, when no arguments are supplied is uses a default file
         written by Sean
         '''
-        
+
         result = args.split(" ")
         looks_good = False
 
@@ -647,24 +648,25 @@ class Console(cmd.Cmd):
         if len(result) == 2:
             looks_good = True
             self._lm = self._fm.import_binary_league(result[0], result[1])
-        
-        
 
         if looks_good:
-            if self._lm != None:
+            if self._lm is not None:
                 self.do_displayLeague(None)
             else:
-                self._lm = LeagueModel()                
+                self._lm = LeagueModel()
                 self._vm.display("Filepath incorrect, please try again")
         else:
-            self._vm.display("Incorrect syntax:" + "\r" + "import [file location] [file name]")
-            
+            self._vm.display(
+                "Incorrect syntax:" +
+                "\r" +
+                "import [file location] [file name]")
 
     def do_save(self, args):
         '''
         save [file location] [file name]
 
-        Saves a file for the game, prepares it for import in future. If no arguments present, default file is used
+        Saves a file for the game, prepares it for import in the future.
+        If no arguments present, default file is used
         written by Sean
         '''
         if self._lm.get_current_league() == "":
@@ -675,12 +677,12 @@ class Console(cmd.Cmd):
         if args == "":
             print("no args")
             self._fm.export_league_binary_to_fs(self._lm)
-        if len(result) == 2:                    
-            self._fm.export_league_binary_to_fs(self._lm,result[0],result[1])
-
+        if len(result) == 2:
+            self._fm.export_league_binary_to_fs(self._lm, result[0], result[1])
 
     def default(self, line):
-        """Called on an input line when the command prefix is not recognized.
+        """
+        Called on an input line when the command prefix is not recognized.
         In that case we execute the line as Python code.
         """
         try:
