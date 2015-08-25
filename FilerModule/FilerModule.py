@@ -15,21 +15,21 @@ class FilerModule(object):
         #Written by Sean
         #:param input_object:
         object to be pickled, should be a league object
-        #:param file_path:
-        #path to file including filename
+        #:param directory:
+        #path to file excluding filename
+        #:param file_name:
+        #filename to be used
         #:return:
         #void
         '''
         if not os.path.exists(directory) and directory != '':
             os.makedirs(directory)
             file_path = directory + "/" + file_name
+        elif os.path.exists(directory) and directory != '':
+            file_path = directory + "/" + file_name
         else:
             file_path = file_name
 
-        print(input_object)
-        print(input_object._my_league)
-        print(dir(input_object))
-        print(input_object.__dict__)
         with open(file_path, 'wb') as f:
             pickle.dump(input_object, f)
 
