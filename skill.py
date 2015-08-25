@@ -1,7 +1,4 @@
-__author__ = 'User'
-
-from edice import EDice
-
+# __author__ = 'User'
 from edice import EDice
 from input_exception import InputException
 

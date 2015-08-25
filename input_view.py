@@ -20,8 +20,8 @@ class InputView(object):
         if input_name != "":
             return input
         else:
-            raise InputException("The user must enter a name for this character"
-                                 ". Please try again")
+            raise InputException("The user must enter a name for this"
+                                 " character. Please try again")
 
     def check_valid_class(self, input_class):
         for charac in Character.__subclasses__():
@@ -41,14 +41,14 @@ class InputView(object):
         # This will check the number of dice:
 
         if len(dice_str_data[0]) == 0:
-            raise InputException("You have not entered the number of dice for a"
-                                 " skill. Please try again")
+            raise InputException("You have not entered the number of dice for"
+                                 "a skill. Please try again")
 
         # This will check the type of dice:
 
         if len(dice_str_data[1]) == 0:
-            raise InputException("You have not entered a valid dice type for a "
-                                 "skill. Please try again")
+            raise InputException("You have not entered a valid dice type for a"
+                                 " skill. Please try again")
 
         # Checking whether a valid dice type has been entered by the user:
         for edice in EDice:

@@ -1,4 +1,4 @@
-__author__ = 'User'
+# __author__ = 'User'
 
 
 class Ability(object):

@@ -1,6 +1,6 @@
-#?__author__ = 'sef0097'
+# __author__ = 'sef0097'
 from FilerModule.FilerExeption import FilerException
-#from league_model import LeagueModel
+# from league_model import LeagueModel
 import pickle
 import string
 import os
@@ -38,7 +38,7 @@ class FilerModule(object):
         #Function to bring back a league from a binary pickle file
         #written by Sean
         '''
-        
+
         if directory != '':
             file_path = directory + "/" + file_name
         else:

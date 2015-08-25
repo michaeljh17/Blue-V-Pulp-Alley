@@ -1,5 +1,4 @@
-__author__ = 'mih279'
-
+# __author__ = 'mih279'
 from edice import EDice
 from character_exception import CharacterException
 from character import Character
@@ -16,11 +15,11 @@ class Follower(Character):
     # Dice numbers - list contains: 1) dice numbers 2) numbers of these dice
     _dice_numbers_1 = [1, 6]
     _dice_numbers_2 = None
-    
+
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
         super().__init__(league, name, health, brawl, shoot, dodge,
-                           might, finesse, cunning, **abilities)
+                         might, finesse, cunning, **abilities)
 
         results = super().get_skills_input(brawl, shoot, dodge, might,
                                            finesse, cunning)
