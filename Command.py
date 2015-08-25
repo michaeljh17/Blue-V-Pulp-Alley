@@ -1,4 +1,4 @@
-﻿# __author__ = 'gazza'
+# __author__ = 'gazza'
 import os
 import cmd
 import pickle
@@ -673,10 +673,10 @@ class Console(cmd.Cmd):
         result = args.split(" ")
         if args == "":            
             self._fm.export_league_binary_to_fs(self._lm)
-            self._vm.display("Exported leage to data.pickles")
+            self._vm.display("Exported league to data.pickles")
         if len(result) == 2:                    
             self._fm.export_league_binary_to_fs(self._lm,result[0],result[1])
-            self._vm.display("Exported leage to " + result[0] + "\\" + result[1])
+            self._vm.display("Exported league to " + result[0] + "\\" + result[1])
 
     def default(self, line):
         """

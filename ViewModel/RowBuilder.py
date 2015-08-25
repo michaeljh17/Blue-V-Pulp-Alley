@@ -11,8 +11,8 @@ class RowBuilder(object):
     def build_row(self, input_array, border_character):
         output = "|"
         count = 0
-        cell_width = self.my_table_builder.get_cell_width(count)
         for entry in input_array:
+            cell_width = self.my_table_builder.get_cell_width(count)
             output += self.cell_builder.build_cell(entry, cell_width,
                                                    border_character)
             count += 1
