@@ -21,7 +21,7 @@ class SideKick(Character):
                          finesse, cunning, **abilities)
 
         results = super().get_skills_input(brawl, shoot, dodge, might,
-                                             finesse, cunning)
+                                           finesse, cunning)
 
         super().check_health(health, self._base_health)
 
@@ -30,7 +30,7 @@ class SideKick(Character):
         super().check_type_dice(self, results[1])
 
         # Check the abilities which the user has entered
-        super().check_abilities( name, self.__class__.__name__, self._level,
+        super().check_abilities(name, self.__class__.__name__, self._level,
                                 self._number_abilities, **abilities)
 
     def __del__(self):

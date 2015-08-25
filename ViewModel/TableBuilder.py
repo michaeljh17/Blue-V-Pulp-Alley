@@ -7,10 +7,10 @@ class TableBuilder(object):
     def __init__(self):
         self.row_builder = RowBuilder(self)
         self.cell_widths = []
-        
+
     def build_table(self, input_2d_array):
-        #print("tablebuilder input:")
-        #print(input_2d_array)
+        # print("tablebuilder input:")
+        # print(input_2d_array)
         output = ""
         input_2d_array = self.pad_table(input_2d_array)
         self.calc_largest_cells(input_2d_array)
@@ -22,7 +22,7 @@ class TableBuilder(object):
         '''
         for entry in input_2d_array:
             output += self.row_builder.build_row(entry, '|') + '\n'
-        
+
         # remove the last endline char
         output = output[:(len(output) - 1)]
 
@@ -56,7 +56,7 @@ class TableBuilder(object):
         return input_2D_array
 
     def calc_largest_cells(self, input_2D_array):
-        #for i in range(len(input_2D_array[0])):
+        # for i in range(len(input_2D_array[0])):
         #    self.set_cell_width(i,0)
         for entry in input_2D_array[0]:
             self.cell_widths.append(2)
@@ -64,5 +64,5 @@ class TableBuilder(object):
         for a in input_2D_array:
             for i in range(len(a)):
                 if len(a[i]) > self.get_cell_width(i):
-                    #self.cell_widths[i] = len(a[i])
-                    self.set_cell_width(i,len(a[i]) + 2)
+                    # self.cell_widths[i] = len(a[i])
+                    self.set_cell_width(i, len(a[i]) + 2)

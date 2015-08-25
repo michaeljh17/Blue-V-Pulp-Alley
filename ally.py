@@ -1,5 +1,4 @@
-__author__ = 'User'
-
+# __author__ = 'User'
 from character import Character
 from edice import EDice
 from character_exception import CharacterException

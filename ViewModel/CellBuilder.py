@@ -8,4 +8,3 @@
         string = '{:<' + str(length) + '}'
         string = string.format(input_text) + border_char
         return string
-
