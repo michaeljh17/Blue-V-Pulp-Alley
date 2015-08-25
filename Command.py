@@ -18,7 +18,8 @@ class Console(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "=>>"
-        self.intro = "Welcome to Python Alley (to view help type 'help')"
+        self.intro = "Welcome to Python Alley League Builder (to view help, " \
+                     "type 'help'):"
         self._lm = LeagueModel()
         self._vm = ViewModel()
         self._fm = FilerModule()
@@ -63,8 +64,8 @@ class Console(cmd.Cmd):
             try:
                 self._lm.get_current_league().set_name(args)
             except AttributeError:
-                self._vm.display("There is no league to rename. I suggest "
-                                 + "you create one")
+                self._vm.display("There is no league to rename. I suggest " +
+                                 "you create one")
                 return
             except Exception as e:
                 self._vm.display("You may not rename the league. " + str(e))
@@ -204,10 +205,11 @@ class Console(cmd.Cmd):
                 inputV.check_valid_skill_dice(result[7])
                 inputV.check_valid_skill_dice(result[8])
 
+                all_abilities = self._lm.get_all_abilities()
+
                 if len(result) == 10:
                     try:
-                        inputV.check_valid_ability(result[9],
-                                                   self._lm.get_all_abilities())
+                        inputV.check_valid_ability(result[9], all_abilities)
                         league.add_character(name=result[0],
                                              char_type=result[1],
                                              health=result[2], brawl=result[3],
@@ -220,10 +222,8 @@ class Console(cmd.Cmd):
 
                 elif len(result) == 11:
                     try:
-                        inputV.check_valid_ability(result[9],
-                                                   self._lm.get_all_abilities())
-                        inputV.check_valid_ability(result[10],
-                                                   self._lm.get_all_abilities())
+                        inputV.check_valid_ability(result[9], all_abilities)
+                        inputV.check_valid_ability(result[10], all_abilities)
                         inputV.check_duplicate_values(result[9], result[10])
 
                         league.add_character(name=result[0],
@@ -239,12 +239,9 @@ class Console(cmd.Cmd):
 
                 elif len(result) == 12:
                     try:
-                        inputV.check_valid_ability(result[9],
-                                                   self._lm.get_all_abilities())
-                        inputV.check_valid_ability(result[10],
-                                                   self._lm.get_all_abilities())
-                        inputV.check_valid_ability(result[11],
-                                                   self._lm.get_all_abilities())
+                        inputV.check_valid_ability(result[9], all_abilities)
+                        inputV.check_valid_ability(result[10], all_abilities)
+                        inputV.check_valid_ability(result[11], all_abilities)
                         inputV.check_duplicate_values(result[9], result[10],
                                                       result[11])
                         league.add_character(name=result[0],
@@ -634,7 +631,8 @@ class Console(cmd.Cmd):
         import
         import [file location] [file name]
 
-        Imports a file from a specified location and loads it, when no arguments are supplied is uses a default file
+        Imports a file from a specified location and loads it, when no
+        arguments are supplied is uses a default file
         written by Sean
         '''
 
@@ -673,11 +671,12 @@ class Console(cmd.Cmd):
             return
 
         result = args.split(" ")
-        if args == "":
-            print("no args")
+        if args == "":            
             self._fm.export_league_binary_to_fs(self._lm)
-        if len(result) == 2:
-            self._fm.export_league_binary_to_fs(self._lm, result[0], result[1])
+            self._vm.display("Exported leage to data.pickles")
+        if len(result) == 2:                    
+            self._fm.export_league_binary_to_fs(self._lm,result[0],result[1])
+            self._vm.display("Exported leage to " + result[0] + "\\" + result[1])
 
     def default(self, line):
         """

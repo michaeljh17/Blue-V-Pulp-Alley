@@ -1,4 +1,4 @@
-# __author__ = 'User'
+﻿# __author__ = 'User'
 
 from league_model import LeagueModel
 # from ViewModel.TableBuilder import TableBuilder
@@ -8,11 +8,10 @@ from FilerModule.FilerModule import FilerModule
 
 vm = ViewModel()
 fm = FilerModule()
-'''
+
 print("loading pickles")
 with open('data.pickles', 'rb') as f:
     imported_pickles_from_tina = pickle.load(f)
-'''
 
 imported_pickles_from_tina = fm.import_binary_league()
 print(imported_pickles_from_tina)
@@ -22,7 +21,7 @@ print(dir(imported_pickles_from_tina))
 print(imported_pickles_from_tina.__dict__)
 vm.display(vm.build_table(imported_pickles_from_tina.export_league()))
 print("\r\r")
-
+'''
 lm = LeagueModel()
 lm.set_abilities_file(fm.read_file("Abilities.txt"))
 
@@ -168,7 +167,7 @@ print("\r")
 
 print("Saving Pickles")
 
-fm.export_league_binary_to_fs(lm,'data.pickles')
+fm.export_league_binary_to_fs(lm)
 
 '''
 with open('data.pickles', 'wb') as f:

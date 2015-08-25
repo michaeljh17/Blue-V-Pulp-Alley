@@ -14,14 +14,14 @@ class Leader(Character):
     # Dice numbers - list contains: 1) dice numbers 2) numbers of these dice
     _dice_numbers_1 = [3, 4]
     _dice_numbers_2 = [2, 2]
-    
+
     def __init__(self, league, name, health, brawl, shoot, dodge, might,
                  finesse, cunning, **abilities):
         super().__init__(league, name, health, brawl, shoot, dodge,
-                           might, finesse, cunning, **abilities)
+                         might, finesse, cunning, **abilities)
 
         results = super().get_skills_input(brawl, shoot, dodge, might,
-                                             finesse, cunning)
+                                           finesse, cunning)
 
         super().check_health(health, self._base_health)
 
@@ -30,7 +30,7 @@ class Leader(Character):
         super().check_type_dice(self, results[1])
 
         # Check the abilities which the user has entered
-        super().check_abilities( name, self.__class__.__name__, self._level,
+        super().check_abilities(name, self.__class__.__name__, self._level,
                                 self._number_abilities, **abilities)
 
     def __del__(self):
