@@ -49,6 +49,8 @@ class League(object):
         """
         Adds a new character to the league
         """
+        # Preconditions of this method: valid data has been entered by the
+        # user: the class and ability names and dice type strings.
 
         # Need to check whether a leader has been added to the league. If not
         # then unless the new character is the leader, then the user should
@@ -87,20 +89,11 @@ class League(object):
         new_character = ""
 
         try:
-            if char_type == Leader.__name__:
-                new_character = Leader(self, name, health, brawl, shoot, dodge,
-                                       might, finesse, cunning, **abilities)
-            elif char_type == Ally.__name__:
-                new_character = Ally(self, name, health, brawl, shoot, dodge,
-                                     might, finesse, cunning, **abilities)
-            elif char_type == SideKick.__name__:
-                new_character = SideKick(self, name, health, brawl, shoot,
-                                         dodge, might, finesse, cunning,
-                                         **abilities)
-            elif char_type == Follower.__name__:
-                new_character = Follower(self, name, health, brawl, shoot,
-                                         dodge, might, finesse, cunning,
-                                         **abilities)
+            for subChar in Character.__subclasses__():
+                if char_type == subChar.__name__:
+                    new_character = subChar(self, name, health, brawl, shoot,
+                                            dodge, might, finesse, cunning,
+                                            **abilities)
 
             if self._max_points < new_character.get_size():
                 raise CharacterException("There are not enough league points "
@@ -108,6 +101,7 @@ class League(object):
                                          new_character.get_name() + " the " +
                                          new_character.__class__.__name__ +
                                          " to the league.")
+
             else:
                 self._max_points -= new_character.get_size()
 
