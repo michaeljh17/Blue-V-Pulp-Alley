@@ -639,11 +639,16 @@ class Console(cmd.Cmd):
             print("You must type the name of the character you wish to " +
                   "display. Type help displayCharacter for more information")
         else:
-            # try:
-            result = self._vm.build_character_table(
-                self._lm.export_character(args))
+            try:
+                result = self._vm.build_character_table(
+                    self._lm.export_character(args))
 
-            self._vm.display(result)
+                self._vm.display(result)
+
+            except IndexError as e:
+                pass
+            except TypeError as e:
+                pass
 
             # except IndexError:
             #    self._vm.display("Index Error")
@@ -690,8 +695,8 @@ class Console(cmd.Cmd):
 
         Saves a file for the game, prepares it for import in the future.
         If no arguments present, default file is used
-        written by Sean
         '''
+        # written by Sean
         if self._lm.get_current_league() == "":
             print("No league to save. Please load or create a league first.")
             return
