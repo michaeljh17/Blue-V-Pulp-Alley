@@ -45,5 +45,11 @@ class ViewModel(object):
         result += tbl.build_table(temp_array)
         return result
 
+    def create_heading(self, text):
+        text = str(text)
+        word_art = Word_Art()
+        result = word_art.heading(text)
+        self.display(result)
+
     def display(self, input):
         print(input)
