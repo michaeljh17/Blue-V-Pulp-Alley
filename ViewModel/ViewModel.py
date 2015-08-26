@@ -11,6 +11,7 @@ class ViewModel(object):
         return tbl.build_table(input_2d_array)
 
     def build_character_table(self, input_2D_array):
+        # print(str(input_2D_array))
         tbl = TableBuilder()
         word_art = Word_Art()
         result = ""
@@ -37,11 +38,20 @@ class ViewModel(object):
         result += word_art.sub_heading(input_2D_array[5][0])
         result += "\n"
         # Dsiplay table for abilities
+        temp_array = []
         headings = []
         for heading in input_2D_array[6]:
             headings.append(word_art.sub_heading(heading))
-        temp_array = [headings, input_2D_array[7],
-                      input_2D_array[8], input_2D_array[9]]
+        temp_array.append(headings)
+        temp_array.append(input_2D_array[7])
+        try:
+            temp_array.append(input_2D_array[8])
+        except IndexError:
+            None
+        try:
+            temp_array.append(input_2D_array[9])
+        except IndexError:
+            None
         result += tbl.build_table(temp_array)
         return result
 
