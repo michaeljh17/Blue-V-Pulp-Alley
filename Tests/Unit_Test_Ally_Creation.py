@@ -20,14 +20,14 @@ class MainTests(unittest.TestCase):
         self.cl = self.lm.get_current_league()
         self.fm = FilerModule()
         self.lm.set_abilities_file(self.fm.read_file("..\Abilities.txt"))
+        self.cl.add_character("Bruce", "Leader", "d10", "3d10", "3d10",
+                              "3d8",
+                              "3d10", "2d8", "2d10", arg1="Mighty",
+                              arg2="Brash", arg3="Crafty")
 
     def test_01(self):
         print("Test 01 - Add Ally with incorrect health")
         self.cl.add_character("Ally01", char_type="Ally", health="d10",
-                              brawl="2d6", shoot="2d6", dodge="1d6",
-                              might="1d6", finesse="1d6", cunning="1d6",
-                              arg1="Mighty", arg2="", arg3="")
-        self.cl.add_character("Ally01", char_type="Ally", health="",
                               brawl="2d6", shoot="2d6", dodge="1d6",
                               might="1d6", finesse="1d6", cunning="1d6",
                               arg1="Mighty", arg2="", arg3="")
@@ -49,9 +49,10 @@ class MainTests(unittest.TestCase):
                               brawl="2d6", shoot="2d6", dodge="1d6",
                               might="1d6", finesse="1d6", cunning="1d6",
                               arg1="Mighty", arg2="", arg3="")
-
-        self.assertTrue(str(self.cl.find_character("Ally01")) == "Ally01")
-        self.cl.delete_character_by_name("Ally01")
+        the_character = self.cl.find_character("Ally01")
+        self.assertTrue(str(the_character) == "Ally01")
+        if the_character is not None:
+            self.cl.remove_character(the_character)
 
     def test_04(self):
         print("Test 04 - Add Ally - Incorrectly Set Skill")
@@ -83,15 +84,19 @@ class MainTests(unittest.TestCase):
     def test_06(self):
         print("Test 06 - Add Ally - when there is a character with "
               + "the same name in the league")
-        self.cl.add_character("Ally01", "Leader", "d10", "3d10", "3d10", "3d8",
-                              "3d10", "2d8", "2d10", arg1="Mighty",
-                              arg2="Brash", arg3="Crafty")
+        self.cl.add_character("Ally01", char_type="Ally", health="d6",
+                              brawl="2d6", shoot="2d6", dodge="1d6",
+                              might="1d6", finesse="1d6",
+                              cunning="1d6", arg1="Mighty",
+                              arg2="", arg3="")
         self.cl.add_character("Ally01", char_type="Ally", health="d6",
                               brawl="2d6", shoot="2d6", dodge="1d6",
                               might="1d6", finesse="1d6",
                               cunning="1d6", arg1="Mighty",
                               arg2="", arg3="")
         self.cl.delete_character_by_name("Ally01")
+        the_character = self.cl.find_character("Ally01")
+        self.cl.remove_character(the_character)
         self.assertTrue(self.cl.find_character("Ally01") == None)
 
 

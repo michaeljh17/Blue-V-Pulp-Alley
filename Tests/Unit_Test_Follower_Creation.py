@@ -19,6 +19,9 @@ class MainTests(unittest.TestCase):
         self.cl = self.lm.get_current_league()
         self.fm = FilerModule()
         self.lm.set_abilities_file(self.fm.read_file("..\Abilities.txt"))
+        self.cl.add_character("Bruce", "Leader", "d10", "3d10", "3d10", "3d8",
+                              "3d10", "2d8", "2d10", arg1="Mighty",
+                              arg2="Brash", arg3="Crafty")
 
     def test_01(self):
         print("Test 01 - Add Follower with incorrect health")
@@ -45,8 +48,10 @@ class MainTests(unittest.TestCase):
                               might="1d6", finesse="1d6", cunning="1d6",
                               arg1="Mighty", arg2="", arg3="")
 
-        self.assertTrue(str(self.cl.find_character("Bounder")) == "Bounder")
-        self.cl.delete_character_by_name("Bounder")
+        the_character = self.cl.find_character("Bounder")
+        self.assertTrue(str(the_character) == "Bounder")
+        if the_character is not None:
+            self.cl.remove_character(the_character)
 
     def test_04(self):
         print("Test 04 - Add Follower - Incorrectly Set Skill")

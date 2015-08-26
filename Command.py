@@ -124,7 +124,7 @@ class Console(cmd.Cmd):
                   "a league.")
             return
 
-        self._vm.display(self._lm.get_current_league())
+        self._vm.create_heading(self._lm.get_current_league())
         self._vm.display(self._vm.build_table(self._lm.export_league()))
 
     def do_addCharacter(self, args):

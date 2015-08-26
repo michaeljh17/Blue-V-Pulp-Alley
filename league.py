@@ -194,6 +194,7 @@ class League(object):
         new_row = []
         the_character = self.find_character(character_name)
         character_data = the_character.export_character()
+        # print("Character data " + str(character_data))
         new_row = [character_data[1]]
         result.append(new_row)
         new_row = ["Type", character_data[0]]
@@ -207,10 +208,13 @@ class League(object):
                    character_data[5], character_data[6], character_data[7],
                    character_data[8]]
         result.append(new_row)
+        new_row = []
         abilities = [x.strip() for x in character_data[9].split(',')]
-        new_row = [abilities[0], abilities[1], abilities[2]]
+        for the_ability in abilities:
+            new_row.append(the_ability)
         result.append(new_row)
 
+        # print("Result from league " + str(result))
         return result
 
     def check_leader(self, char_type):
