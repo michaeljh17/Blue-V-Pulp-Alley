@@ -1,6 +1,7 @@
 from ViewModel.TableBuilder import *
 # from ViewModel.RowBuilder import *
 # from ViewModel.CellBuilder import *
+from ViewModel.Word_Art import *
 
 
 class ViewModel(object):
@@ -11,8 +12,11 @@ class ViewModel(object):
 
     def build_character_table(self, input_3D_array):
         tbl = TableBuilder()
+        word_art = Word_Art()
         result = ""
-        for table in input_3D_array:
+        for count, table in enumerate(input_3D_array):
+            if count == 0:
+                table[0][1] = word_art.change(table[0][1])
             result += tbl.build_table(table)
             result += "\n"
         return result

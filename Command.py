@@ -615,16 +615,20 @@ class Console(cmd.Cmd):
 
         if args == "" or args is None:
             print("You must type the name of the character you wish to " +
-                  "display")
+                  "display. Type help displayCharacter for more information")
         else:
-            try:
-                result = self._vm.build_character_table(
-                    self._lm.export_character(args))
-                self._vm.display(result)
+            # try:
+            result = self._vm.build_character_table(
+                self._lm.export_character(args))
 
-            except:
-                print("Unable to find that character, Are you sure they " +
-                      "exist?")
+            self._vm.display(result)
+
+            # except IndexError:
+            #    self._vm.display("Index Error")
+
+            # except:
+            # print("Unable to find information for " + args + ", Are you sure"
+            # + " they exist?")
 
     def do_import(self, args):
         '''
@@ -671,12 +675,16 @@ class Console(cmd.Cmd):
             return
 
         result = args.split(" ")
-        if args == "":            
+        if args == "":
             self._fm.export_league_binary_to_fs(self._lm)
             self._vm.display("Exported league to data.pickles")
-        if len(result) == 2:                    
-            self._fm.export_league_binary_to_fs(self._lm,result[0],result[1])
-            self._vm.display("Exported league to " + result[0] + "\\" + result[1])
+        if len(result) == 2:
+            self._fm.export_league_binary_to_fs(self._lm, result[0], result[1])
+            self._vm.display(
+                "Exported league to " +
+                result[0] +
+                "\\" +
+                result[1])
 
     def default(self, line):
         """

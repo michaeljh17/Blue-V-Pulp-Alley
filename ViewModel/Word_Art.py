@@ -194,7 +194,7 @@ class Word_Art(object):
 
         return result
 
-    def change(self, theString):
+    def heading(self, theString):
         # when given a string this method converts each letter in it into
         # arrays and then joins the arrays to display the word as text art
         result = []
@@ -209,3 +209,6 @@ class Word_Art(object):
             return_string += string + "\n"
 
         return return_string
+
+    def sub_heading(self, theString):
+        return theString.upper()
