@@ -326,6 +326,18 @@ class Character(metaclass=ABCMeta):
     def get_base_health(self):
         return self._base_health
 
+    def get_dice_type_1(self):
+        return self._dice_type_1
+
+    def get_dice_type_2(self):
+        return self._dice_type_2
+
+    def get_dice_numbers_1(self):
+        return self._dice_numbers_1
+
+    def get_dice_numbers_2(self):
+        return self._dice_numbers_2
+
     def export_character(self):
         """
         # Method used to export the current character into an array
@@ -474,7 +486,7 @@ class Character(metaclass=ABCMeta):
         abilities = self.__my_league.get_my_league_model().get_all_abilities()
         new_abili = charac.find_ability(charac, new_ability_name, abilities)
 
-        max_level = self.get_subclass_level(charac)
+        max_level = self.get_level()
         # print("Max level of " + charac.get_name() + ": " + str(max_level))
 
         if old_abili:
@@ -498,7 +510,7 @@ class Character(metaclass=ABCMeta):
                 print(new_ability_name + " is not a valid ability. The attempt"
                                          " to replace abilities has failed.")
         else:
-            print(charac.get_name() + " does not the ability, " +
+            print(charac.get_name() + " does not have the ability, " +
                   old_ability_name + ". The attempt to replace abilities has "
                                      "failed.")
 
@@ -512,16 +524,16 @@ class Character(metaclass=ABCMeta):
         dice numbers
         :return: none
         """
-        dice_number_1 = char_instance.__class__._dice_numbers_1
-        dice_number_2 = char_instance.__class__._dice_numbers_2
+        dice_num_1 = char_instance.__class__.get_dice_numbers_1(char_instance)
+        dice_num_2 = char_instance.__class__.get_dice_numbers_2(char_instance)
         count_1 = 0
         count_2 = 0
 
         # Check the first set of dice numbers
         for x in num_dice_list:
-            if x == str(dice_number_1[0]):
+            if x == str(dice_num_1[0]):
                 count_1 += 1
-        if count_1 != dice_number_1[1]:
+        if count_1 != dice_num_1[1]:
             # raise an exception
             raise CharacterException("Incorrect dice numbers have been set for"
                                      " " + char_instance.get_name() + " the " +
@@ -529,12 +541,12 @@ class Character(metaclass=ABCMeta):
                                                                "again")
 
         # Check the second set of dice numbers (if applicable)
-        if dice_number_2 is not None:
+        if dice_num_2 is not None:
             for x in num_dice_list:
-                if x == str(dice_number_2[0]):
+                if x == str(dice_num_2[0]):
                     count_2 += 1
             # print(count_2)
-            if count_2 != dice_number_2[1]:
+            if count_2 != dice_num_2[1]:
                 # raise an exception
                 raise CharacterException("Incorrect dice numbers have been set"
                                          " for " + char_instance.get_name() +
@@ -547,8 +559,8 @@ class Character(metaclass=ABCMeta):
         :param dice_type_list: contains: 1) Edice 2) number of these Edice
         :return: none
         """
-        dice_type_1 = char_instance.__class__._dice_type_1
-        dice_type_2 = char_instance.__class__._dice_type_2
+        dice_type_1 = char_instance.__class__.get_dice_type_1(char_instance)
+        dice_type_2 = char_instance.__class__.get_dice_type_2(char_instance)
         count_1 = 0
         count_2 = 0
 
@@ -559,7 +571,7 @@ class Character(metaclass=ABCMeta):
         # print(count_1)
         if count_1 != dice_type_1[1]:
             # raise an exception
-            raise CharacterException("Incorrect dice type have been set for" +
+            raise CharacterException("Incorrect dice type have been set for " +
                                      char_instance.get_name() + " the " +
                                      self.__class__.__name__ + ". Please try "
                                                                "again")
@@ -573,7 +585,7 @@ class Character(metaclass=ABCMeta):
             if count_2 != dice_type_1[1]:
                 # raise an exception
                 raise CharacterException("Incorrect dice type have been set "
-                                         "for" + char_instance.get_name() +
+                                         "for " + char_instance.get_name() +
                                          " the " + self.__class__.__name__ +
                                          ". Please try again")
 

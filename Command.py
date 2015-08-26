@@ -40,6 +40,12 @@ class Console(cmd.Cmd):
         This command creates a league with the given name. You must create
         a league before you are able to add characters to it.
         '''
+        if self._lm.get_current_league() != "":
+            print("The " + self._lm.get_current_league().get_name() +
+                  " league is currently loaded. To create a new league, "
+                  "please remove this one first.")
+            return
+
         try:
             self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
             # change to handle file systems
