@@ -27,24 +27,39 @@ class MainTests(unittest.TestCase):
     def test_02(self):
         print("Test 2 - convert_letter - c")
         result = self.wa.convert_letter("c")
+        expected = ["      ",
+                    "  ___ ",
+                    " / __|",
+                    "| (__ ",
+                    " \___|",
+                    "      "]
         for row in result:
             print(row)
+        self.assertTrue(result == expected)
 
     def test_03(self):
-        print("Test 3 - combining combine arrays and convert_letter")
+        print("Test 3 - combining comvine_arrays and convert_letter")
         array1 = self.wa.convert_letter("A")
-        for row in array1:
-            print(row)
         array2 = self.wa.convert_letter("e")
         array3 = self.wa.convert_letter("c")
         result = self.wa.combine_arrays(array1, array2, array3)
+        expected = ["                   ",
+                    "  __ _   ___   ___ ",
+                    " / _` | / _ \\ / __|",
+                    "| (_| ||  __/| (__ ",
+                    " \__,_| \___| \___|",
+                    "                   "]
+        self.assertTrue(result == expected)
+
         for row in result:
             print(row)
 
     def test_04(self):
         print("Test 4 - create(\"ace\")")
         result = self.wa.heading("ace")
+        # expected = "                   \n  __ _   ___   ___ \n / _` | / __| / _ \\n| (_| || (__ |  __/\n \__,_| \___| \___|\n                   "
         print(result)
+        # self.assertTrue(result == expected)
 
     def test_05(self):
         print("Test 5 - create(\"abcdefghij\")")
@@ -62,7 +77,7 @@ class MainTests(unittest.TestCase):
         print(result)
 
     def test_08(self):
-        print("Test 8 - create() with numbers")
+        print("Test 8 - create(\"one1 two2\") with numbers")
         result = self.wa.heading("one1 two2")
         print(result)
 if __name__ == "__main__":
