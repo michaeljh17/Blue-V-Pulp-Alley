@@ -43,23 +43,27 @@ class MainTests(unittest.TestCase):
 
     def test_04(self):
         print("Test 4 - create(\"ace\")")
-        result = self.wa.change("ace")
+        result = self.wa.heading("ace")
         print(result)
 
     def test_05(self):
         print("Test 5 - create(\"abcdefghij\")")
-        result = self.wa.change("abcdefghij")
+        result = self.wa.heading("abcdefghij")
         print(result)
 
     def test_06(self):
         print("Test 6 - create(\"ice ace\")")
-        result = self.wa.change("ice ace")
+        result = self.wa.heading("ice ace")
         print(result)
 
     def test_07(self):
-        print("Test 5 - create(\"jklmnopqrstuvwxyz\")")
-        result = self.wa.change("jklmnopqrstuvwxyz")
+        print("Test 7 - create(\"jklmnopqrstuvwxyz\")")
+        result = self.wa.heading("jklmnopqrstuvwxyz")
         print(result)
 
+    def test_08(self):
+        print("Test 8 - create() with numbers")
+        result = self.wa.heading("one1 two2")
+        print(result)
 if __name__ == "__main__":
     unittest.main()
