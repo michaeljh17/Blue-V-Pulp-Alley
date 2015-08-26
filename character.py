@@ -308,6 +308,12 @@ class Character(metaclass=ABCMeta):
     def get_abilities(self):
         return self.__all_my_abilities
 
+    def get_abilities_names(self):
+        abilities_list = []
+        for abili in self.__all_my_abilities:
+            abilities_list.append(abili.get_name())
+        return abilities_list
+
     def get_level(self):
         return self._level
 
@@ -462,6 +468,7 @@ class Character(metaclass=ABCMeta):
 
         # First we really need to check that both the old ability and the new
         # ability are valid abilities
+
         old_abili = charac.find_ability(charac, old_ability_name,
                                         self.__all_my_abilities)
         abilities = self.__my_league.get_my_league_model().get_all_abilities()
