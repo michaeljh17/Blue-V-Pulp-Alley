@@ -42,7 +42,7 @@ class InputView(object):
 
         if len(dice_str_data[0]) == 0:
             raise InputException("You have not entered the number of dice for"
-                                 "a skill. Please try again")
+                                 " a skill. Please try again")
 
         # This will check the type of dice:
 
@@ -64,7 +64,7 @@ class InputView(object):
         raise InputException("Invalid ability name entry. Please try again")
 
     @staticmethod
-    def check_duplicate_values(*collection):
+    def check_duplicate_values(collection):
         a_dict = dict()
 
         for a in collection:

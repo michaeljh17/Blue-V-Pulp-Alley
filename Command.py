@@ -11,6 +11,7 @@ from FilerModule.FilerModule import FilerModule
 from skill import Skill
 from eskill import ESkill
 from character import Character
+import copy
 
 
 class Console(cmd.Cmd):
@@ -224,7 +225,7 @@ class Console(cmd.Cmd):
                     try:
                         inputV.check_valid_ability(result[9], all_abilities)
                         inputV.check_valid_ability(result[10], all_abilities)
-                        inputV.check_duplicate_values(result[9], result[10])
+                        inputV.check_duplicate_values([result[9], result[10]])
 
                         league.add_character(name=result[0],
                                              char_type=result[1],
@@ -242,8 +243,8 @@ class Console(cmd.Cmd):
                         inputV.check_valid_ability(result[9], all_abilities)
                         inputV.check_valid_ability(result[10], all_abilities)
                         inputV.check_valid_ability(result[11], all_abilities)
-                        inputV.check_duplicate_values(result[9], result[10],
-                                                      result[11])
+                        inputV.check_duplicate_values([result[9], result[10],
+                                                      result[11]])
                         league.add_character(name=result[0],
                                              char_type=result[1],
                                              health=result[2], brawl=result[3],
@@ -332,10 +333,16 @@ class Console(cmd.Cmd):
 
         if character is not None:
             try:
+                # Validate the input:
                 input_v.check_valid_ability(result[1],
                                             self._lm.get_all_abilities())
                 input_v.check_valid_ability(result[2],
                                             self._lm.get_all_abilities())
+                # Check the user does not already have that ability:
+                abilities_list = character.get_abilities_names()
+                abilities_list.append(result[2])
+                input_v.check_duplicate_values(abilities_list)
+
                 character.replace_ability(character, result[1], result[2])
                 # print(result[0] + " has had the ability " + result[1] +
                 #      " replaced with " + result[2])
@@ -345,6 +352,7 @@ class Console(cmd.Cmd):
             print(result[0] + " is not in the " +
                   self._lm.get_current_league().get_name() + " league Please "
                   "try again.")
+
     # Two methods for replacing all of a character's abilities:
 
     def do_replaceAllAbilities(self, args):
@@ -420,6 +428,10 @@ class Console(cmd.Cmd):
                                           (character),
                                           character.get_number_abilities(),
                                           arg1=result[1], arg2=result[2])
+                # Check the user is not adding duplicate abilities:
+                abilities_list = character.get_abilities_names()
+                abilities_list.extend([result[1], result[2]])
+                input_v.check_duplicate_values(abilities_list)
 
                 # Delete the character's current abilities and set the new ones
                 character.clear_abilities()
@@ -449,6 +461,10 @@ class Console(cmd.Cmd):
                                           character.get_number_abilities(),
                                           arg1=result[1], arg2=result[2],
                                           arg3=result[3])
+                # Check the user is not adding duplicate abilities:
+                abilities_list = character.get_abilities_names()
+                abilities_list.extend([result[1], result[2], result[3]])
+                input_v.check_duplicate_values(abilities_list)
 
                 # Delete the character's current abilities and set the new ones
                 character.clear_abilities()
@@ -671,12 +687,13 @@ class Console(cmd.Cmd):
             return
 
         result = args.split(" ")
-        if args == "":            
+        if args == "":
             self._fm.export_league_binary_to_fs(self._lm)
             self._vm.display("Exported league to data.pickles")
-        if len(result) == 2:                    
-            self._fm.export_league_binary_to_fs(self._lm,result[0],result[1])
-            self._vm.display("Exported league to " + result[0] + "\\" + result[1])
+        if len(result) == 2:
+            self._fm.export_league_binary_to_fs(self._lm, result[0], result[1])
+            self._vm.display("Exported league to " + result[0] + "\\" +
+                             result[1])
 
     def default(self, line):
         """
