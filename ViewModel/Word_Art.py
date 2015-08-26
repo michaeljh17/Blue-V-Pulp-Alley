@@ -211,4 +211,5 @@ class Word_Art(object):
         return return_string
 
     def sub_heading(self, theString):
+        theString = str(theString)
         return theString.upper()
