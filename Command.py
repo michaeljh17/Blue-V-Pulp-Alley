@@ -244,7 +244,7 @@ class Console(cmd.Cmd):
                         inputV.check_valid_ability(result[10], all_abilities)
                         inputV.check_valid_ability(result[11], all_abilities)
                         inputV.check_duplicate_values([result[9], result[10],
-                                                      result[11]])
+                                                       result[11]])
                         league.add_character(name=result[0],
                                              char_type=result[1],
                                              health=result[2], brawl=result[3],
@@ -631,16 +631,20 @@ class Console(cmd.Cmd):
 
         if args == "" or args is None:
             print("You must type the name of the character you wish to " +
-                  "display")
+                  "display. Type help displayCharacter for more information")
         else:
-            try:
-                result = self._vm.build_character_table(
-                    self._lm.export_character(args))
-                self._vm.display(result)
+            # try:
+            result = self._vm.build_character_table(
+                self._lm.export_character(args))
 
-            except:
-                print("Unable to find that character, Are you sure they " +
-                      "exist?")
+            self._vm.display(result)
+
+            # except IndexError:
+            #    self._vm.display("Index Error")
+
+            # except:
+            # print("Unable to find information for " + args + ", Are you sure"
+            # + " they exist?")
 
     def do_import(self, args):
         '''
@@ -692,6 +696,7 @@ class Console(cmd.Cmd):
             self._vm.display("Exported league to data.pickles")
         if len(result) == 2:
             self._fm.export_league_binary_to_fs(self._lm, result[0], result[1])
+
             self._vm.display("Exported league to " + result[0] + "\\" +
                              result[1])
 

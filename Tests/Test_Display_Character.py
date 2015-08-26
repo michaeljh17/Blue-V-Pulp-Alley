@@ -25,8 +25,8 @@ lm.get_current_league().add_character("Bruce", char_type="Leader",
                                       cunning="3d8",
                                       arg1="Mighty", arg2="Brash",
                                       arg3="Crafty")
-print(lm.get_current_league().find_character("Bruce"))
-
-result = vm.build_character_table(
-    lm.export_character("Bruce"))
+# print(lm.get_current_league().find_character("Bruce"))
+# vm.display("Data returned from lm.export_character "
+#           + str(lm.export_character("Bruce")))
+result = vm.build_character_table(lm.export_character("Bruce"))
 vm.display(result)

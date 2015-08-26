@@ -1,6 +1,7 @@
 from ViewModel.TableBuilder import *
 # from ViewModel.RowBuilder import *
 # from ViewModel.CellBuilder import *
+from ViewModel.Word_Art import *
 
 
 class ViewModel(object):
@@ -9,14 +10,40 @@ class ViewModel(object):
         tbl = TableBuilder()
         return tbl.build_table(input_2d_array)
 
-    def build_character_table(self, input_3D_array):
+    def build_character_table(self, input_2D_array):
         tbl = TableBuilder()
+        word_art = Word_Art()
         result = ""
-        for table in input_3D_array:
-            result += tbl.build_table(table)
-            result += "\n"
+        temp_array = []
+        # Change name to word art heading and display it
+        result = word_art.heading(str(input_2D_array[0]))
+        # Display Table for type
+        temp_array.append([word_art.sub_heading(input_2D_array[1][0]),
+                           input_2D_array[1][1]])
+        result += tbl.build_table(temp_array)
+
+        # Display subheading - Skills with no Table
+        result += "\n"
+        result += word_art.sub_heading(input_2D_array[2][0])
+        result += "\n"
+        # Display table for skills
+        headings = []
+        for heading in input_2D_array[3]:
+            headings.append(word_art.sub_heading(heading))
+        temp_array = [headings, input_2D_array[4]]
+        result += tbl.build_table(temp_array)
+        # Dsiplay subheading - Abilities with no Table
+        result += "\n"
+        result += word_art.sub_heading(input_2D_array[5][0])
+        result += "\n"
+        # Dsiplay table for abilities
+        headings = []
+        for heading in input_2D_array[6]:
+            headings.append(word_art.sub_heading(heading))
+        temp_array = [headings, input_2D_array[7],
+                      input_2D_array[8], input_2D_array[9]]
+        result += tbl.build_table(temp_array)
         return result
 
-        # stuff
     def display(self, input):
         print(input)

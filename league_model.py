@@ -26,6 +26,11 @@ class LeagueModel(object):
             ability_list.append(new_ability)
         # return ability_list
 
+    def get_ability_by_name(self, name):
+        for ability in self._all_my_abilities:
+            if ability.get_name() == name:
+                return ability
+
     def get_all_abilities(self):
         return self._all_my_abilities
 
@@ -48,7 +53,23 @@ class LeagueModel(object):
 
     def export_character(self, character_name):
         #  -MS-
-        return self._my_league.export_character(character_name)
+        the_data = self._my_league.export_character(character_name)
+        # print("Data given to lm " + str(the_data))
+        abilities = the_data[5]
+        del the_data[5]
+        new_row = ["Abilities"]
+        the_data.append(new_row)
+        new_row = ["Name", "Level", "Effect"]
+        the_data.append(new_row)
+        for ability in abilities:
+            the_ability = self.get_ability_by_name(ability)
+            new_row = []
+            new_row.append(ability)
+            new_row.append(str(the_ability.get_level()))
+            new_row.append("Adds " + str(the_ability.get_modifier()) + " to "
+                           + the_ability.get_effected_skill())
+            the_data.append(new_row)
+        return the_data
 
     def export_league_binary(self):
         return self._my_league

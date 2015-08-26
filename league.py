@@ -190,39 +190,27 @@ class League(object):
         return output
 
     def export_character(self, character_name):
-        # -MS-
-        # find the character object using the name as a given reference
-        character = self.find_character(character_name)
-        character_data = character.export_character()
-        # create a 3D array
         result = []
-        first_row = []
-        second_row = []
-        third_row = []
-        fourth_row = []
-        # First row array is to contain - Name
-        first_row.append(["Name", character_data[1]])
-        result.append(first_row)
-        # Second row array is to contain - Type
-        second_row.append(["Type", character_data[0]])
-        result.append(second_row)
-        # Third row array is to contain - Skills
-        third_row.append(["Skills"])
-        third_row.append(
-            ["Health", "Brawl", "Shoot", "Dodge", "Might", "Finesse",
-             "Cunning"])
-        third_row.append([character_data[2], character_data[3],
-                          character_data[4],
-                          character_data[5], character_data[
-                              6], character_data[7],
-                          character_data[8]])
-        result.append(third_row)
-        # Fourth row array is to contain - abilities
-        fourth_row.append(["Abilities"])
-        fourth_row.append([character_data[9]])
-        result.append(fourth_row)
+        new_row = []
+        the_character = self.find_character(character_name)
+        character_data = the_character.export_character()
+        new_row = [character_data[1]]
+        result.append(new_row)
+        new_row = ["Type", character_data[0]]
+        result.append(new_row)
+        new_row = ["Skills"]
+        result.append(new_row)
+        new_row = ["Health", "Brawl", "Shoot", "Dodge", "Might", "Finesse",
+                   "Cunning"]
+        result.append(new_row)
+        new_row = [character_data[2], character_data[3], character_data[4],
+                   character_data[5], character_data[6], character_data[7],
+                   character_data[8]]
+        result.append(new_row)
+        abilities = [x.strip() for x in character_data[9].split(',')]
+        new_row = [abilities[0], abilities[1], abilities[2]]
+        result.append(new_row)
 
-        # return an array of the character's attributes
         return result
 
     def check_leader(self, char_type):
