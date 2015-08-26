@@ -1,7 +1,6 @@
 # __author__ = 'User'
 from league import League
 from ability import Ability
-import string
 
 
 class LeagueModel(object):
@@ -70,8 +69,8 @@ class LeagueModel(object):
                 new_row = []
                 new_row.append(ability)
                 new_row.append(str(the_ability.get_level()))
-                new_row.append("Adds " + str(the_ability.get_modifier()) + " to "
-                               + the_ability.get_effected_skill())
+                new_row.append("Adds " + str(the_ability.get_modifier()) +
+                               " to " + the_ability.get_effected_skill())
                 the_data.append(new_row)
         # print("Result from LeagueModel " + str(the_data))
         return the_data

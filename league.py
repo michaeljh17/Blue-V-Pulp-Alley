@@ -193,6 +193,11 @@ class League(object):
         result = []
         new_row = []
         the_character = self.find_character(character_name)
+        # Error checking:
+        if the_character is None:
+            print("There is no character with that name in this league.")
+            return
+
         character_data = the_character.export_character()
         # print("Character data " + str(character_data))
         new_row = [character_data[1]]
