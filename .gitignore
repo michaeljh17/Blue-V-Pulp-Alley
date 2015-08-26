@@ -23,3 +23,6 @@ ViewModel/__pycache__/CellBuilder.cpython-34.pyc
 *.pyc
 *.pyc
 ViewModel/__pycache__/TableBuilder.cpython-34.pyc
+*.pyc
+ViewModel/__pycache__/RowBuilder.cpython-34.pyc
+ViewModel/__pycache__/RowBuilder.cpython-34.pyc
