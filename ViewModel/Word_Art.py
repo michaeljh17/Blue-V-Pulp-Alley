@@ -201,9 +201,13 @@ class Word_Art(object):
         #
         for letter in theString:
             result.append(self.convert_letter(letter))
+        # print(str(result))
 
         result = self.combine_arrays(*result)
         return_string = ""
+
+        if result is None:
+            return_string = result
 
         for string in result:
             return_string += string + "\n"
