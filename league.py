@@ -122,7 +122,7 @@ class League(object):
             if (the_character == each_character):
                 del self._all_my_characters[count]
                 count += 1
-
+    """
     @staticmethod
     def check_valid_character(char_type):
         if char_type == Leader.__name__ or char_type == Ally.__name__ or \
@@ -131,7 +131,7 @@ class League(object):
             return True
         else:
             return False
-
+    """
     def check_duplicate_name(self, name):
         for c in self._all_my_characters:
             if name == c.get_name():
