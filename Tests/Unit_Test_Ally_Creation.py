@@ -1,15 +1,15 @@
 import unittest
 import os
 import sys
+from league_model import *
+from league import *
+from character import *
+from FilerModule.FilerModule import *
 from _overlapped import NULL
 path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if path not in sys.path:
     sys.path.insert(1, path)
 del path
-from league_model import *
-from league import *
-from character import *
-from FilerModule.FilerModule import *
 
 
 class MainTests(unittest.TestCase):
@@ -82,8 +82,8 @@ class MainTests(unittest.TestCase):
         self.cl.delete_character_by_name("Ally02")
 
     def test_06(self):
-        print("Test 06 - Add Ally - when there is a character with "
-              + "the same name in the league")
+        print("Test 06 - Add Ally - when there is a character with " +
+              "the same name in the league")
         self.cl.add_character("Ally01", char_type="Ally", health="d6",
                               brawl="2d6", shoot="2d6", dodge="1d6",
                               might="1d6", finesse="1d6",

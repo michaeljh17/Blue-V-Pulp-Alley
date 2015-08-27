@@ -185,8 +185,8 @@ class Word_Art(object):
             result.append("")
 
         if len(args) < 2:
-            print("combine_arrays() must be given at least two arrays")
-            return
+            # print("combine_arrays() must be given at least two arrays")
+            return result
 
         for count, the_array in enumerate(args):
             for i, the_string in enumerate(the_array):
@@ -201,9 +201,13 @@ class Word_Art(object):
         #
         for letter in theString:
             result.append(self.convert_letter(letter))
+        # print(str(result))
 
         result = self.combine_arrays(*result)
         return_string = ""
+
+        if result is None:
+            return_string = result
 
         for string in result:
             return_string += string + "\n"
