@@ -2,8 +2,8 @@
 class Word_Art(object):
 
     def convert_letter(self, letter):
-        # when given a letter this method returns an array of four arrays
-        # containing characters to draw the letter over four lines
+        # when given a letter this method returns an array of six arrays
+        # containing characters to draw the letter over six lines
         letter = letter.lower()
         return {
             'a': ["       ",
