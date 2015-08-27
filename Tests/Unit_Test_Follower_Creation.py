@@ -1,14 +1,14 @@
 import unittest
 import os
 import sys
-path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if path not in sys.path:
-    sys.path.insert(1, path)
-del path
 from league_model import *
 from league import *
 from character import *
 from FilerModule.FilerModule import *
+path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if path not in sys.path:
+    sys.path.insert(1, path)
+del path
 
 
 class MainTests(unittest.TestCase):
@@ -80,10 +80,10 @@ class MainTests(unittest.TestCase):
         self.cl.delete_character_by_name("Bounder02")
 
     def test_06(self):
-        print("Test 06 - Add Follower - when there is a character with "
-              + "the same name in the league")
-        self.cl.add_character("Bounder", "Leader", "d10", "3d10", "3d10", "3d8",
-                              "3d10", "2d8", "2d10", arg1="Mighty",
+        print("Test 06 - Add Follower - when there is a character with " +
+              "the same name in the league")
+        self.cl.add_character("Bounder", "Leader", "d10", "3d10", "3d10",
+                              "3d8", "3d10", "2d8", "2d10", arg1="Mighty",
                               arg2="Brash", arg3="Crafty")
         self.cl.add_character("Bounder", char_type="Follower", health="d8",
                               brawl="2d6", shoot="3d6", dodge="2d6",

@@ -1,15 +1,15 @@
 import unittest
 import os
 import sys
+from league_model import *
+from league import *
+from character import *
+from FilerModule.FilerModule import *
 from test.test_datetime import tearDownClass
 path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if path not in sys.path:
     sys.path.insert(1, path)
 del path
-from league_model import *
-from league import *
-from character import *
-from FilerModule.FilerModule import *
 
 
 class MainTests(unittest.TestCase):
@@ -85,8 +85,8 @@ class MainTests(unittest.TestCase):
             self.cl.remove_character(self.cl.find_character("Kicky02"))
 
     def test_06(self):
-        print("Test 06 - Add SideKick - when there is a character with "
-              + "the same name in the league")
+        print("Test 06 - Add SideKick - when there is a character with " +
+              "the same name in the league")
         self.cl.add_character("Kicky", char_type="Follower", health="d6",
                               brawl="1d6", shoot="1d6", dodge="1d6",
                               might="1d6", finesse="1d6", cunning="1d6",
