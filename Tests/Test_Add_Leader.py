@@ -1,4 +1,4 @@
-from Test_Add_Character import *
+from Tests.Test_Add_Character import *
 
 test = Test_Add_Character()
 

@@ -1,12 +1,12 @@
 import sys
 import os
-from league import *
-from character import *
-from league_model import *
 path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if path not in sys.path:
     sys.path.insert(1, path)
 del path
+from league import *
+from character import *
+from league_model import *
 
 
 class Test_Add_Character(object):

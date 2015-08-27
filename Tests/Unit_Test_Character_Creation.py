@@ -1,14 +1,14 @@
 import unittest
 import os
 import sys
-from league_model import *
-from league import *
-from character import *
-from FilerModule.FilerModule import *
 path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if path not in sys.path:
     sys.path.insert(1, path)
 del path
+from league_model import *
+from league import *
+from character import *
+from FilerModule.FilerModule import *
 
 
 class MainTests(unittest.TestCase):
