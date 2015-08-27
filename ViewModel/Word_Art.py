@@ -183,11 +183,11 @@ class Word_Art(object):
 
         for i in range(largest_array_length):
             result.append("")
-
+        """
         if len(args) < 2:
             print("combine_arrays() must be given at least two arrays")
             return
-
+        """
         for count, the_array in enumerate(args):
             for i, the_string in enumerate(the_array):
                 result[i] += the_array[i]

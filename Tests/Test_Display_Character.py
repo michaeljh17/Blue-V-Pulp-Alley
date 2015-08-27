@@ -12,7 +12,7 @@ from ViewModel.ViewModel import *
 
 
 lm = LeagueModel()
-lm.add_league("Test League")
+lm.add_league("a")
 fm = FilerModule()
 lm.set_abilities_file(fm.read_file("..\Abilities.txt"))
 vm = ViewModel()
@@ -29,10 +29,16 @@ lm.get_current_league().add_character("Alice", char_type="Ally", health="d6",
                                       brawl="2d6", shoot="2d6", dodge="1d6",
                                       might="1d6", finesse="1d6", cunning="1d6",
                                       arg1="Mighty", arg2="", arg3="")
+lm.get_current_league().add_character("A", char_type="Ally", health="d6",
+                                      brawl="2d6", shoot="2d6", dodge="1d6",
+                                      might="1d6", finesse="1d6", cunning="1d6",
+                                      arg1="Mighty", arg2="", arg3="")
 # print(lm.get_current_league().find_character("Bruce"))
 # vm.display("Data returned from lm.export_character "
 #           + str(lm.export_character("Bruce")))
 result = vm.build_character_table(lm.export_character("Bruce"))
 vm.display(result)
 result = vm.build_character_table(lm.export_character("Alice"))
+vm.display(result)
+result = vm.build_character_table(lm.export_character("A"))
 vm.display(result)
