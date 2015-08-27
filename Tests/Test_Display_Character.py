@@ -4,9 +4,9 @@ path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if path not in sys.path:
     sys.path.insert(1, path)
 del path
+from league_model import *
 from league import *
 from character import *
-from league_model import *
 from FilerModule.FilerModule import *
 from ViewModel.ViewModel import *
 

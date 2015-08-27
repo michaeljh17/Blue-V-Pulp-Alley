@@ -64,6 +64,11 @@ class Console(cmd.Cmd):
         This command allows you to change the name of the current league.
 
         """
+        if self._lm.get_current_league() == "":
+            print("You need to create a league first before trying to display "
+                  "a league.")
+            return
+
         # -MS-
         if args == "":
             self._vm.display("You must type a new name to replace the old")
@@ -78,7 +83,7 @@ class Console(cmd.Cmd):
                 self._vm.display("You may not rename the league. " + str(e))
                 return
         self._vm.display("The league is now named: " +
-                         self._lm.get_current_league().get_name())
+                         self._lm.greet_current_league().get_name())
 
     def do_deleteLeague(self, args):
         '''

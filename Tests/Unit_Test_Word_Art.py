@@ -1,12 +1,12 @@
 import unittest
 import os
 import sys
+from ViewModel.Word_Art import *
 from test.test_datetime import tearDownClass
 path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if path not in sys.path:
     sys.path.insert(1, path)
 del path
-from ViewModel.Word_Art import *
 
 
 class MainTests(unittest.TestCase):
@@ -19,8 +19,8 @@ class MainTests(unittest.TestCase):
         array1 = ["Array1String1", "Array1String2"]
         array2 = ["Array2String1", "Array2String2"]
         result = self.wa.combine_arrays(array1, array2)
-        expected_result = ["Array1String1Array2String1", "Array1"
-                           + "String2Array2String2"]
+        expected_result = ["Array1String1Array2String1", "Array1" +
+                           "String2Array2String2"]
         self.assertTrue(result == expected_result, "combine_arrays() is " +
                         "unable to combine the arrays appropriately")
 
