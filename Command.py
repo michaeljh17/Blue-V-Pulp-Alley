@@ -653,7 +653,7 @@ class Console(cmd.Cmd):
             except IndexError as e:
                 pass
             except TypeError as e:
-                pass
+                self._vm.display(e.__doc__)  # .__repr__())
 
             # except IndexError:
             #    self._vm.display("Index Error")
