@@ -12,7 +12,7 @@ class Follower(Character):
     # Dice type - list contains: 1) Edice 2) number of these Edice
     _dice_type_1 = [EDice.d6, 6]
     _dice_type_2 = None
-    # Dice numbers - list contains: 1) dice numbers 2) numbers of these dice
+    # Dice numbers - list contains: 1) dice numbers 2) numbers of these numbers
     _dice_numbers_1 = [1, 6]
     _dice_numbers_2 = None
 

@@ -46,14 +46,27 @@ class Console(cmd.Cmd):
                   "please remove this one first.")
             return
 
+        input_v = InputView()
+        result = args.split(' ')
+
+        if len(result) > 1:
+            self._vm.display("You have entered too many arguments. Please try "
+                             "again")
+            return
+
         try:
             self._lm.set_abilities_file(self._fm.read_file("abilities.txt"))
             # change to handle file systems
             if args != "":
+                input_v.check_valid_name(args)
                 self._lm.add_league(args)
-                print(args + " created")
+                self._vm.display(args + " created")
             else:
                 print("The new league must have a name!")
+        except InputException:
+                self._vm.display("Invalid name entry: use only alphanumeric "
+                                 "characters when naming a league. Please try "
+                                 "again")
         except TypeError as e:
             print("Please check your filesystem has all the necessary files.")
 
@@ -64,17 +77,31 @@ class Console(cmd.Cmd):
         This command allows you to change the name of the current league.
 
         """
+        """
         if self._lm.get_current_league() == "":
             print("You need to create a league first before trying to display "
                   "a league.")
             return
+        """
+        inputV = InputView()
+        result = args.split(" ")
 
         # -MS-
         if args == "":
             self._vm.display("You must type a new name to replace the old")
+        elif len(result) > 1:
+            self._vm.display("You have entered too many arguments. Please try "
+                             "again")
         else:
             try:
-                self._lm.get_current_league().set_name(args)
+                inputV.check_valid_name(result[0])
+                self._lm.get_current_league().set_name(result[0])
+                self._vm.display("The league is now named: " +
+                         self._lm.get_current_league().get_name())
+            except InputException:
+                self._vm.display("Invalid name entry: use only alphanumeric "
+                                 "characters when renaming a league. Please "
+                                 "try again")
             except AttributeError:
                 self._vm.display("There is no league to rename. I suggest " +
                                  "you create one")
@@ -82,8 +109,6 @@ class Console(cmd.Cmd):
             except Exception as e:
                 self._vm.display("You may not rename the league. " + str(e))
                 return
-        self._vm.display("The league is now named: " +
-                         self._lm.greet_current_league().get_name())
 
     def do_deleteLeague(self, args):
         '''
@@ -653,7 +678,7 @@ class Console(cmd.Cmd):
             except IndexError as e:
                 pass
             except TypeError as e:
-                pass
+                self._vm.display(e.__doc__)  # .__repr__())
 
             # except IndexError:
             #    self._vm.display("Index Error")
